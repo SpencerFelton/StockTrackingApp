@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Common;
 
 namespace ProviderAPI
 {
@@ -15,62 +16,45 @@ namespace ProviderAPI
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                var Stocks = entity.Stocks;
-
-                if (name.Length > maxStockNameLength)
-                {
-                    throw new Exception($"Name cannot exceed {maxStockNameLength} characters in length");
-                }
-
-                if (abbreviation.Length > maxStockAbbrLength)
-                {
-                    throw new Exception($"Abbreviation cannot exceed {maxStockAbbrLength} characters in length");
-                }
-
-                IQueryable<Stock> existingStocks = Stocks.Where(s => s.name.ToLower() == name.ToLower());
-                if (existingStocks.Count() > 0)
-                {
-                    throw new Exception("Stock already exists with the name " + name);
-                }
-
-                existingStocks = Stocks.Where(s => s.abbr.ToUpper() == abbreviation.ToUpper());
-                if (existingStocks.Count() > 0)
-                {
-                    throw new Exception("Stock already exists with the abbreviation " + abbreviation);
-                }
-
+                if (name.Length > maxStockNameLength) 
+                    throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
+                if (abbreviation.Length > maxStockAbbrLength) 
+                    throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
+                
+                if (entity.Stocks.Where(s => s.name.ToLower() == name.ToLower()).Count() > 0) 
+                    throw new ArgumentException("Stock already exists with the name " + name);
+                if (entity.Stocks.Where(s => s.abbr.ToUpper() == abbreviation.ToUpper()).Count() > 0) 
+                    throw new ArgumentException("Stock already exists with the abbreviation " + abbreviation);
+                
                 // No exception thrown => Can create new stock
-
+                // Any exception thown after this will be a system error
                 Stock newStock = new Stock
                 {
                     name = name, // name can be however
                     abbr = abbreviation.ToUpper() // abbr should be capitalised
                 };
-
                 entity.Stocks.Add(newStock);
                 entity.SaveChanges();
             }
         }
 
-        public static void DeleteStock(string str)
+        public static void DeleteStock(string abbreviation)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                // attempt to locate stock where str is an abbreviation
-                if (entity.Stocks.Where(s => s.abbr.ToUpper() == str.ToUpper()).Count() == 1)
+                if (entity.Stocks.Where(s => s.abbr.ToUpper() == abbreviation.ToUpper()).Count() == 1)
                 {
-                    entity.Stocks.Remove(entity.Stocks.Single(s => s.abbr.ToUpper() == str.ToUpper()));
-                    entity.SaveChanges();
-                }
-                // attempt to locate stock where str is a name
-                else if (entity.Stocks.Where(s => s.name.ToLower() == str.ToLower()).Count() == 1)
-                {
-                    entity.Stocks.Remove(entity.Stocks.Single(s => s.name.ToLower() == str.ToLower()));
+                    Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == abbreviation.ToUpper());
+                    foreach (PriceHistory price in stock.PriceHistories)
+                    {
+                        entity.PriceHistories.Remove(price);
+                    }
+                    entity.Stocks.Remove(stock);
                     entity.SaveChanges();
                 }
                 else
                 {
-                    throw new Exception("Stock not found");
+                    throw new ArgumentException("Stock not found");
                 }
             }
         }

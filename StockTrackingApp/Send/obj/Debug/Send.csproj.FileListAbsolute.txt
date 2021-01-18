@@ -1,0 +1,46 @@
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\Send.exe.config
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\Send.exe
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\Send.pdb
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\RabbitMQ.Client.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Buffers.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Memory.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Threading.Channels.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\RabbitMQ.Client.pdb
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\RabbitMQ.Client.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Buffers.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Memory.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Threading.Channels.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\obj\Debug\Send.csproj.CoreCompileInputs.cache
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\obj\Debug\Send.csproj.CopyComplete
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\obj\Debug\Send.exe
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\obj\Debug\Send.pdb
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\Send.exe.config
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\Send.exe
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\Send.pdb
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\RabbitMQ.Client.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Buffers.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Memory.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Threading.Channels.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\RabbitMQ.Client.pdb
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\RabbitMQ.Client.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Buffers.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Memory.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Threading.Channels.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\obj\Debug\Send.csprojAssemblyReference.cache
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\obj\Debug\Send.csproj.CoreCompileInputs.cache
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\obj\Debug\Send.csproj.CopyComplete
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\obj\Debug\Send.exe
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Send\obj\Debug\Send.pdb
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Send\obj\Debug\Send.csprojAssemblyReference.cache

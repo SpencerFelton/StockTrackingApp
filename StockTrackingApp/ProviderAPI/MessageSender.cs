@@ -31,11 +31,9 @@ namespace ProviderAPI
 
         public void SendMessage(string message)
         {
-
             var body = Encoding.UTF8.GetBytes(message);
             _channel.BasicPublish(exchange: "stocks", routingKey: "", basicProperties: null, body: body);
-            Console.WriteLine("Sent {0}", message);
-
+            System.Diagnostics.Debug.WriteLine("Sent {0}", message);
         }
     }
 }

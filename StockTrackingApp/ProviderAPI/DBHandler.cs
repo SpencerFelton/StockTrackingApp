@@ -76,5 +76,23 @@ namespace ProviderAPI
                 entity.SaveChanges();
             }
         }
+
+        public static int StockCount()
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                return entity.Stocks.Count();
+            }
+        }
+        public static int CheckStockExists(string name, string abbreviation)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                int status = 0;
+                if (entity.Stocks.Where(s => s.name.ToLower() == name.ToLower()).Count() > 0) status += 2;
+                if (entity.Stocks.Where(s => s.abbr.ToUpper() == abbreviation.ToUpper()).Count() > 0) status += 1;
+                return status;
+            }
+        }
     }
 }

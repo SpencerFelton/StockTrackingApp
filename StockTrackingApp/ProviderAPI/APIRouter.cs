@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitMQ.Client.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,9 +69,32 @@ namespace ProviderAPI
             {
                 DBHandler.UpdateStockPrice(abbreviation, dateTime, price);
                 System.Diagnostics.Debug.WriteLine($"Price listed for {abbreviation}: {price} at {dateTime}");
-                RabbitMQHandler.SendStockPrice(abbreviation, dateTime, price);
-                System.Diagnostics.Debug.WriteLine($"Price sent to RabbitMQ for {abbreviation}: {price} at {dateTime}");
-                return 200;
+                try
+                {
+                    RabbitMQHandler.SendStockPrice(abbreviation, dateTime, price);
+                    System.Diagnostics.Debug.WriteLine($"Price sent to RabbitMQ for {abbreviation}: {price} at {dateTime}");
+                    return 200;
+                }
+                catch (BrokerUnreachableException e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.Message);
+                    return 500;
+                }
+                catch (ArgumentNullException e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.Message);
+                    return 406;
+                }
+                catch (EncoderFallbackException e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.Message);
+                    return 500;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.Message);
+                    return 500;
+                }
             }
             catch (ArgumentNullException e)
             {

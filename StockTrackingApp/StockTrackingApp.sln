@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTrackingApp", "StockTr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProviderAPI", "ProviderAPI\ProviderAPI.csproj", "{7DAC2F2D-C96C-42BA-9B69-2989E15ED721}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProviderAPITester", "ProviderAPITester\ProviderAPITester.csproj", "{366FB6B8-7259-42FD-B791-3F0CFF83AF8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7DAC2F2D-C96C-42BA-9B69-2989E15ED721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DAC2F2D-C96C-42BA-9B69-2989E15ED721}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DAC2F2D-C96C-42BA-9B69-2989E15ED721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{366FB6B8-7259-42FD-B791-3F0CFF83AF8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{366FB6B8-7259-42FD-B791-3F0CFF83AF8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{366FB6B8-7259-42FD-B791-3F0CFF83AF8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{366FB6B8-7259-42FD-B791-3F0CFF83AF8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

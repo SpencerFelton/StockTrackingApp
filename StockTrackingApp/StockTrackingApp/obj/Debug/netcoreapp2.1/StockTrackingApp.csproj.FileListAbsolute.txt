@@ -1,0 +1,15 @@
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\bin\Debug\netcoreapp2.1\StockTrackingApp.deps.json
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\bin\Debug\netcoreapp2.1\StockTrackingApp.runtimeconfig.json
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\bin\Debug\netcoreapp2.1\StockTrackingApp.runtimeconfig.dev.json
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\bin\Debug\netcoreapp2.1\StockTrackingApp.dll
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\bin\Debug\netcoreapp2.1\StockTrackingApp.pdb
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\obj\Debug\netcoreapp2.1\StockTrackingApp.csprojAssemblyReference.cache
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\obj\Debug\netcoreapp2.1\StockTrackingApp.AssemblyInfoInputs.cache
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\obj\Debug\netcoreapp2.1\StockTrackingApp.AssemblyInfo.cs
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\obj\Debug\netcoreapp2.1\StockTrackingApp.csproj.CoreCompileInputs.cache
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\obj\Debug\netcoreapp2.1\StockTrackingApp.RazorAssemblyInfo.cache
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\obj\Debug\netcoreapp2.1\StockTrackingApp.RazorAssemblyInfo.cs
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\obj\Debug\netcoreapp2.1\StockTrackingApp.RazorTargetAssemblyInfo.cache
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\obj\Debug\netcoreapp2.1\StockTrackingApp.dll
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\obj\Debug\netcoreapp2.1\StockTrackingApp.pdb
+C:\Users\roger\Desktop\NovusGroupProject\StockTrackingApp\StockTrackingApp\StockTrackingApp\obj\Debug\netcoreapp2.1\StockTrackingApp.genruntimeconfig.cache

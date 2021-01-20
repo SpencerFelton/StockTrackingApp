@@ -14,7 +14,7 @@ namespace SMSSender
         static void Main(string[] args)
         {
             string accountSid = "AC497154f8ed22e9115f9d5a895fd185d6";
-            string authToken = "624d32bfcadb2003f5089678c1d56d14";
+            string authToken = "bf73ceefff0c088646681bcec2d96edd";
             TwilioClient.Init(accountSid, authToken);
 
             var toPhoneNumber = new PhoneNumber("+447541277864");

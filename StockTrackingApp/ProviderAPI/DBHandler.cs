@@ -95,11 +95,11 @@ namespace ProviderAPI
             }
         }
 
-        public static IEnumerable<Stock> GetStocks()
+        public static Stock[] GetStocks()
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                return entity.Stocks;
+                return entity.Stocks.ToArray();
             }
         }
         public static Stock GetStock(int id)
@@ -176,12 +176,12 @@ namespace ProviderAPI
                 return latestPriceHistory;
             }
         }
-        public static IEnumerable<PriceHistory> GetPriceHistories(Stock stock)
+        public static PriceHistory[] GetPriceHistories(Stock stock)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
                 stock = entity.Stocks.Find(stock);
-                return stock.PriceHistories;
+                return stock.PriceHistories.ToArray();
             }
         }
     }

@@ -10,37 +10,62 @@ namespace ProviderWebApi.Controllers
 {
     public class StocksController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        // GET api/stocks
+        public IEnumerable<object> Get()
         {
             IEnumerable<Stock> stocks = DBHandler.GetStocks();
-            List<string> strings = new List<string>();
+            List<object> objects = new List<object>();
             foreach (Stock stock in stocks)
             {
-                strings.Add($"id={stock.id}, name={stock.name}, abbreviation={stock.abbr}");
+                objects.Add(ToObject(stock));
             }
-            return strings;
+            return objects;
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        // GET api/stock/4
+        public object Get(int id)
         {
-            return "value";
+            return ToObject(DBHandler.GetStock(id));
         }
 
-        // POST api/<controller>
+        // POST api/stock
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<controller>/5
+        // PUT api/stock/5
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<controller>/5
+        // DELETE api/stock/5
         public void Delete(int id)
         {
+        }
+
+        private object ToObject(Stock stock)
+        {
+            PriceHistory price = DBHandler.GetMostRecentStockPriceHistory(stock);
+            return new
+            {
+                stock_id = stock.id,
+                name = stock.name,
+                abbreviation = stock.abbr,
+                price = price.value,
+                dateTime = price.time
+            };
+        }
+        private object ToObject(PriceHistory price)
+        {
+            Stock stock = DBHandler.GetStock(price.stock_id);
+            return new
+            {
+                stock_id = price.stock_id,
+                name = stock.name,
+                abbreviation = stock.abbr,
+                price = price.value,
+                dateTime = price.time
+            };
         }
     }
 }

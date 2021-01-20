@@ -95,43 +95,45 @@ namespace ProviderAPI
             }
         }
 
-        public static Stock[] GetStocks()
+        public static Stock[] GetStocks() // CHECKED
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
                 return entity.Stocks.ToArray();
             }
         }
-        public static Stock GetStock(int id)
+        public static Stock GetStock(int id) // CHECKED
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
                 return entity.Stocks.SingleOrDefault(s => s.id == id);
             }
         }
-        public static Stock GetStock(string abbreviation)
+        public static Stock GetStock(string abbreviation) // CHECKED
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
                 return entity.Stocks.SingleOrDefault(s => s.abbr == abbreviation);
             }
         }
-        public static Stock GetStockFromName(string name)
+        public static Stock GetStockFromName(string name) // CHECKED
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
                 return entity.Stocks.SingleOrDefault(s => s.name == name);
             }
         }
-        public static decimal GetMostRecentStockPrice(Stock stock)
+        public static decimal GetMostRecentStockPrice(Stock stock) // POORLY CHECKED
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                stock = entity.Stocks.Find(stock);
+                if (stock == null) throw new ArgumentNullException();
+                Stock foundStock = entity.Stocks.SingleOrDefault(s => s.id == stock.id);
+                if (foundStock == null) throw new ArgumentOutOfRangeException();
                 decimal price = 0.00M;
                 DateTime dateTime = stock.PriceHistories.FirstOrDefault().time;
                 bool first = true;
-                foreach (PriceHistory priceHistory in stock.PriceHistories)
+                foreach (PriceHistory priceHistory in foundStock.PriceHistories)
                 {
                     if (first)
                     {
@@ -151,14 +153,16 @@ namespace ProviderAPI
                 return price;
             }
         }
-        public static PriceHistory GetMostRecentStockPriceHistory(Stock stock)
+        public static PriceHistory GetMostRecentStockPriceHistory(Stock stock) // CHECKED
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                stock = entity.Stocks.Find(stock);
+                if (stock == null) return null;
+                Stock foundStock = entity.Stocks.SingleOrDefault(s => s.id == stock.id);
+                if (foundStock == null) return null;
                 PriceHistory latestPriceHistory = null;
                 bool first = true;
-                foreach (PriceHistory priceHistory in stock.PriceHistories)
+                foreach (PriceHistory priceHistory in foundStock.PriceHistories)
                 {
                     if (first)
                     {
@@ -176,12 +180,14 @@ namespace ProviderAPI
                 return latestPriceHistory;
             }
         }
-        public static PriceHistory[] GetPriceHistories(Stock stock)
+        public static PriceHistory[] GetPriceHistories(Stock stock) // SEMI CHECKED
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                stock = entity.Stocks.Find(stock);
-                return stock.PriceHistories.ToArray();
+                if (stock == null) return new PriceHistory[] { };
+                Stock foundStock = entity.Stocks.SingleOrDefault(s => s.id == stock.id);
+                if (stock == null) return new PriceHistory[] { };
+                return foundStock.PriceHistories.ToArray(); // CONCERN
             }
         }
     }

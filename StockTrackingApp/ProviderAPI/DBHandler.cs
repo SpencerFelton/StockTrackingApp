@@ -94,5 +94,95 @@ namespace ProviderAPI
                 return status;
             }
         }
+
+        public static IEnumerable<Stock> GetStocks()
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                return entity.Stocks;
+            }
+        }
+        public static Stock GetStock(int id)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                return entity.Stocks.SingleOrDefault(s => s.id == id);
+            }
+        }
+        public static Stock GetStock(string abbreviation)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                return entity.Stocks.SingleOrDefault(s => s.abbr == abbreviation);
+            }
+        }
+        public static Stock GetStockFromName(string name)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                return entity.Stocks.SingleOrDefault(s => s.name == name);
+            }
+        }
+        public static decimal GetMostRecentStockPrice(Stock stock)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                stock = entity.Stocks.Find(stock);
+                decimal price = 0.00M;
+                DateTime dateTime = stock.PriceHistories.FirstOrDefault().time;
+                bool first = true;
+                foreach (PriceHistory priceHistory in stock.PriceHistories)
+                {
+                    if (first)
+                    {
+                        price = priceHistory.value;
+                        dateTime = priceHistory.time;
+                        first = false;
+                    }
+                    else
+                    {
+                        if (DateTime.Compare(priceHistory.time, dateTime) == 1)
+                        {
+                            dateTime = priceHistory.time;
+                            price = priceHistory.value;
+                        }
+                    }
+                }
+                return price;
+            }
+        }
+        public static PriceHistory GetMostRecentStockPriceHistory(Stock stock)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                stock = entity.Stocks.Find(stock);
+                PriceHistory latestPriceHistory = null;
+                bool first = true;
+                foreach (PriceHistory priceHistory in stock.PriceHistories)
+                {
+                    if (first)
+                    {
+                        latestPriceHistory = priceHistory;
+                        first = false;
+                    }
+                    else
+                    {
+                        if (DateTime.Compare(priceHistory.time, latestPriceHistory.time) == 1)
+                        {
+                            latestPriceHistory = priceHistory;
+                        }
+                    }
+                }
+                return latestPriceHistory;
+            }
+        }
+        public static IEnumerable<PriceHistory> GetPriceHistories(Stock stock)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                stock = entity.Stocks.Find(stock);
+                return stock.PriceHistories;
+            }
+        }
     }
 }

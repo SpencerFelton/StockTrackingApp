@@ -17,55 +17,33 @@ namespace ProviderWebApi.Controllers
             List<object> objects = new List<object>();
             foreach (Stock stock in stocks)
             {
-                objects.Add(ToObject(stock));
+                objects.Add(new TransitStock(stock));
             }
             return objects;
         }
 
-        // GET api/stock/4
+        // GET api/stocks/4
         public object Get(int id)
         {
-            return ToObject(DBHandler.GetStock(id));
+            return new TransitStock(DBHandler.GetStock(id));
         }
 
-        // POST api/stock
-        public void Post([FromBody] string value)
+        // POST api/stocks
+        [HttpPost]
+        public void Post([FromBody] TransitStock transitStock)
         {
+            if (transitStock == null) throw new ArgumentNullException();
+            DBHandler.AddStock(transitStock);
         }
 
-        // PUT api/stock/5
+        // PUT api/stocks/5
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/stock/5
+        // DELETE api/stocks/5
         public void Delete(int id)
         {
-        }
-
-        private object ToObject(Stock stock)
-        {
-            PriceHistory price = DBHandler.GetMostRecentStockPriceHistory(stock);
-            return new
-            {
-                stock_id = stock.id,
-                name = stock.name,
-                abbreviation = stock.abbr,
-                price = price.value,
-                dateTime = price.time
-            };
-        }
-        private object ToObject(PriceHistory price)
-        {
-            Stock stock = DBHandler.GetStock(price.stock_id);
-            return new
-            {
-                stock_id = price.stock_id,
-                name = stock.name,
-                abbreviation = stock.abbr,
-                price = price.value,
-                dateTime = price.time
-            };
         }
     }
 }

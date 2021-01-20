@@ -32,5 +32,28 @@ namespace ProviderAPI
                 messageSender.SendMessage(message);
             }
         }
+        public static void SendStockPrice(TransitStock transitStock)
+        {
+            // Building the connection factory, contains default username, password and localhost
+            var factory = new ConnectionFactory()
+            {
+                UserName = "guest",
+                Password = "guest",
+                HostName = "localhost"
+            };
+
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+
+                channel.ExchangeDeclare("stocks", ExchangeType.Direct); // Declare exchange "stock"
+                MessageSender messageSender = new MessageSender(channel);
+                messageSender.BindQueue("stock"); // Declare and Bind Queue "stock" to "stocks" exchange
+
+                string message = transitStock.price.ToString(); // change this to whatever message
+        
+                messageSender.SendMessage(message);
+            }
+        }
     }
 }

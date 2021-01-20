@@ -37,6 +37,30 @@ namespace ProviderAPI
                 entity.SaveChanges();
             }
         }
+        public static void AddStock(TransitStock transitStock)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                if (transitStock.name.Length > maxStockNameLength)
+                    throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
+                if (transitStock.abbreviation.Length > maxStockAbbrLength)
+                    throw new ArgumentOutOfRangeException($"Abbreviation cannot exceed {maxStockNameLength} characters in length");
+
+                if (entity.Stocks.Where(s => s.name.ToLower() == transitStock.name.ToLower()).Count() > 0)
+                    throw new ArgumentException("Stock already exists with the name " + transitStock.name);
+                if (entity.Stocks.Where(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper()).Count() > 0)
+                    throw new ArgumentException("Stock already exists with the abbreviation " + transitStock.abbreviation);
+
+                // No exception thrown => Can create new stock
+                // Any exception thown after this will be a system error
+                Stock newStock = transitStock.ToStock();
+                entity.Stocks.Add(newStock);
+                entity.SaveChanges();
+                PriceHistory priceHistory = transitStock.ToPriceHistory();
+                entity.PriceHistories.Add(priceHistory);
+                entity.SaveChanges();
+            }
+        }
 
         public static void DeleteStock(string abbreviation)
         {
@@ -70,6 +94,23 @@ namespace ProviderAPI
                     stock_id = stock.id,
                     time = dateTime,
                     value = price
+                };
+
+                entity.PriceHistories.Add(priceHistory);
+                entity.SaveChanges();
+            }
+        }
+        public static void UpdateStockPrice(TransitStock transitStock)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper());
+
+                PriceHistory priceHistory = new PriceHistory
+                {
+                    stock_id = stock.id,
+                    time = transitStock.dateTime,
+                    value = transitStock.price
                 };
 
                 entity.PriceHistories.Add(priceHistory);

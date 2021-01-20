@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProviderAPI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -22,8 +23,12 @@ namespace ProviderWebApi.Controllers
         }
 
         // POST api/prices
-        public void Post([FromBody] string value)
+        [HttpPost]
+        public void Post([FromBody] TransitStock transitStock)
         {
+            if (transitStock == null) throw new ArgumentNullException();
+            DBHandler.UpdateStockPrice(transitStock);
+            RabbitMQHandler.SendStockPrice(transitStock);
         }
 
         // PUT api/prices/5

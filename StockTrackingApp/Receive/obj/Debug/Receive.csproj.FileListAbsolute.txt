@@ -1,0 +1,46 @@
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.csproj.CoreCompileInputs.cache
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\Receive.exe.config
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\Receive.exe
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\Receive.pdb
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\RabbitMQ.Client.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Buffers.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Memory.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Channels.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\RabbitMQ.Client.pdb
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\RabbitMQ.Client.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Buffers.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Memory.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Channels.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.csproj.CopyComplete
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.exe
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.pdb
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\Receive.exe.config
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\Receive.exe
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\Receive.pdb
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\RabbitMQ.Client.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Buffers.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Memory.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Channels.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\RabbitMQ.Client.pdb
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\RabbitMQ.Client.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Buffers.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Memory.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Channels.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.csprojAssemblyReference.cache
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.csproj.CoreCompileInputs.cache
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.csproj.CopyComplete
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.exe
+C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.pdb
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.csprojAssemblyReference.cache

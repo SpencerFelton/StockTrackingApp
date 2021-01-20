@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Spen's Beast\\Desktop\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj": {}
+    "C:\\Users\\joewa\\source\\repos\\Projects\\Stock Tracking Application\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Spen's Beast\\Desktop\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj": {
+    "C:\\Users\\joewa\\source\\repos\\Projects\\Stock Tracking Application\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Spen's Beast\\Desktop\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj",
+        "projectUniqueName": "C:\\Users\\joewa\\source\\repos\\Projects\\Stock Tracking Application\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj",
         "projectName": "StockTrackingApp",
-        "projectPath": "C:\\Users\\Spen's Beast\\Desktop\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj",
-        "packagesPath": "C:\\Users\\Spen's Beast\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Spen's Beast\\Desktop\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\obj\\",
+        "projectPath": "C:\\Users\\joewa\\source\\repos\\Projects\\Stock Tracking Application\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj",
+        "packagesPath": "C:\\Users\\joewa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\joewa\\source\\repos\\Projects\\Stock Tracking Application\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Spen's Beast\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\joewa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

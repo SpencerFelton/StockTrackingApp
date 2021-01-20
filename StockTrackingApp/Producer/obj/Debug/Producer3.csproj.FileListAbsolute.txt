@@ -1,0 +1,5 @@
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Producer3\bin\Debug\Producer3.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Producer3\bin\Debug\Producer3.pdb
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Producer3\obj\Debug\Producer3.csproj.CoreCompileInputs.cache
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Producer3\obj\Debug\Producer3.dll
+C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Producer3\obj\Debug\Producer3.pdb

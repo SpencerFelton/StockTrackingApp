@@ -14,10 +14,7 @@ namespace ProviderAPI
         public decimal price;
         public DateTime dateTime;
 
-        public TransitStock()
-        {
-
-        }
+        public TransitStock() { }
         public TransitStock(Stock stock, PriceHistory priceHistory)
         {
             if (stock.id != priceHistory.id) throw new InvalidOperationException("Stock.id did not match PriceHistory.stock_id");
@@ -67,6 +64,7 @@ namespace ProviderAPI
                 };
             }
         }
+
         public PriceHistory ToPriceHistory(bool idKnown = false)
         {
             if (idKnown)

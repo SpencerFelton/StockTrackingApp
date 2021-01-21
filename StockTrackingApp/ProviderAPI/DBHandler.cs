@@ -12,6 +12,7 @@ namespace ProviderAPI
         private const int maxStockNameLength = 30;
         private const int maxStockAbbrLength = 4;
 
+        #region DATABASE MODIFIERS
         public static void AddStock(string name, string abbreviation)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
@@ -82,6 +83,26 @@ namespace ProviderAPI
                 }
             }
         }
+        public static void DeleteStock(TransitStock transitStock)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                if (entity.Stocks.Where(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper()).Count() == 1)
+                {
+                    Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper());
+                    foreach (PriceHistory price in stock.PriceHistories)
+                    {
+                        entity.PriceHistories.Remove(price);
+                    }
+                    entity.Stocks.Remove(stock);
+                    entity.SaveChanges();
+                }
+                else
+                {
+                    throw new ArgumentException("Stock not found");
+                }
+            }
+        }
 
         public static void UpdateStockPrice(string abbreviation, DateTime dateTime, decimal price)
         {
@@ -117,7 +138,9 @@ namespace ProviderAPI
                 entity.SaveChanges();
             }
         }
+        #endregion
 
+        #region TESTER SUPPLEMENTS
         public static int StockCount()
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
@@ -125,6 +148,7 @@ namespace ProviderAPI
                 return entity.Stocks.Count();
             }
         }
+
         public static int CheckStockExists(string name, string abbreviation)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
@@ -135,36 +159,41 @@ namespace ProviderAPI
                 return status;
             }
         }
+        #endregion
 
-        public static Stock[] GetStocks() // CHECKED
+        #region GETTERS - OBJECT(s) OR NULL(s) RETURNED WITH 1 EXCEPTION
+        public static Stock[] GetStocks()
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
                 return entity.Stocks.ToArray();
             }
         }
-        public static Stock GetStock(int id) // CHECKED
+
+        public static Stock GetStock(int id)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
                 return entity.Stocks.SingleOrDefault(s => s.id == id);
             }
         }
-        public static Stock GetStock(string abbreviation) // CHECKED
+        public static Stock GetStock(string abbreviation)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
                 return entity.Stocks.SingleOrDefault(s => s.abbr == abbreviation);
             }
         }
-        public static Stock GetStockFromName(string name) // CHECKED
+        
+        public static Stock GetStockFromName(string name)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
                 return entity.Stocks.SingleOrDefault(s => s.name == name);
             }
         }
-        public static decimal GetMostRecentStockPrice(Stock stock) // POORLY CHECKED
+        
+        public static decimal GetMostRecentStockPrice(Stock stock) // Throws exceptions // May be problematic if implemented
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
@@ -194,7 +223,8 @@ namespace ProviderAPI
                 return price;
             }
         }
-        public static PriceHistory GetMostRecentStockPriceHistory(Stock stock) // CHECKED
+        
+        public static PriceHistory GetMostRecentStockPriceHistory(Stock stock)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
@@ -221,15 +251,32 @@ namespace ProviderAPI
                 return latestPriceHistory;
             }
         }
-        public static PriceHistory[] GetPriceHistories(Stock stock) // SEMI CHECKED
+        
+        public static PriceHistory[] GetPriceHistories()
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                return entity.PriceHistories.ToArray();
+            }
+        }
+        public static PriceHistory[] GetPriceHistories(Stock stock)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
                 if (stock == null) return new PriceHistory[] { };
                 Stock foundStock = entity.Stocks.SingleOrDefault(s => s.id == stock.id);
                 if (stock == null) return new PriceHistory[] { };
-                return foundStock.PriceHistories.ToArray(); // CONCERN
+                return foundStock.PriceHistories.ToArray();
             }
         }
+
+        public static PriceHistory GetPriceHistory(int id)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                return entity.PriceHistories.SingleOrDefault(p => p.id == id);
+            }
+        }
+        #endregion
     }
 }

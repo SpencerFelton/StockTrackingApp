@@ -50,8 +50,9 @@ namespace ProviderAPI
                 MessageSender messageSender = new MessageSender(channel);
                 messageSender.BindQueue("stock"); // Declare and Bind Queue "stock" to "stocks" exchange
 
-                string message = transitStock.price.ToString(); // change this to whatever message
-        
+                // string message = transitStock.price.ToString(); // change this to whatever message
+                string message = $"{transitStock.stock_id},{transitStock.name.Trim()},{transitStock.abbreviation},{transitStock.price},{transitStock.dateTime}";
+
                 messageSender.SendMessage(message);
             }
         }

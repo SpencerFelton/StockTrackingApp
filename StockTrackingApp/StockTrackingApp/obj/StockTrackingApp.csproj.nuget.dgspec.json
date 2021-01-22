@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Daniel\\Documents\\GitHub\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj": {}
+    "C:\\Users\\alex2\\source\\repos\\SpencerFelton\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Daniel\\Documents\\GitHub\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj": {
+    "C:\\Users\\alex2\\source\\repos\\SpencerFelton\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Daniel\\Documents\\GitHub\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj",
+        "projectUniqueName": "C:\\Users\\alex2\\source\\repos\\SpencerFelton\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj",
         "projectName": "StockTrackingApp",
-        "projectPath": "C:\\Users\\Daniel\\Documents\\GitHub\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj",
-        "packagesPath": "C:\\Users\\Daniel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Daniel\\Documents\\GitHub\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\obj\\",
+        "projectPath": "C:\\Users\\alex2\\source\\repos\\SpencerFelton\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp.csproj",
+        "packagesPath": "C:\\Users\\alex2\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\alex2\\source\\repos\\SpencerFelton\\StockTrackingApp\\StockTrackingApp\\StockTrackingApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Daniel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alex2\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

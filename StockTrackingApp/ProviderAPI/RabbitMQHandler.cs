@@ -9,7 +9,7 @@ namespace ProviderAPI
 {
     public static class RabbitMQHandler
     {
-        public static void SendStockPrice(string abbreviation, DateTime dateTime, decimal price)
+        public static void SendStockPrice(int stock_id, string name, string abbreviation, decimal price, DateTime dateTime)
         {
             // Building the connection factory, contains default username, password and localhost
             var factory = new ConnectionFactory()
@@ -22,12 +22,11 @@ namespace ProviderAPI
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-
                 channel.ExchangeDeclare("stocks", ExchangeType.Direct); // Declare exchange "stock"
                 MessageSender messageSender = new MessageSender(channel);
                 messageSender.BindQueue("stock"); // Declare and Bind Queue "stock" to "stocks" exchange
 
-                string message = price.ToString(); // change this to whatever message
+                string message = $"{stock_id},{name.Trim()},{abbreviation},{price},{dateTime}";
 
                 messageSender.SendMessage(message);
             }
@@ -45,7 +44,6 @@ namespace ProviderAPI
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-
                 channel.ExchangeDeclare("stocks", ExchangeType.Direct); // Declare exchange "stock"
                 MessageSender messageSender = new MessageSender(channel);
                 messageSender.BindQueue("stock"); // Declare and Bind Queue "stock" to "stocks" exchange

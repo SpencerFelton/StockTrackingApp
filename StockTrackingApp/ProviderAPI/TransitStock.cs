@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ProviderAPI
 {
+    /// <summary>
+    /// A class designed to universally transfer data regarding both stocks and stock prices through the API.
+    /// Provides methods to construct Stock and PriceHistory classes directly from the TransitStock.
+    /// </summary>
     public class TransitStock
     {
         public int stock_id;

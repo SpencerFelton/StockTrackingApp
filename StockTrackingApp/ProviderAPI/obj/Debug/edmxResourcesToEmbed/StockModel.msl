@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StockTrackerModelStoreContainer" CdmEntityContainer="StockTrackerEntities">
+    <EntitySetMapping Name="PriceHistories">
+      <EntityTypeMapping TypeName="StockTrackerModel.PriceHistory">
+        <MappingFragment StoreEntitySet="PriceHistory">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="stock_id" ColumnName="stock_id" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="value" ColumnName="value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stocks">
+      <EntityTypeMapping TypeName="StockTrackerModel.Stock">
+        <MappingFragment StoreEntitySet="Stocks">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="abbr" ColumnName="abbr" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

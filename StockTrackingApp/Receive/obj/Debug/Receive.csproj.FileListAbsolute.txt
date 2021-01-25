@@ -44,3 +44,26 @@ C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp
 C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.exe
 C:\Users\Spen's Beast\Desktop\StockTrackingApp\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.pdb
 C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.csprojAssemblyReference.cache
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\Receive.exe.config
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\Receive.exe
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\Receive.pdb
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\RabbitMQ.Client.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Buffers.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Memory.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Channels.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\RabbitMQ.Client.pdb
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\RabbitMQ.Client.xml
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Buffers.xml
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Memory.xml
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Channels.xml
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.csprojAssemblyReference.cache
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.csproj.CoreCompileInputs.cache
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.csproj.CopyComplete
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.exe
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\Receive\obj\Debug\Receive.pdb

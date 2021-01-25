@@ -72,7 +72,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APIRouter.cs" />
     <Compile Include="DBHandler.cs" />
     <Compile Include="MessageSender.cs" />
     <Compile Include="PriceHistory.cs">

@@ -15,3 +15,20 @@ C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp
 C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\SMSSender\obj\Debug\SMSSender.csproj.CopyComplete
 C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\SMSSender\obj\Debug\SMSMessage.exe
 C:\Users\joewa\source\repos\Projects\Stock Tracking Application\StockTrackingApp\StockTrackingApp\SMSSender\obj\Debug\SMSMessage.pdb
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\SMSMessage.exe.config
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\SMSMessage.exe
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\SMSMessage.pdb
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\Microsoft.IdentityModel.Logging.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\Microsoft.IdentityModel.Tokens.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\Newtonsoft.Json.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\Twilio.dll
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\Microsoft.IdentityModel.Tokens.xml
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\Newtonsoft.Json.xml
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\bin\Debug\Twilio.xml
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\obj\Debug\SMSSender.csprojAssemblyReference.cache
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\obj\Debug\SMSSender.csproj.CoreCompileInputs.cache
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\obj\Debug\SMSSender.csproj.CopyComplete
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\obj\Debug\SMSMessage.exe
+C:\Users\alex2\source\repos\SpencerFelton\StockTrackingApp\StockTrackingApp\SMSSender\obj\Debug\SMSMessage.pdb

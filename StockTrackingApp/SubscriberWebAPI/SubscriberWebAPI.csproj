@@ -172,10 +172,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientStockTrackerModel.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientStockTrackerModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientStockTrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClientStockTrackerModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientStockTrackerModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PriceHistory.cs">
+      <DependentUpon>ClientStockTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Stock.cs">
+      <DependentUpon>ClientStockTrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -191,6 +202,10 @@
     <Content Include="Models\ClientStockTrackerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ClientStockTrackerModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ClientStockTrackerModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ClientStockTrackerModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

@@ -40,10 +40,13 @@ export class ObjectConverter{
 
     static ConvertArrayProvider(objectFrom: any[], convertIdTo:string):any[]{
         var length = objectFrom.length;
+        console.log("Length is " + length);
         //check if ObjectFrom and objectTo has the properties you want
         if(objectFrom[0].hasOwnProperty("stock_id") && convertIdTo=="id"){
-            let objectA:ICompany[];
+            console.log("This is working");
+            var objectA:ICompany[] = [];
             for(var i = 0; i<length; i++){
+                console.log("pushed " + i + " times");
                 objectA.push({
                 "id":objectFrom[i].stock_id,
                 "name": objectFrom[i].name,
@@ -54,7 +57,7 @@ export class ObjectConverter{
             }   
              return objectA;
          }else if(objectFrom[0].hasOwnProperty("id") && convertIdTo=="stock_id"){
-            let objectB:ICompanyB[];
+            let objectB:ICompanyB[] = [];
             for(var i = 0; i<length; i++){
                 objectB.push({
                 "stock_id":objectFrom[i].id,

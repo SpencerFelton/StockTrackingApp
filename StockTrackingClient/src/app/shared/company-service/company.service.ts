@@ -16,7 +16,7 @@ export class CompanyService{
 
     private clientUrl  = '/api/companies';
     private otherServiceUrl = '/api/companiesClient';
-    private trueUrl = 'https://localhost:44326/api/stocks';
+    private trueUrl = 'https://localhost:44326/api/stocks'; //This is the URL of the webapi. Change to match it
     private ROOTURL = 'https://jsonplaceholder.typicode.com/';
     //companyClient:ICompanyView;
     //private clienturl2 = 'localhost:44326/api/controller'
@@ -24,10 +24,10 @@ export class CompanyService{
 
     constructor(private http: HttpClient, private companyServiceClient:CompanyServiceClient ){}
 
-    //Modify this for the web server
+    //Calls all the companies. 
     getCompanies():Observable<any>{
         //const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.http.get<any>(this.clientUrl,{observe: 'body', responseType: 'json'})
+        return this.http.get<any>(this.trueUrl,{observe: 'body', responseType: 'json'})
         .pipe(
             //retry(3), //retry failed request up to three times
             tap(data => console.log('getCompanies: ' + JSON.stringify(data))),
@@ -36,13 +36,14 @@ export class CompanyService{
         ); 
     }
 
-    //Modify this for the web server
+    //Modify this for the web server.Currently works but it does throw a typeerror eventhough it doesn't
+    //impact how the code functions.
     getCompany(ids:number):Observable<ICompany>{
         //const headers = new HttpHeaders({'Content-Type': 'application/json'});
         console.log("using getcompany function");
         console.log(`id equals ${ids}`);
         if(ids != 0){
-            const url = `${this.clientUrl}/${ids}/`;
+            const url = `${this.trueUrl}/${ids}/`;
             return this.http.get<ICompany>(url)
             .pipe(
                 tap(data => console.log('getCompany: ' + JSON.stringify(data))),
@@ -67,22 +68,24 @@ export class CompanyService{
             catchError(this.handleError)
         );
     }
-
+    //addCompany now works.
     addCompany(company:any): Observable<any>{
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         //REMOVE THIS DEPENDING ON IF YOU ARE SENDING TO THE BACKEND OR NOT
-        this.id +=1;
+        //this.id +=1;
         //DELETE THE LINE BELOW IF YOU ARE SENDING TO THE BACKEND
-        company.id = this.id;
+        //company.id = this.id;
         //change for backend
-        var companySend = ObjectConverter.ConvertProvider(company, "id"); 
+        company.dateTime = new Date();
+        var companySend = ObjectConverter.ConvertProvider(company, "stock_id"); 
         console.log("I am here!");
         //CHANGE THIS WHEN YOU ARE IMPLEMENTING THE BACKEND, THIS JUST CONNECTS THE TWO DATABASES TOGETHER.
-        this.companyServiceClient.addCompanyClient(companySend)
-        .subscribe();
+        //this.companyServiceClient.addCompanyClient(companySend)
+        //.subscribe();
+        console.log(company);
 
         console.log("I am here too!");
-        return this.http.post<ICompany>(this.clientUrl, companySend, {headers:headers})
+        return this.http.post<ICompany>(this.trueUrl, companySend, {headers:headers})
         .pipe(
             tap(() => console.log('added company: ' + company.id)),
             map(()=> company),

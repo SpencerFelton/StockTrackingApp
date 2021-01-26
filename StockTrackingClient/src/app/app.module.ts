@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
-import {CompanyData} from './shared/company-data';
+//import {CompanyData} from './shared/company-data';
 //import {subscription} from 
 //import {CompanyDataClient} from './shared/company-data-client-DEPRICATED';
 
@@ -33,7 +33,7 @@ import {TestCallsComponent} from './shared/TestShit/test-calls.component';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    InMemoryWebApiModule.forRoot(CompanyData),
+    //InMemoryWebApiModule.forRoot(CompanyData),
     RouterModule.forRoot([
       { path: 'stockmaker', component: StockMaker},
       { path: 'stockviewer', component: StockViewer},

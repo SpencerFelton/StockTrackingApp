@@ -17,9 +17,4 @@ export class TestCallsComponent{
     getPosts(){
         this.posts = this.http.get(this.ROOT_URL + '/posts');
     }
-
-
-
-    
-
 }

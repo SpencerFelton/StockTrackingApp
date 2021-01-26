@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProviderAPI
+namespace ProviderWebApi.Models
 {
     /// <summary>
     /// A class designed to universally transfer data regarding both stocks and stock prices through the API.

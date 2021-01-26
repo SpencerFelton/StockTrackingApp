@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProviderAPI
+namespace ProviderWebApi.Models
 {
     using System;
     using System.Collections.Generic;

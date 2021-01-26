@@ -5,15 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Common;
 
-namespace ProviderAPI
+namespace ProviderWebApi.Models
 {
+    /// <summary>
+    /// A static class that provides access to CRUD operations with built in verification to the StockTracker database.
+    /// </summary>
     public static class DBHandler
     {
         private const int maxStockNameLength = 30;
         private const int maxStockAbbrLength = 4;
 
         #region DATABASE MODIFIERS
-        public static void AddStock(string name, string abbreviation)
+        public static void AddStock(string name, string abbreviation, DateTime dateTime, decimal price)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
@@ -35,6 +38,15 @@ namespace ProviderAPI
                     abbr = abbreviation.ToUpper() // abbr should be capitalised
                 };
                 entity.Stocks.Add(newStock);
+                entity.SaveChanges();
+                newStock = entity.Stocks.Single(s => s.abbr == abbreviation);
+                PriceHistory priceHistory = new PriceHistory
+                {
+                    stock_id = newStock.id,
+                    time = dateTime,
+                    value = price
+                };
+                entity.PriceHistories.Add(priceHistory);
                 entity.SaveChanges();
             }
         }

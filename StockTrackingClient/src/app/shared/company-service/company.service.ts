@@ -27,11 +27,11 @@ export class CompanyService{
     //Modify this for the web server
     getCompanies():Observable<any>{
         //const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.http.get<any>(this.ROOTURL + '/posts',{observe: 'body', responseType: 'json'})
+        return this.http.get<any>(this.clientUrl,{observe: 'body', responseType: 'json'})
         .pipe(
-            retry(3), //retry failed request up to three times
+            //retry(3), //retry failed request up to three times
             tap(data => console.log('getCompanies: ' + JSON.stringify(data))),
-            map(companies => /*ObjectConverter.ConvertArrayProvider(companies,"id")*/ console.log(companies)),
+            map(companies => ObjectConverter.ConvertArrayProvider(companies,"id") /*console.log(companies)*/),
             catchError(this.handleError)
         ); 
     }

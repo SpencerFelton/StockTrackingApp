@@ -15,7 +15,8 @@ import {StockModify} from './stock-maker/stock-modify.component';
 import {WelcomeComponent} from './home/welcome.component';
 import {StockViewer} from './stock-viewer/stock-viewer.component';
 import {subscriptionView} from './subscriptionView/subscriptionView.component';
-import {LoginComponent} from './Login/Login.component'
+import {LoginComponent} from './Login/Login.component';
+import {TestCallsComponent} from './shared/TestShit/test-calls.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {LoginComponent} from './Login/Login.component'
     StockModify,
     WelcomeComponent,
     StockViewer,
-    subscriptionView
+    subscriptionView,
+    TestCallsComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +42,7 @@ import {LoginComponent} from './Login/Login.component'
       { path: 'viewstock', component:StockViewer}, 
       { path: 'login', component:LoginComponent},
       { path: 'subscriptions', component:subscriptionView},
+      {path: 'testing', component:TestCallsComponent},
       { path: '',redirectTo: 'welcome', pathMatch: 'full'},
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'}    
     ])

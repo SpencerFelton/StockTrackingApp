@@ -35,7 +35,10 @@ namespace Receive
                 Console.WriteLine(readMessage);
                 Console.WriteLine("Press [enter] to exit");
                 Console.ReadLine();
-            }  
+            }
+            
+
+            // ADD METHODS TO WRITE TO THE DATABASE BELOW
         }
     }
 }

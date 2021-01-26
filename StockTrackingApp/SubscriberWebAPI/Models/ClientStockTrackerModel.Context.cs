@@ -9,6 +9,7 @@
 
 namespace SubscriberWebAPI.Models
 {
+    using ProviderAPI;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;

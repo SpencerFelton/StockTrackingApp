@@ -29,9 +29,8 @@ namespace SubscriberWebAPI.Models
             {
                 if (name.Length > maxStockNameLength) 
                     throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
-                if (abbreviation.Length > maxStockAbbrLength) 
-                    throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
-                
+                if (abbreviation.Length > maxStockAbbrLength)
+                    throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");    
                 if (entity.Stocks.Where(s => s.name.ToLower() == name.ToLower()).Count() > 0) 
                     throw new ArgumentException("Stock already exists with the name " + name);
                 if (entity.Stocks.Where(s => s.abbr.ToUpper() == abbreviation.ToUpper()).Count() > 0) 
@@ -65,11 +64,15 @@ namespace SubscriberWebAPI.Models
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                if (transitStock.name.Length > maxStockNameLength)
+                // Validation for all transitstock variables
+                if (transitStock.name.Length > maxStockNameLength || transitStock.name.Length <= 0)
                     throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
-                if (transitStock.abbreviation.Length > maxStockAbbrLength)
+                if (transitStock.abbreviation.Length > maxStockAbbrLength || transitStock.abbreviation.Length <= 0)
                     throw new ArgumentOutOfRangeException($"Abbreviation cannot exceed {maxStockNameLength} characters in length");
-
+                if (transitStock.dateTime == null)
+                    throw new ArgumentNullException("Date time field is null" + transitStock.dateTime);
+                if (transitStock.price <= 0)
+                    throw new ArgumentNullException("Stock price field is less than or equal to 0 or null" + transitStock.price);
                 if (entity.Stocks.Where(s => s.name.ToLower() == transitStock.name.ToLower()).Count() > 0)
                     throw new ArgumentException("Stock already exists with the name " + transitStock.name);
                 if (entity.Stocks.Where(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper()).Count() > 0)
@@ -158,7 +161,7 @@ namespace SubscriberWebAPI.Models
                 entity.SaveChanges();
             }
         }
-        /// <summary>
+        /// <summary>l
         /// Creates a new <see cref="PriceHistory"/> entry for a specified stock.
         /// </summary>
         /// <param name="transitStock">The <see cref="TransitStock"/> containing the abbreviation of the stock, the price and the associated date and time.</param>
@@ -166,7 +169,13 @@ namespace SubscriberWebAPI.Models
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper());
+                Stock stock = entity.Stocks.SingleOrDefault(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper());
+
+                if(stock == null)
+                {
+                    AddStock(transitStock);
+                    return;
+                }
 
                 PriceHistory priceHistory = new PriceHistory
                 {
@@ -179,6 +188,27 @@ namespace SubscriberWebAPI.Models
                 entity.SaveChanges();
             }
         }
+
+
+        // Testing updating the stock name
+        public static void UpdateStockName(TransitStock transitStock, string newName)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                // Validation that the new name is not null or greater than max length
+                if (newName.Length > maxStockNameLength || newName.Length <= 0)
+                    throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
+
+                transitStock.name = newName;
+
+                // Validate that the name is not already taken
+                if (entity.Stocks.Where(s => s.name.ToLower() == transitStock.name.ToLower()).Count() > 0)
+                    throw new ArgumentException("Stock already exists with the name " + transitStock.name);
+
+                entity.SaveChanges();
+            }
+        }
+
         #endregion
 
         #region TESTER SUPPLEMENTS

@@ -161,7 +161,7 @@ namespace SubscriberWebAPI.Models
                 entity.SaveChanges();
             }
         }
-        /// <summary>l
+        /// <summary>
         /// Creates a new <see cref="PriceHistory"/> entry for a specified stock.
         /// </summary>
         /// <param name="transitStock">The <see cref="TransitStock"/> containing the abbreviation of the stock, the price and the associated date and time.</param>
@@ -189,22 +189,25 @@ namespace SubscriberWebAPI.Models
             }
         }
 
-
-        // Testing updating the stock name
-        public static void UpdateStockName(TransitStock transitStock, string newName)
+        /// <summary>
+        /// Updates the name of an existing <see cref="Stock"/>, identified by the abbreviation, to a new name, where these details 
+        /// are contained within a <see cref="TransitStock"/>.
+        /// </summary>
+        /// <param name="transitStock">A <see cref="TransitStock"/> containing the stock's abbreviation and the new name of the stock.</param>
+        public static void UpdateStockName(TransitStock transitStock)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
                 // Validation that the new name is not null or greater than max length
-                if (newName.Length > maxStockNameLength || newName.Length <= 0)
+                if (transitStock.name.Length > maxStockNameLength || transitStock.name.Length <= 0)
                     throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
-
-                transitStock.name = newName;
 
                 // Validate that the name is not already taken
                 if (entity.Stocks.Where(s => s.name.ToLower() == transitStock.name.ToLower()).Count() > 0)
                     throw new ArgumentException("Stock already exists with the name " + transitStock.name);
 
+                // Change stock name
+                entity.Stocks.Single(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper()).name = transitStock.name;
                 entity.SaveChanges();
             }
         }

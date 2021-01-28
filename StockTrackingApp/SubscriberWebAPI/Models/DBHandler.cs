@@ -410,6 +410,49 @@ namespace SubscriberWebAPI.Models
                 return entity.PriceHistories.SingleOrDefault(p => p.id == id);
             }
         }
+
+        /// <summary>
+        /// Reads a <see cref="PriceHistory"/> from the PriceHistory table that matches a stock by the given abbreviation and closest matches the date and time.
+        /// </summary>
+        /// <param name="abbreviation">The abbreviation of the stock.</param>
+        /// <param name="dateTime">The date and time of the price history to be found.</param>
+        /// <returns></returns>
+        public static PriceHistory GetPriceHistory(string abbreviation, DateTime dateTime)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                Stock foundStock = entity.Stocks.SingleOrDefault(s => s.abbr == abbreviation);
+                if (foundStock == null) return null;
+
+                PriceHistory closestPriceHistory = null;
+                bool first = true;
+                foreach (PriceHistory priceHistory in foundStock.PriceHistories)
+                {
+                    if (first)
+                    {
+                        closestPriceHistory = priceHistory;
+                        first = false;
+                    }
+                    else
+                    {
+                        TimeSpan dateTimeDiffNew = dateTimeDiffNew = dateTime.Subtract(priceHistory.time);
+                        if (DateTime.Compare(priceHistory.time, dateTime) == 1)
+                             dateTimeDiffNew = priceHistory.time.Subtract(dateTime);
+
+                        TimeSpan dateTimeDiffOld = dateTimeDiffOld = dateTime.Subtract(closestPriceHistory.time);
+                        if (DateTime.Compare(closestPriceHistory.time, dateTime) == 1)
+                            dateTimeDiffOld = closestPriceHistory.time.Subtract(dateTime);
+
+
+                        if (TimeSpan.Compare(dateTimeDiffNew, dateTimeDiffOld) == 1)
+                        {
+                            closestPriceHistory = priceHistory;
+                        }
+                    }
+                }
+                return closestPriceHistory;
+            }
+        }
         #endregion
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
+using SubscriberWebAPI.Models;
 
 
 namespace Receive
@@ -26,7 +27,6 @@ namespace Receive
             {
                 channel.ExchangeDeclare("stocks", ExchangeType.Direct); // Declare exchange "stocks"
 
-
                 MessageReceiver messageReceiver = new MessageReceiver(channel);
                 messageReceiver.BindQueue("stock");
 
@@ -35,7 +35,7 @@ namespace Receive
                 Console.WriteLine(readMessage);
                 Console.WriteLine("Press [enter] to exit");
                 Console.ReadLine();
-            }  
+            }
         }
     }
 }

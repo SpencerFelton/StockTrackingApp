@@ -13,9 +13,10 @@ import {MatIconModule} from '@angular/material/icon';
 
 import {CompanyData} from './shared/company-data';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import {SortDirective} from './directive/sort.directive'
 //import {subscription} from 
 //import {CompanyDataClient} from './shared/company-data-client-DEPRICATED';
-
+//import { AppTableComponent } from './app-table/app-table.component';
 import { AppComponent } from './app.component';
 import {StockMaker} from './stock-maker/stock-maker.component';
 import {PercentChangeComponent} from './shared/percent-change/percent-change.component';
@@ -36,7 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     WelcomeComponent,
     StockViewer,
     subscriptionView,
-    TestCallsComponent
+    TestCallsComponent,
+    SortDirective
   ],
   imports: [
     BrowserModule,

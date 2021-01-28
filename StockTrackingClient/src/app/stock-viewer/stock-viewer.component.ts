@@ -3,6 +3,7 @@ import { CompanyServiceClient } from '../shared/company-service-client/company-s
 import { ICompanyView } from '../shared/companyView';
 import {ObjectConverter} from '../shared/ObjectConverter/object-converter';
 import {NotifierService} from '../shared/Notifications/notifier.service';
+import {SortDirective} from '../directive/sort.directive'
 
 @Component({
     selector: 'pm-stockview',

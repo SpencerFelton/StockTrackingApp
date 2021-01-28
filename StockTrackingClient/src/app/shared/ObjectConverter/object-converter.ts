@@ -42,7 +42,7 @@ export class ObjectConverter{
         var length = objectFrom.length;
         //check if ObjectFrom and objectTo has the properties you want
         if(objectFrom[0].hasOwnProperty("stock_id") && convertIdTo=="id"){
-            let objectA:ICompany[];
+            var objectA:ICompany[]=[];
             for(var i = 0; i<length; i++){
                 objectA.push({
                 "id":objectFrom[i].stock_id,
@@ -54,7 +54,7 @@ export class ObjectConverter{
             }   
              return objectA;
          }else if(objectFrom[0].hasOwnProperty("id") && convertIdTo=="stock_id"){
-            let objectB:ICompanyB[];
+            var objectB :ICompanyB[] = [];
             for(var i = 0; i<length; i++){
                 objectB.push({
                 "stock_id":objectFrom[i].id,

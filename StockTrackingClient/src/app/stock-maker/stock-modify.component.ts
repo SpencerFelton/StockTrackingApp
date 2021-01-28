@@ -1,4 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {NotifierService} from '../shared/Notifications/notifier.service';
 
 
 import{ICompany} from '../shared/company';
@@ -23,7 +24,7 @@ export class StockModify implements OnInit, OnChanges{
     isZero: boolean = false;;
 
 
-    constructor(private route: ActivatedRoute, private companyService: CompanyService, private router: Router){}
+    constructor(private route: ActivatedRoute, private companyService: CompanyService, private router: Router, private NotifierService:NotifierService){}
 
     
     ngOnInit(){
@@ -75,8 +76,12 @@ export class StockModify implements OnInit, OnChanges{
         .subscribe({
             next: () => {
                 this.getCompany(this.companyid);
-                console.log("Sucessfully saved!");},
-            error: err => this.errorMessage = err
+                console.log("Sucessfully saved!");
+                this.NotifierService.showNotification("Company sucessfully modified and saved!", "OK","success","upload");},
+            error: () =>{
+                err => this.errorMessage = err;
+                this.NotifierService.showNotification("Error: There was a problem saving these changes", "OK","error","cross");
+            } 
         });
         }else{
             console.log("began saving")
@@ -87,9 +92,14 @@ export class StockModify implements OnInit, OnChanges{
             .subscribe({
                 next: () => {
                     console.log("Sucessfully saved!");
+                    this.NotifierService.showNotification("Company sucessfully added and uploaded!", "OK","success","upload");
+                    this.NotifierService.showNotification("Company sucessfully modified and saved!", "OK","success","upload");
                     this.router.navigate(['/stockmaker']);
                 },
-                error: err => this.errorMessage = err
+                error: () =>{
+                    err => this.errorMessage = err;
+                    this.NotifierService.showNotification("Error: There was a problem saving these changes", "OK","error","cross");
+                } 
         })
     }
 

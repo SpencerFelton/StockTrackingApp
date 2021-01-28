@@ -27,7 +27,7 @@ export class CompanyService{
     //Calls all the companies. 
     getCompanies():Observable<any>{
         //const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.http.get<any>(this.trueUrl,{observe: 'body', responseType: 'json'})
+        return this.http.get<any>(this.clientUrl,{observe: 'body', responseType: 'json'})
         .pipe(
             //retry(3), //retry failed request up to three times
             tap(data => console.log('getCompanies: ' + JSON.stringify(data))),
@@ -43,7 +43,7 @@ export class CompanyService{
         console.log("using getcompany function");
         console.log(`id equals ${ids}`);
         if(ids != 0){
-            const url = `${this.trueUrl}/${ids}/`;
+            const url = `${this.clientUrl}/${ids}/`;
             return this.http.get<ICompany>(url)
             .pipe(
                 tap(data => console.log('getCompany: ' + JSON.stringify(data))),
@@ -51,7 +51,6 @@ export class CompanyService{
                 catchError(this.handleError)
             );
         }
-
     }
 
     //Modify this for the web server
@@ -72,20 +71,20 @@ export class CompanyService{
     addCompany(company:any): Observable<any>{
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         //REMOVE THIS DEPENDING ON IF YOU ARE SENDING TO THE BACKEND OR NOT
-        //this.id +=1;
+        this.id +=1;
         //DELETE THE LINE BELOW IF YOU ARE SENDING TO THE BACKEND
-        //company.id = this.id;
+        company.id = this.id;
         //change for backend
         company.dateTime = new Date();
-        var companySend = ObjectConverter.ConvertProvider(company, "stock_id"); 
+        var companySend = ObjectConverter.ConvertProvider(company, "id"); 
         console.log("I am here!");
         //CHANGE THIS WHEN YOU ARE IMPLEMENTING THE BACKEND, THIS JUST CONNECTS THE TWO DATABASES TOGETHER.
-        //this.companyServiceClient.addCompanyClient(companySend)
-        //.subscribe();
+        this.companyServiceClient.addCompanyClient(companySend)
+        .subscribe();
         console.log(company);
 
         console.log("I am here too!");
-        return this.http.post<ICompany>(this.trueUrl, companySend, {headers:headers})
+        return this.http.post<ICompany>(this.clientUrl, companySend, {headers:headers})
         .pipe(
             tap(() => console.log('added company: ' + company.id)),
             map(()=> company),
@@ -114,7 +113,6 @@ export class CompanyService{
     }
 
     private handleError(err: HttpErrorResponse){
-
         let errorMessage = '';
         if(err.error instanceof ErrorEvent){
             errorMessage = `An error occured: ${err.error.message}`;

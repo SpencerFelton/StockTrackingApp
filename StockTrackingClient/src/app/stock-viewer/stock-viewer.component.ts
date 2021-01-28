@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CompanyServiceClient } from '../shared/company-service-client/company-service-client';
 import { ICompanyView } from '../shared/companyView';
 import {ObjectConverter} from '../shared/ObjectConverter/object-converter';
+import {NotifierService} from '../shared/Notifications/notifier.service';
 
 @Component({
     selector: 'pm-stockview',
@@ -21,7 +22,7 @@ export class StockViewer implements OnInit {
         this.filteredCompanies= this.listFilter ? this.performFilter(this.listFilter) : this.companies;
     }    
 
-    constructor(private companyServiceClient: CompanyServiceClient){
+    constructor(private companyServiceClient: CompanyServiceClient,private NotifierService:NotifierService){
         this.filteredCompanies = this.companies;
         this.listFilter = '';
     }
@@ -38,9 +39,15 @@ export class StockViewer implements OnInit {
     subUnsub(company:ICompanyView): void {
        company.subscribed = !company.subscribed
        this.companyServiceClient.modifyStockClient(company).subscribe({
-        next: () => console.log("Sucessfully subscribed"),
+        next: () => {console.log("Sucessfully subscribed");
+        if(company.subscribed) this.NotifierService.showNotification("Subscription added!", "OK","success","tick");
+        else this.NotifierService.showNotification("Subscription removed!", "OK","success","tick")        
+       },
             //this.individualStatus = new Array(companies.length).fill(0);
-        error: err => this.errorMessage = err
+        error: () => {
+            err => this.errorMessage = err;
+            this.NotifierService.showNotification("Error adding subscription!", "OK","success","cross");
+        }
        });
     }
 
@@ -68,8 +75,15 @@ export class StockViewer implements OnInit {
             company.stocksPurchased -=1;
             this.companyServiceClient.modifyStockClient(company)
             .subscribe({
-                next: () => console.log("Sucessfully sold stock!"),
-                error: err => this.errorMessage = err
+                next: () => {
+                    console.log("Sucessfully sold stock!");
+                    this.NotifierService.showNotification("Stock sucessfully sold!", "OK","success","tick");
+
+                },
+                error: () =>{
+                    err => this.errorMessage = err;
+                    this.NotifierService.showNotification("Error occured whilst selling stock!", "OK","error","cross");
+                } 
         });
     }
         else{
@@ -81,8 +95,15 @@ export class StockViewer implements OnInit {
         company.stocksPurchased +=1;
         this.companyServiceClient.modifyStockClient(company)
         .subscribe({
-            next: () => console.log("Sucessfully bought stock!"),
-            error: err => this.errorMessage = err
+            next: () =>{
+                console.log("Sucessfully bought stock!");
+                this.NotifierService.showNotification("Stock sucessfully purchased!", "OK","success","tick");
+
+            },
+            error: () => {
+                err => this.errorMessage = err;
+                this.NotifierService.showNotification("Error occured whilst buying stock!", "OK","error","cross");
+            } 
     });
     }
 }

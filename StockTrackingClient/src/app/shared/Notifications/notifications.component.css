@@ -1,0 +1,23 @@
+
+#image{
+    width:65px;
+    padding:10px;
+    float:left;
+
+}
+#text{
+    width:auto;
+    max-width: 55%;
+    float:left;
+    text-align: center;
+    font-size: 14px;
+    padding-top: 8px;
+}
+#buttonDiv{
+    width: auto;
+    float: right;
+    margin: 10px;
+}
+#box{
+}
+

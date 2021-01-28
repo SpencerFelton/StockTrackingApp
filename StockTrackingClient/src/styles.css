@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~bootstrap/dist/css/bootstrap.min.css"; 
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 div.card-header {
  font-size: large;
@@ -12,3 +13,6 @@ div.card {
 .table {
   margin-top: 10px
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

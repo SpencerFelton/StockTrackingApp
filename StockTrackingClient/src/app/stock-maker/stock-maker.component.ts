@@ -1,6 +1,7 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ICompany} from '../shared/company';
 import {CompanyService} from '../shared/company-service/company.service';
+import {NotifierService} from '../shared/Notifications/notifier.service';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class StockMaker implements OnChanges, OnInit{
         this.filteredCompanies = this._listFilter? this.performFilter(this.listFilter): this.companies;
     }
 
-    constructor(private companyService: CompanyService){
+    constructor(private companyService: CompanyService, private notiferService:NotifierService){
         this.listFilter = '';
     }
 

@@ -1,0 +1,12 @@
+
+<div id="image">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" [attr.class]=imageData[0] viewBox="0 0 16 16">
+        <path fill-rule="evenodd" [attr.d]=imageData[1]/>
+      </svg>
+</div>
+<div id="text">
+    {{data.message}}
+</div>
+<div id="buttonDiv">
+    <button class="btn btn-dark" (click) = "snackBarRef.dismiss()" >{{data.buttonText}}</button>
+</div>

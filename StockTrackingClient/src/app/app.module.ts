@@ -3,8 +3,16 @@ import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
-import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
-//import {CompanyData} from './shared/company-data';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
+
+
+
+import {CompanyData} from './shared/company-data';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 //import {subscription} from 
 //import {CompanyDataClient} from './shared/company-data-client-DEPRICATED';
 
@@ -17,6 +25,7 @@ import {StockViewer} from './stock-viewer/stock-viewer.component';
 import {subscriptionView} from './subscriptionView/subscriptionView.component';
 import {LoginComponent} from './Login/Login.component';
 import {TestCallsComponent} from './shared/TestShit/test-calls.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -33,7 +42,7 @@ import {TestCallsComponent} from './shared/TestShit/test-calls.component';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    //InMemoryWebApiModule.forRoot(CompanyData),
+    InMemoryWebApiModule.forRoot(CompanyData),
     RouterModule.forRoot([
       { path: 'stockmaker', component: StockMaker},
       { path: 'stockviewer', component: StockViewer},
@@ -45,7 +54,13 @@ import {TestCallsComponent} from './shared/TestShit/test-calls.component';
       {path: 'testing', component:TestCallsComponent},
       { path: '',redirectTo: 'welcome', pathMatch: 'full'},
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'}    
-    ])
+    ]),
+    MatDialogModule,
+    MatCheckboxModule,    
+    MatSnackBarModule,
+    MatCardModule,
+    MatIconModule,
+    BrowserAnimationsModule
   ],
   bootstrap: [AppComponent]
 })

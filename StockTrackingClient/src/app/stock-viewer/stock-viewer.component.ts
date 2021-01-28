@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CompanyServiceClient } from '../shared/company-service-client/company-service-client';
 import { ICompanyView } from '../shared/companyView';
 import {ObjectConverter} from '../shared/ObjectConverter/object-converter';
+import {SortDirective} from '../directive/sort.directive'
 
 @Component({
     selector: 'pm-stockview',

@@ -15,13 +15,13 @@
           </div>
         </div>
         <div class='table-responsive'>
-            <table class='table' id='table1' *ngIf='companies && companies.length'>
+            <table class='table table-striped border mt-1' id='table1' *ngIf='filteredCompanies && filteredCompanies.length'>
               <thead>
                 <tr>
                   <th>Subscribe to Stock</th>
-                  <th>CompanyName</th>
-                  <th>Shorthand</th>
-                  <th>Current Stock Price</th>
+                  <th scope="col" [appSort] = "filteredCompanies" data-order="desc" data-name="name">Company Name</th>
+                  <th scope="col" [appSort] = "filteredCompanies" data-order="desc" data-name="abbreviation">Shorthand</th>
+                  <th scope="col" [appSort] = "filteredCompanies" data-order="desc" data-name="price">Current Stock Price</th>
                   <th>Purchased Stocks</th>
                 </tr>
               </thead>

@@ -5,9 +5,10 @@ import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {CompanyData} from './shared/company-data';
+import {SortDirective} from './directive/sort.directive'
 //import {subscription} from 
 //import {CompanyDataClient} from './shared/company-data-client-DEPRICATED';
-
+//import { AppTableComponent } from './app-table/app-table.component';
 import { AppComponent } from './app.component';
 import {StockMaker} from './stock-maker/stock-maker.component';
 import {PercentChangeComponent} from './shared/percent-change/percent-change.component';
@@ -25,7 +26,8 @@ import {LoginComponent} from './Login/Login.component'
     StockModify,
     WelcomeComponent,
     StockViewer,
-    subscriptionView
+    subscriptionView,
+    SortDirective
   ],
   imports: [
     BrowserModule,

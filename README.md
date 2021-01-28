@@ -4,7 +4,7 @@
 
 A stock tracking application built using C#, RabbitMQ and Angular. 
 
-Created by Spencer Felton, Jack Barlow, Alex Robinson, Joe Waddington, Sinko Mutambo, Hanad Salim, Arun George and Adrian Kaczmarczyk.
+Created by Spencer Felton, Jack Barlow, Alex Robinson, Joe Waddington, Sinko Mutambo, Dan Greenhalgh, Hanad Salim, Arun George and Adrian Kaczmarczyk.
 
 The application is built using the following structure:
 

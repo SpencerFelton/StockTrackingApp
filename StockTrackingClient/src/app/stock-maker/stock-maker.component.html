@@ -16,13 +16,13 @@
             </div>
         </div>
         <div class = "table-responsive">
-            <table class="table"
+            <table class='table table-striped border mt-1'
                 *ngIf = "companies && companies.length">
                 <thead>
                     <tr>
-                        <th>Company</th>
-                        <th>Shorthand</th>
-                        <th>Current Stock Price</th>                        
+                        <th scope="col" [appSort] = "filteredCompanies" data-order="desc" data-name="name">Company</th>
+                        <th scope="col" [appSort] = "filteredCompanies" data-order="desc" data-name="abbreviation">Shorthand</th>
+                        <th scope="col" [appSort] = "filteredCompanies" data-order="desc" data-name="price">Current Stock Price</th>                     
                         <th></th>
                     </tr>
                 </thead>

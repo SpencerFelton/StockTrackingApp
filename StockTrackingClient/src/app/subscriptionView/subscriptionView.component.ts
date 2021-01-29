@@ -13,7 +13,7 @@ export class subscriptionView implements OnInit {
     pageTitle: string = 'Subscription List';
     errorMessage:string;
     sortedColumn: string;
-    tableHeaders: string[][] = [["Subscribe to Stock", "0"], ["Company Name", "desc"], ["Shorthand", "desc"], ["Current Stock Price", "desc"], ["Purchased Stocks", "0"]]
+    tableHeaders: string[][] = [["Company Name", "desc"], ["Shorthand", "desc"], ["Current Stock Price", "desc"]]
     foundIndex: number;
 
     _listFilter: string = '';

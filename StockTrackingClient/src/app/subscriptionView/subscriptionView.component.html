@@ -21,6 +21,16 @@
           <table class='table table-striped border mt-1' id='table1' *ngIf='filteredCompanies && filteredCompanies.length'>
               <thead>
                 <tr>
+                  <th>
+                    <table>
+                      <tr>
+                        <td>Subscribe to Stock</td>
+                        <td>
+                          <i></i>
+                        </td>
+                      </tr>
+                    </table>
+                  </th>
                   <th class='headerClass' *ngFor="let header of tableHeaders" scope="col" [appSort] = "filteredCompanies" data-order="desc" data-name="name" (click)="sortColumn(header)">
                     <table>
                       <tr>
@@ -33,6 +43,16 @@
                         </td>
                       </tr>
 
+                    </table>
+                  </th>
+                  <th>
+                    <table>
+                      <tr>
+                        <td>Purchased Stocks</td>
+                        <td>
+                          <i></i>
+                        </td>
+                      </tr>
                     </table>
                   </th>
 

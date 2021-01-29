@@ -26,8 +26,8 @@
                       <tr>
                         <td>{{header[0]}}</td>
                         <td>
-                          <i class="" *ngIf="header[1] === '0'"></i>
-                          <i class="fa fa-sort" *ngIf="sortedColumn !== header[0]"></i>
+                          <i></i>
+                          <i class="fa fa-sort" *ngIf="sortedColumn !== header[0] && header[1] !== '0'"></i>
                           <i class="fa fa-sort-up" *ngIf="header[1] === 'asc' && sortedColumn === header[0]"></i>
                           <i class="fa fa-sort-down" *ngIf="header[1] === 'desc' && sortedColumn === header[0]"></i>
                         </td>

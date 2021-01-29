@@ -12,7 +12,7 @@ export class SortDirective {
         this.sortData()
     }
     sortData() {
-        alert("header clicked");
+        //alert("header clicked");
         const sort = new Sort();
         const elem = this.targetElem.nativeElement;
         const order = elem.getAttribute("data-order");

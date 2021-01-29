@@ -12,6 +12,9 @@ import {NotifierService} from '../shared/Notifications/notifier.service';
 export class subscriptionView implements OnInit {
     pageTitle: string = 'Subscription List';
     errorMessage:string;
+    sortedColumn: string;
+    tableHeaders: string[][] = [["Subscribe to Stock", "0"], ["Company Name", "desc"], ["Shorthand", "desc"], ["Current Stock Price", "desc"], ["Purchased Stocks", "0"]]
+    foundIndex: number;
 
     _listFilter: string = '';
 
@@ -33,7 +36,21 @@ export class subscriptionView implements OnInit {
     filteredCompanies: ICompanyView[];
     companies: ICompanyView[]= [];
 
-
+    sortColumn(header: string): void {
+        //alert("ts sort alert");
+        this.sortedColumn = header[0];
+        for (let i=0; i<this.tableHeaders.length; i++){
+            if (this.tableHeaders[i][0] === header[0]){
+                this.foundIndex = i;
+                break;
+            }
+        }
+        if(header[1] === "desc"){
+            this.tableHeaders[this.foundIndex] = [header[0], "asc"];
+        }else if(header[1] === "asc"){
+            this.tableHeaders[this.foundIndex] = [header[0], "desc"];
+        }
+    }
 
 
     performFilter(filterBy: string): ICompanyView[] {

@@ -30,24 +30,20 @@ namespace Receive
                 var body = ea.Body.ToArray();
                 message = Encoding.UTF8.GetString(body);
                 Console.WriteLine("Received: {0}", message);
-                AddToDB(message);
+                AddToDB(message); //API METHOD CALLS FROM RABBITMQ MUST BE CALLED FROM IN HERE
             };
             _channel.BasicConsume(queueName, autoAck: true, consumer: consumer);
-            
-            //if (message.Length == 0)
-            //{
-                //System.Diagnostics.Debug.Write("no message");
-               // return message;
-            //}
+
             return message;
         }
 
         public void AddToDB(string message)
         {
+            //De-serialise RMQ message, add fields to array
+            //Soon to be replaced by JSON
             string[] fieldsList = message.Split(',');
-            System.Diagnostics.Debug.Write(fieldsList.ToString());
 
-            TransitStock stock = new TransitStock()
+            TransitStock stock = new TransitStock() //Transit Stock format used within Subscriber API
             {
                 stock_id = int.Parse(fieldsList[0]),
                 name = fieldsList[1],
@@ -56,7 +52,7 @@ namespace Receive
                 dateTime = DateTime.Parse(fieldsList[4])
             };
 
-            Console.WriteLine(stock.ToString());
+            //Calling API methods --- may need to be expanded upon for altering Subscriber side DB if expanded upon i.e deleting history etc
             DBHandler.UpdateStockPrice(stock);
         }
     }

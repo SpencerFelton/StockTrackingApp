@@ -13,6 +13,9 @@ import {SortDirective} from '../directive/sort.directive'
 export class StockViewer implements OnInit {
     pageTitle: string = 'Stock List';
     errorMessage:string;
+    sortedColumn: string;
+    tableHeaders: string[][] = [["Company Name", "desc", "name"], ["Shorthand", "desc", "abbreviation"], ["Current Stock Price", "desc", "price"]]
+    foundIndex: number;
 
     _listFilter: string = '';
     get listFilter(): string {
@@ -30,6 +33,22 @@ export class StockViewer implements OnInit {
     
     filteredCompanies: ICompanyView[];
     companies: ICompanyView[]= [];
+
+    sortColumn(header: string[]): void {
+        //alert("ts sort alert");
+        this.sortedColumn = header[0];
+        for (let i=0; i<this.tableHeaders.length; i++){
+            if (this.tableHeaders[i][0] === header[0]){
+                this.foundIndex = i;
+                break;
+            }
+        }
+        if(header[1] === "desc"){
+            this.tableHeaders[this.foundIndex] = [header[0], "asc", header[2]];
+        }else if(header[1] === "asc"){
+            this.tableHeaders[this.foundIndex] = [header[0], "desc", header[2]];
+        }
+    }
 
 
     performFilter(filterBy: string): ICompanyView[] {

@@ -31,7 +31,7 @@
                       </tr>
                     </table>
                   </th>
-                  <th class='headerClass' *ngFor="let header of tableHeaders" scope="col" [appSort] = "filteredCompanies" data-order="desc" data-name="name" (click)="sortColumn(header)">
+                  <th class='headerClass' *ngFor="let header of tableHeaders" scope="col" [appSort] = "filteredCompanies" attr.data-order="{{header[1]}}" attr.data-name="{{header[2]}}" (click)="sortColumn(header)">
                     <table>
                       <tr>
                         <td>{{header[0]}}</td>
@@ -45,6 +45,7 @@
 
                     </table>
                   </th>
+                  
                   <th>
                     <table>
                       <tr>

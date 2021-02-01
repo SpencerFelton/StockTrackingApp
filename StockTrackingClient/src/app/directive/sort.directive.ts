@@ -21,10 +21,13 @@ export class SortDirective {
         if (order === "desc") {
             this.appSort.sort(sort.startSort(property, order, type));
             elem.setAttribute("data-order", "asc");
+            elem.setAttribute("data-name", property);
         }
         else {
             this.appSort.sort(sort.startSort(property, order, type));
             elem.setAttribute("data-order", "desc");
+            elem.setAttribute("data-name", property);
         }
+        const newOrder = elem.getAttribute("data-order");
     }
 }

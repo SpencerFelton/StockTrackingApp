@@ -1,0 +1,11 @@
+#abovezero{
+    color: green;
+}
+
+#atzero{
+    color: rgb(0, 0, 0);
+}
+
+#belowzero{
+    color: red;
+}

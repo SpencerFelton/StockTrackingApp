@@ -1,0 +1,58 @@
+<div class='card'>
+    <div class='card-header'>
+        {{pageTitle}}
+    </div>
+    <div class ="card-body">
+        <div *ngIf = '!isZero' class="form-group">
+            <div class = "col-md-4">
+            <div>
+                <div>Company Name</div>
+                <div ><input type="text" class="form-control" [placeholder]="company.name" [(ngModel)] = "companyName"  aria-label="company name"></div> 
+            </div>
+            <br/>
+            <div>
+                <div>Company Shorthand</div>
+                <div><strong>{{company.abbreviation}}</strong></div> 
+            </div>
+            <br/>
+            <div>
+                <div> Stock Price</div>
+                <div><input type="text" class="form-control" [placeholder]="company.price" [(ngModel)] = "companyStock" aria-label="stock price"></div> 
+            </div>
+            <br/>
+            <div>
+                <div>% Change</div>
+                <div><pm-percent [potentialStockPrice] = 'companyStock' [currentStockPrice] = 'company.price'></pm-percent></div> 
+            </div>
+            </div>
+                <br/>
+                <button type="button" class="btn btn-primary" [routerLink] = "['/stockmaker']" >Back</button>
+                <button type="submit" class="btn btn-primary" (click) = 'onSave()'>Save Changes</button>
+                <button type="button" class="btn btn-primary" (click) = 'onDelete()'>Delete Stock</button>
+            
+        </div>
+        <div *ngIf = 'isZero' class="form-group">
+            <div class = "col-md-8">
+            <div>
+                <div>Company Name</div>
+                <div ><input type="text" class="form-control" placeholder='Generic Company' [(ngModel)] = "companyName"  aria-label="company name"></div> 
+            </div>
+            <br/>
+            <div>
+                <div>Company Shorthand2</div>
+                <div><input type="text" class="form-control" placeholder="GNCP" [(ngModel)] = "companyShortHand"  aria-label="company shorthand"></div> 
+            </div>
+            <br/>
+            <div>
+                <div> Initial Stock Price</div>
+                <div><input type="text" class="form-control" placeholder="$1000" [(ngModel)] = "companyStock" aria-label="First name"></div> 
+            </div>
+            <br/>
+            </div>
+                <br/>
+                <button type="button" class="btn btn-primary" [routerLink] = "['/stockmaker']">Cancel</button>
+                <button type="submit" class="btn btn-primary" (click) = 'onSave()'>Create Stock</button>
+        </div>
+        
+    </div>
+</div>

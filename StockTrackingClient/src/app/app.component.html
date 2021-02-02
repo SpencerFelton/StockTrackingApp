@@ -1,0 +1,25 @@
+
+<!--The content below is only a placeholder and can be replaced.-->
+<nav class="navbar navbar-light navbar-expand-sm bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <!--<img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-top">--> 
+      FutureProof
+    </a>
+    <ul class='nav nav-pills'>
+      <li><a class ='nav-link' [routerLink] = "['/welcome']">Home</a></li>
+      <li><a class = 'nav-link' [routerLink] = "['/login']">Login</a> </li>
+      <li><a class ='nav-link' [routerLink] = "['/stockmaker']">View Provider Stocks</a></li>   
+      <li><a class ='nav-link' [routerLink] = "['/viewstock']">View Current Stocks</a></li>
+      <li><a class ='nav-link' [routerLink] = "['/subscriptions']">View Subscribed Stocks</a></li>
+      <li><a class = 'nav-link' [routerLink] = "['/testing']">testing</a></li>
+    </ul>
+  </div>
+</nav>
+<div class='container'>
+  <router-outlet></router-outlet>
+</div>
+<mat-card> Hello
+</mat-card>
+
+<mat-checkbox> Subscribe to me!</mat-checkbox>

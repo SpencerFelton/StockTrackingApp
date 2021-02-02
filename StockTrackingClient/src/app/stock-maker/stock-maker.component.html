@@ -1,0 +1,43 @@
+<div class = "card">
+    <div class = "card-header">
+        {{pageTitle}}
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">
+                Filter by:
+            </div>
+            <div class="col-md-2">
+
+            </div>
+            <div class="col-md-4">
+                <input type="text"
+                [(ngModel)] = 'listFilter'/>
+            </div>
+        </div>
+        <div class = "table-responsive">
+            <table class="table"
+                *ngIf = "companies && companies.length">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Shorthand</th>
+                        <th>Current Stock Price</th>                        
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let company of filteredCompanies; let index = index">
+                        <td>{{company.name}}</td>
+                        <td>{{company.abbreviation}}</td>
+                        <td>{{company.price}}</td>
+                        <td><button type ="button" class="btn btn-primary" [routerLink] = "['/stockmaker/editstock/', company.id]">{{statusString[1]}}</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <button type ="button" class="btn btn-primary"  [routerLink] = "['/stockmaker/editstock/',0]">{{statusString[0]}}</button>
+        </div>
+    </div>
+</div>

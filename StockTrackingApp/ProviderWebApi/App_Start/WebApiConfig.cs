@@ -14,6 +14,9 @@ namespace ProviderWebApi
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            // Enable Cross Origin Requests
+            config.EnableCors();
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

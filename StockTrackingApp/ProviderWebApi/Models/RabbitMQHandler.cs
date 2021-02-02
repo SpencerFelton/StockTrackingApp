@@ -32,7 +32,7 @@ namespace ProviderWebApi.Models
                 messageSender.SendMessage(message);
             }
         }
-        public static void SendStockPrice(string httpRequestType, TransitStock transitStock)
+        public static void SendStockPrice(TransitStock transitStock)
         {
             // Building the connection factory, contains default username, password and localhost
             var factory = new ConnectionFactory()
@@ -51,7 +51,7 @@ namespace ProviderWebApi.Models
 
                 // string message = transitStock.price.ToString(); // change this to whatever message
                 JObject json = new JObject();
-                json.Add("httpRequestType", httpRequestType);
+                json.Add("httpRequestType", "post"); // change the httprequesttype based on the method being called
                 json.Add("stockID", transitStock.stock_id);
                 json.Add("stockName", transitStock.name.Trim());
                 json.Add("stockAbbreviation", transitStock.abbreviation);

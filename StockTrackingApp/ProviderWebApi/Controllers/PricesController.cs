@@ -81,7 +81,7 @@ namespace ProviderWebApi.Controllers
         {
             if (transitStock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
             DBHandler.UpdateStockPrice(transitStock); // may need to add a try-catch to return errors as status codes and stop the api breaking
-            RabbitMQHandler.SendStockPrice("post",transitStock); // may need to add a try catch to return errors as status codes and stop the api breaking
+            RabbitMQHandler.SendStockPrice(transitStock); // may need to add a try catch to return errors as status codes and stop the api breaking
         }
     }
 }

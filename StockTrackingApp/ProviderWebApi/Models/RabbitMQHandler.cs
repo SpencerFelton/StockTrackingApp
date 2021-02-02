@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using Newtonsoft.Json.Linq;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace ProviderWebApi.Models
                 messageSender.SendMessage(message);
             }
         }
-        public static void SendStockPrice(TransitStock transitStock)
+        public static void SendStockPrice(string httpRequestType, TransitStock transitStock)
         {
             // Building the connection factory, contains default username, password and localhost
             var factory = new ConnectionFactory()
@@ -49,7 +50,15 @@ namespace ProviderWebApi.Models
                 messageSender.BindQueue("stock"); // Declare and Bind Queue "stock" to "stocks" exchange
 
                 // string message = transitStock.price.ToString(); // change this to whatever message
-                string message = $"{transitStock.stock_id},{transitStock.name.Trim()},{transitStock.abbreviation},{transitStock.price},{transitStock.dateTime}";
+                JObject json = new JObject();
+                json.Add("httpRequestType", httpRequestType);
+                json.Add("stockID", transitStock.stock_id);
+                json.Add("stockName", transitStock.name.Trim());
+                json.Add("stockAbbreviation", transitStock.abbreviation);
+                json.Add("stockPrice", transitStock.price);
+                json.Add("stockDateTime", transitStock.dateTime);
+
+                string message = json.ToString();
 
                 messageSender.SendMessage(message);
             }

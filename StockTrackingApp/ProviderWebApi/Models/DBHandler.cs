@@ -179,6 +179,44 @@ namespace ProviderWebApi.Models
                 entity.SaveChanges();
             }
         }
+
+        public static void ModifyStock(TransitStock transitStock)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                if (entity.Stocks.Where(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper()).Count() == 1)
+                {
+                    Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper());
+                    stock.abbr = transitStock.abbreviation;
+                    stock.name = transitStock.name;
+                }
+                else
+                {
+                    throw new ArgumentException("Stock not found");
+                }
+
+                entity.SaveChanges();
+            }
+        }
+
+        public static void ModifyStock(string abbreviation, string newAbbreviation, string name)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                if (entity.Stocks.Where(s => s.abbr.ToUpper() == abbreviation.ToUpper()).Count() == 1)
+                {
+                    Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == abbreviation.ToUpper());
+                    stock.abbr = newAbbreviation;
+                    stock.name = name;
+                }
+                else
+                {
+                    throw new ArgumentException("Stock not found");
+                }
+
+                entity.SaveChanges();
+            }
+        }
         #endregion
 
         #region TESTER SUPPLEMENTS

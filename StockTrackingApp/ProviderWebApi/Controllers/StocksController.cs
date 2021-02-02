@@ -22,7 +22,7 @@ namespace ProviderWebApi.Controllers
             return transitStocks;
         }
 
-        // GET api/stocks/4
+        // GET api/stocks/id
         public TransitStock Get(int id)
         {
             Stock stock = DBHandler.GetStock(id);
@@ -32,11 +32,28 @@ namespace ProviderWebApi.Controllers
 
         // POST api/stocks
         [HttpPost]
-        public void Post([FromBody] TransitStock transitStock)
+        public void Post([FromBody]TransitStock transitStock)
         {
             if (transitStock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
             DBHandler.AddStock(transitStock); // may need a try-catch to return errors as status codes and stop the api breaking
             RabbitMQHandler.SendStockPrice(transitStock); // may need a try-catch to return errors as status codes and stop the api breaking
+        }
+
+        // DELETE api/stocks/id
+        public void Delete(int id)
+        {
+            Stock stock = DBHandler.GetStock(id);
+            if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            DBHandler.DeleteStock(stock.abbr);
+        }
+
+        // PUT api/stocks/id
+        [HttpPut]
+        public void Put([FromBody]TransitStock transitStock)
+        {
+            if (transitStock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
+            DBHandler.ModifyStock(transitStock);
+            //RabbitMQHandler.UpdateSubscriber(transitStock);
         }
     }
 }

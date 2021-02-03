@@ -3,21 +3,68 @@
     {{pageTitle}}
   </div>
   <div class="card-body">
-    <form>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    <form (ngSubmit) = "save()" 
+          [formGroup] = "LoginForm">
+      <div>
+        <label for="accountTypeID">Account type </label>
+        <select id="accountTypeID"
+                class="form-control"
+                formControlName="accountType"
+                [ngClass] = "{'is-invalid': accountTypeMessage}">
+                <option selected value = 0>Please choose</option>
+                <option value = "1">Client</option>
+                <option value = "2">Provider</option>
+                
+        </select>
+        <span class="invalid-feedback">
+          {{accountTypeMessage}}
+        </span>
+    
       </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
+          
+      <div>
+        <label for="usernameID">Username </label>
+        <input id="usernameID"
+               class="form-control"
+               type="text"
+               placeholder="username (Required)"
+               formControlName="username"
+               [ngClass] = "{'is-invalid': usernameMessage}"/>
+               
+        <span class = "invalid-feedback">
+          {{usernameMessage}}
+        </span>
+
       </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Remember Me</label>
+      <div>
+        <label for="passwordID">Password</label>
+        <input id="passwordID"
+               class="form-control"
+               type="password"
+               placeholder="password (Required)"
+               formControlName="password"
+               [ngClass] = "{'is-invalid': passwordMessage}"/>
+        <span class = "invalid-feedback">
+          {{passwordMessage}}
+        </span>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="form-check" >
+        <input id="rememberMeID"
+               class="form-check-input"
+               type="checkbox"
+               formControlName="keepSignIn"/>
+        <label for="rememberMeID">Remember Me</label>
+      </div>
+      <div>
+        Don't have an account? Sign up
+      </div>
+      <div>
+        <button class="btn btn-primary mr-3"
+                type="submit"
+                [disabled]="!LoginForm.valid">
+              Log in
+              </button>
+      </div>
     </form>
   </div>
 </div>

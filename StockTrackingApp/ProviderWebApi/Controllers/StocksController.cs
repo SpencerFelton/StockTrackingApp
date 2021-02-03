@@ -45,6 +45,7 @@ namespace ProviderWebApi.Controllers
             Stock stock = DBHandler.GetStock(id);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
             DBHandler.DeleteStock(stock.abbr);
+            //RabbitMQHandler.DeleteStock(transitStock);
         }
 
         // PUT api/stocks/id
@@ -53,7 +54,7 @@ namespace ProviderWebApi.Controllers
         {
             if (transitStock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
             DBHandler.ModifyStock(transitStock);
-            //RabbitMQHandler.UpdateSubscriber(transitStock);
+            //RabbitMQHandler.UpdateStock(transitStock);
         }
     }
 }

@@ -184,30 +184,11 @@ namespace ProviderWebApi.Models
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                if (entity.Stocks.Where(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper()).Count() == 1)
+                if (entity.Stocks.Where(s => s.id == transitStock.stock_id).Count() == 1)
                 {
-                    Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper());
+                    Stock stock = entity.Stocks.Single(s => s.id == transitStock.stock_id);
                     stock.abbr = transitStock.abbreviation;
                     stock.name = transitStock.name;
-                }
-                else
-                {
-                    throw new ArgumentException("Stock not found");
-                }
-
-                entity.SaveChanges();
-            }
-        }
-
-        public static void ModifyStock(string abbreviation, string newAbbreviation, string name)
-        {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
-            {
-                if (entity.Stocks.Where(s => s.abbr.ToUpper() == abbreviation.ToUpper()).Count() == 1)
-                {
-                    Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == abbreviation.ToUpper());
-                    stock.abbr = newAbbreviation;
-                    stock.name = name;
                 }
                 else
                 {

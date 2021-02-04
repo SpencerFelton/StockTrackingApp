@@ -23,7 +23,8 @@ namespace ProviderWebApi.Models
 
             return factory;
         }
-        public static void SendRabbitMQMessage(TransitStock transitStock, string methodName)
+
+        public static void SendMessage(JObject json)
         {
             var factory = MakeConnectionFactory();
 
@@ -33,36 +34,49 @@ namespace ProviderWebApi.Models
                 channel.ExchangeDeclare("stocks", ExchangeType.Direct); // Declare exchange "stock"
                 MessageSender messageSender = new MessageSender(channel);
                 messageSender.BindQueue("stock"); // Declare and Bind Queue "stock" to "stocks" exchange
-                JObject json = new JObject();
 
-                switch (methodName)
-                {
-                    case "addNewStock":
-                        json.Add("methodName", methodName);
-                        json.Add("stockName", transitStock.name.Trim());
-                        json.Add("stockAbbreviation", transitStock.abbreviation);
-                        break;
-                    case "changePrice":
-                        json.Add("methodName", methodName);
-                        json.Add("stockID", transitStock.stock_id);
-                        json.Add("stockPrice", transitStock.price);
-                        json.Add("stockDateTime", transitStock.dateTime);
-                        break;
-                    case "changeNameAbbr":
-                        json.Add("methodName", methodName);
-                        json.Add("stockID", transitStock.stock_id);
-                        json.Add("stockName", transitStock.name.Trim());
-                        json.Add("stockAbbreviation", transitStock.abbreviation);
-                        break;
-                    case "deleteStock":
-                        json.Add("methodName", methodName);
-                        json.Add("stockID", transitStock.stock_id);
-                        break;
-                }
                 string message = json.ToString();
 
                 messageSender.SendMessage(message);
             }
+        }
+
+        public static void createAddNewStockRMQMessage(Stock stock)
+        {
+            JObject json = new JObject();
+            json.Add("methodName", "addNewStock");
+            json.Add("stockName", stock.name.Trim());
+            json.Add("stockAbbreviation", stock.abbr);
+
+            SendMessage(json);
+        }
+        public static void createModifyStockRMQMessage(Stock stock)
+        {
+            JObject json = new JObject();
+            json.Add("methodName", "changeNameAbbr");
+            json.Add("stockID", stock.id);
+            json.Add("stockName", stock.name.Trim());
+            json.Add("stockAbbreviation", stock.abbr);
+
+            SendMessage(json);
+        }
+        public static void createDeleteStockRMQMessage(Stock stock)
+        {
+            JObject json = new JObject();
+            json.Add("methodName", "deleteStock");
+            json.Add("stockID", stock.id);
+
+            SendMessage(json);
+        }
+        public static void createUpdateStockPriceRMQMessage(TransitStock transitStock)
+        {
+            JObject json = new JObject();
+            json.Add("methodName", "changePrice");
+            json.Add("stockID", transitStock.stock_id);
+            json.Add("stockPrice", transitStock.price);
+            json.Add("stockDateTime", transitStock.dateTime);
+
+            SendMessage(json);
         }
     }
 }

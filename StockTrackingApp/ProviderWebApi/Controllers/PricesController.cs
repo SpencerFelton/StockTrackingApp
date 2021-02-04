@@ -1,4 +1,4 @@
-﻿using ProviderWebApi.Models;
+using ProviderWebApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -81,7 +81,7 @@ namespace ProviderWebApi.Controllers
         {
             if (transitStock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
             DBHandler.UpdateStockPrice(transitStock); // may need to add a try-catch to return errors as status codes and stop the api breaking
-            //RabbitMQHandler.SendStockPrice(priceHistory); // may need to add a try catch to return errors as status codes and stop the api breaking
+            RabbitMQHandler.createUpdateStockPriceRMQMessage(transitStock); // may need to add a try catch to return errors as status codes and stop the api breaking
         }
     }
 }

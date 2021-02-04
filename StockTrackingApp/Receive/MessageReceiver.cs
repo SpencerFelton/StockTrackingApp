@@ -35,13 +35,11 @@ namespace Receive
                 // convert back to json
                 JObject json = JObject.Parse(message);
 
-
-                string httpRequestType = json.Value<string>("httpRequestType");
-
-                json.Remove("httpRequestType");
+                string methodName = json.Value<string>("methodName");
+                json.Remove("methodName");
 
                 // handle different kinds of requests here             
-                determineAction(httpRequestType, json);
+                determineAction(methodName, json);
                 
             };
             _channel.BasicConsume(queueName, autoAck: true, consumer: consumer);
@@ -49,41 +47,71 @@ namespace Receive
             return message;
         }
 
-        public void AddToDB(JObject message)
+        public void addNewStock(JObject message)
         {
-            //De-serialise RMQ message, add fields to array
-            //Soon to be replaced by JSON
+            Stock stock = new Stock() //Transit Stock format used within Subscriber API
+            {
+                name = message.Value<string>("stockName"),
+                abbr = message.Value<string>("stockAbbreviation")
+            };
 
+            //Calling API methods --- may need to be expanded upon for altering Subscriber side DB if expanded upon i.e deleting history etc
+            DBHandler.addNewStock(stock);
+        }
+
+        public void changeNameAbbr(JObject message)
+        {
+            Stock stock = new Stock() //Transit Stock format used within Subscriber API
+            {
+                id = message.Value<int>("stockID"),
+                name = message.Value<string>("stockName"),
+                abbr = message.Value<string>("stockAbbreviation")
+            };
+
+            DBHandler.ModifyStock(stock);
+        }
+
+        public void deleteStock(JObject message)
+        {
+            Stock stock = new Stock() //Transit Stock format used within Subscriber API
+            {
+                id = message.Value<int>("stockID")
+            };
+            DBHandler.DeleteStock(stock);
+        }
+
+        public void changePrice(JObject message)
+        {
             TransitStock stock = new TransitStock() //Transit Stock format used within Subscriber API
             {
                 stock_id = message.Value<int>("stockID"),
-                name = message.Value<string>("stockName"),
-                abbreviation = message.Value<string>("stockAbbreviation"),
                 price = message.Value<decimal>("stockPrice"),
                 dateTime = message.Value<DateTime>("stockDateTime")
             };
 
-            //Calling API methods --- may need to be expanded upon for altering Subscriber side DB if expanded upon i.e deleting history etc
             DBHandler.UpdateStockPrice(stock);
         }
 
-        public void determineAction(string httpRequestType, JObject message)
+        public void determineAction(string methodName, JObject message)
         {
-            if (httpRequestType.Equals("post"))
+            switch (methodName)
             {
-                AddToDB(message); //API METHOD CALLS FROM RABBITMQ MUST BE CALLED FROM IN HERE
-            }
-            if (httpRequestType.Equals("get"))
-            {
-
-            }
-            if (httpRequestType.Equals("post"))
-            {
-
-            }
-            if (httpRequestType.Equals("post"))
-            {
-
+                case "addNewStock":
+                    //add new stock to database
+                    addNewStock(message);
+                    break;
+                case "changePrice":
+                    // change price of stock in database
+                    changePrice(message);
+                    break;
+                case "changeNameAbbr":
+                    // change name or abbreviation of stock in database
+                    changeNameAbbr(message);
+                    break;
+                case "deleteStock":
+                    // delete stock by id from database
+                    deleteStock(message);
+                    break;
             }
         }
     }

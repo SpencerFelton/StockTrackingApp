@@ -32,10 +32,10 @@ namespace ProviderWebApi.Controllers
 
         // POST api/stocks
         [HttpPost]
-        public void Post([FromBody] string name, string abbreviation)
+        public void Post([FromBody] Stock stock)
         {
-            if (name == null || abbreviation == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
-            DBHandler.AddStock(name, abbreviation); // may need a try-catch to return errors as status codes and stop the api breaking
+            if (stock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
+            DBHandler.AddStock(stock); // may need a try-catch to return errors as status codes and stop the api breaking
             //RabbitMQHandler.AddStock(stock); // may need a try-catch to return errors as status codes and stop the api breaking
         }
 

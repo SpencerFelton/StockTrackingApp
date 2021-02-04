@@ -77,11 +77,11 @@ namespace ProviderWebApi.Controllers
 
         // POST api/prices
         [HttpPost]
-        public void Post([FromBody] TransitStock transitStock)
+        public void Post([FromBody] PriceHistory priceHistory)
         {
-            if (transitStock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
-            DBHandler.UpdateStockPrice(transitStock); // may need to add a try-catch to return errors as status codes and stop the api breaking
-            RabbitMQHandler.SendStockPrice(transitStock); // may need to add a try catch to return errors as status codes and stop the api breaking
+            if (priceHistory == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
+            DBHandler.UpdateStockPrice(priceHistory); // may need to add a try-catch to return errors as status codes and stop the api breaking
+            RabbitMQHandler.SendStockPrice(priceHistory); // may need to add a try catch to return errors as status codes and stop the api breaking
         }
     }
 }

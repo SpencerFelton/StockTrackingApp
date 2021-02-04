@@ -32,11 +32,11 @@ namespace ProviderWebApi.Controllers
 
         // POST api/stocks
         [HttpPost]
-        public void Post([FromBody]TransitStock transitStock)
+        public void Post([FromBody] string name, string abbreviation)
         {
-            if (transitStock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
-            DBHandler.AddStock(transitStock); // may need a try-catch to return errors as status codes and stop the api breaking
-            RabbitMQHandler.SendStockPrice(transitStock); // may need a try-catch to return errors as status codes and stop the api breaking
+            if (name == null || abbreviation == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
+            DBHandler.AddStock(name, abbreviation); // may need a try-catch to return errors as status codes and stop the api breaking
+            //RabbitMQHandler.AddStock(stock); // may need a try-catch to return errors as status codes and stop the api breaking
         }
 
         // DELETE api/stocks/id
@@ -44,16 +44,16 @@ namespace ProviderWebApi.Controllers
         {
             Stock stock = DBHandler.GetStock(id);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
-            DBHandler.DeleteStock(stock.abbr);
+            DBHandler.DeleteStock(id);
             //RabbitMQHandler.DeleteStock(transitStock);
         }
 
         // PUT api/stocks/id
         [HttpPut]
-        public void Put([FromBody]TransitStock transitStock)
+        public void Put([FromBody]Stock stock)
         {
-            if (transitStock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
-            DBHandler.ModifyStock(transitStock);
+            if (stock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
+            DBHandler.ModifyStock(stock);
             //RabbitMQHandler.UpdateStock(transitStock);
         }
     }

@@ -93,25 +93,6 @@ namespace SubscriberWebAPI.Models
             }
         }
 
-        public static void ModifyStock(Stock stock)
-        {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
-            {
-                // Validation that the new name is not null or greater than max length
-                if (stock.name.Length > maxStockNameLength || stock.name.Length <= 0)
-                    throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
-
-                // Validate that the name is not already taken
-                if (entity.Stocks.Where(s => s.name.ToLower() == stock.name.ToLower()).Count() > 0)
-                    throw new ArgumentException("Stock already exists with the name " + stock.name);
-
-                // Change stock name
-                entity.Stocks.Single(s => s.id == stock.id).name = stock.name;
-                entity.Stocks.Single(s => s.id == stock.id).abbr = stock.abbr;
-                entity.SaveChanges();
-            }
-        }
-
         /// <summary>
         /// Updates the name of an existing <see cref="Stock"/>, identified by the abbreviation, to a new name, where these details 
         /// are contained within a <see cref="TransitStock"/>.

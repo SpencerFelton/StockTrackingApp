@@ -11,7 +11,7 @@ namespace ProviderWebApi.Controllers
     public class StocksController : ApiController
     {
         // GET api/stocks
-        public IEnumerable<TransitStock> Get()
+        public IEnumerable<TransitStock> GetAllStocks()
         {
             Stock[] stocks = DBHandler.GetStocks();
             List<TransitStock> transitStocks = new List<TransitStock>();
@@ -23,7 +23,7 @@ namespace ProviderWebApi.Controllers
         }
 
         // GET api/stocks/id
-        public TransitStock Get(int id)
+        public TransitStock GetStock(int id)
         {
             Stock stock = DBHandler.GetStock(id);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -32,7 +32,7 @@ namespace ProviderWebApi.Controllers
 
         // POST api/stocks
         [HttpPost]
-        public void Post([FromBody] Stock stock)
+        public void AddStock([FromBody] Stock stock)
         {
             if (stock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
             DBHandler.AddStock(stock); // may need a try-catch to return errors as status codes and stop the api breaking
@@ -40,7 +40,7 @@ namespace ProviderWebApi.Controllers
         }
 
         // DELETE api/stocks/id
-        public void Delete(int id)
+        public void DeleteStock(int id)
         {
             Stock stock = DBHandler.GetStock(id);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -50,7 +50,7 @@ namespace ProviderWebApi.Controllers
 
         // PUT api/stocks/id
         [HttpPut]
-        public void Put([FromBody]Stock stock)
+        public void ModifyStock([FromBody]Stock stock)
         {
             if (stock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
             DBHandler.ModifyStock(stock);

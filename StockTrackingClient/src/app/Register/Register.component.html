@@ -1,0 +1,162 @@
+<div class="card">
+    <div class="card-header">
+      {{pageTitle}}
+    </div>
+    <div class="card-body">
+      <form (ngSubmit) = "save()" 
+            [formGroup] = "RegisterForm">
+            <mat-horizontal-stepper formArrayName="RegistrarDetails">
+                <mat-step formGroupName="0"  label = "Step 1" >
+                <div>
+                    <label for="emailID">Email Address </label>
+                    <input id="emailID"
+                       class="form-control"
+                       type="text"
+                       placeholder="Email Address (Required)"
+                       formControlName="email"
+                       [ngClass] = "{'is-invalid': emailMessage}"/>
+                    <span class = "invalid-feedback">
+                    {{emailMessage}}
+                    </span>
+                </div>
+                <div>
+                    <label for="usernameID">Username </label>
+                    <input id="usernameID"
+                           class="form-control"
+                           type="text"
+                           placeholder="username (Required)"
+                           formControlName="username"
+                           [ngClass] = "{'is-invalid': usernameMessage}"/>
+                           
+                    <span class = "invalid-feedback">
+                      {{usernameMessage}}
+                    </span>
+                  </div>
+                  <div>
+                    <label for="passwordID">Password</label>
+                    <input id="passwordID"
+                           class="form-control"
+                           type="password"
+                           placeholder="password (Required)"
+                           formControlName="password"
+                           [ngClass] = "{'is-invalid': passwordMessage}"/>
+                    <span class = "invalid-feedback">
+                      {{passwordMessage}}
+                    </span>
+                  </div>
+                  <div>
+                    <button mat-button matStepperNext type="button">Next</button>
+                  </div>
+
+                </mat-step>
+                <mat-step formGroupName="1"   label = "Step 2" >
+                <div>
+                    <label for="firstNameID">First Name </label>
+                <input id="firstNameID"
+                       class="form-control"
+                       type="text"
+                       placeholder="First Name (Required)"
+                       formControlName="firstName"
+                       [ngClass] = "{'is-invalid': firstNameMessage}"/>
+                <span class = "invalid-feedback">
+                  {{firstNameMessage}}
+                </span>
+              </div>
+              <div>
+                <label for="lastNameID">Last Name </label>
+                <input id="lastNameID"
+                       class="form-control"
+                       type="text"
+                       placeholder="Last Name (Required)"
+                       formControlName="lastName"
+                       [ngClass] = "{'is-invalid': lastNameMessage}"/>
+                <span class = "invalid-feedback">
+                  {{lastNameMessage}}
+                </span>
+              </div>
+              <div>
+                <label for="dateOfBirthID">Age (should be DOB)</label>
+                <input id="dateOfBirthID"
+                       class="form-control"
+                       type="text"
+                       placeholder="Date of Birth (Required)"
+                       formControlName="dateOfBirth"
+                       [ngClass] = "{'is-invalid': dateOfBirthMessage}"/>
+                <span class = "invalid-feedback">
+                  {{dateOfBirthMessage}}
+                </span>
+              </div>
+              <div>
+                <button mat-button matStepperPrevious type="button">Back</button>
+                <button mat-button matStepperNext type="button">Next</button>
+              </div>
+                </mat-step>
+                <mat-step formGroupName="2" label = "Step 3" >
+                        
+            <div>
+            <label for="accountTypeID">Account type </label>
+            <select id="accountTypeID"
+                  class="form-control"
+                  formControlName="accountType"
+                  [ngClass] = "{'is-invalid': accountTypeMessage}">
+                  <option selected value = 0>Please choose</option>
+                  <option value = "1">Client</option>
+                  <option value = "2">Provider</option>
+            </select>
+            <span class="invalid-feedback">
+            {{accountTypeMessage}}
+            </span>
+            </div>
+            <div *ngIf="RegistrarDetailsFunc.get([2]).get('accountType').value == 2">
+                <label for="companyNameID">Company Name </label>
+                <input id="companyNameID"
+                       class="form-control"
+                       type="text"
+                       placeholder="Company Name"
+                       formControlName="dateOfBirth"
+                       [ngClass] = "{'is-invalid': companyNameMessage}"/>
+                <span class="invalid-feedback">
+                {{companyNameMessage}}
+                </span>
+                </div>
+            <div>
+                <button mat-button matStepperPrevious type="button">Back</button>
+                <button mat-button matStepperNext type="button">Next</button>
+              </div>
+            </mat-step>
+            <mat-step formGroupName="3"  label = "Step 4" >
+
+        <div class="form-check" >
+          <input id="allvalidID"
+                 class="form-check-input"
+                 type="checkbox"
+                 formControlName="allValid"/>
+          <label for="allvalidID">I hereby declare that all information given is valid to the best of my ability.</label>
+          <span class="invalid-feedback">
+            {{allValidMessage}}
+            </span>
+        </div>
+        <div class="form-check" >
+            <input id="readTermsID"
+                   class="form-check-input"
+                   type="checkbox"
+                   formControlName="readTerms"/>
+            <label for="readTermsID">I have read and agree to the terms of service.</label>
+            <span class="invalid-feedback">
+                {{TOSMessage}}
+                </span>
+          </div>
+        <div>
+            <button mat-button matStepperPrevious type="button">Back</button>
+            <button class="btn btn-primary mr-3"
+                  type="submit"
+                  [disabled]="!RegisterForm.valid">
+                Register
+                </button>
+        </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+      </form>
+    </div>
+  </div>
+  

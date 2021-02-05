@@ -8,6 +8,11 @@ import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+
 
 
 
@@ -26,7 +31,7 @@ import {subscriptionView} from './subscriptionView/subscriptionView.component';
 import {LoginComponent} from './Login/Login.component';
 import {TestCallsComponent} from './shared/TestShit/test-calls.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {RegisterComponent} from './Register/Register.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +42,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     StockViewer,
     subscriptionView,
     TestCallsComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +58,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       { path: 'welcome', component:WelcomeComponent},
       { path: 'viewstock', component:StockViewer}, 
       { path: 'login', component:LoginComponent},
+      { path: 'register', component:RegisterComponent},
       { path: 'subscriptions', component:subscriptionView},
       {path: 'testing', component:TestCallsComponent},
       { path: '',redirectTo: 'welcome', pathMatch: 'full'},
@@ -62,7 +69,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSnackBarModule,
     MatCardModule,
     MatIconModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatStepperModule,
+    MatFormFieldModule, 
+    MatInputModule,
+    MatButtonModule
   ],
   bootstrap: [AppComponent]
 })

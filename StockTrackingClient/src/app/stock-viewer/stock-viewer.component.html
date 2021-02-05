@@ -6,6 +6,20 @@
         {{pageTitle}}
     </div>
     <div class='card-body'>
+
+        <div class='flex-item'>
+          <div style='display: block;'>
+          <canvas baseChart width='400' height='100'
+                      [datasets]='lineChartData'
+                      [labels]='lineChartLabels'
+                      [options]='lineChartOptions'
+                      [colors]='lineChartColors'
+                      [legend]='lineChartLegend'
+                      [chartType]='lineChartType'
+                      [plugins]='lineChartPlugins'
+                      (chartHover)="chartHovered($event)"
+                      (chartClick)="chartClicked($event)"></canvas>
+        </div>
         <div class='row'>
           <div class='col-md-2'>Filter by:</div>
           <div class='col-md-4'>
@@ -45,7 +59,16 @@
 
                     </table>
                   </th>
-                  
+                  <th>
+                    <table>
+                      <tr>
+                        <td>View Stock Price History</td>
+                        <td>
+                          <i></i>
+                        </td>
+                      </tr>
+                    </table>
+                  </th>
                   <th>
                     <table>
                       <tr>
@@ -70,6 +93,11 @@
                   <td>{{company.name}}</td>
                   <td>{{company.abbreviation}}</td>
                   <td>{{company.price | currency:'USD':'symbol':'1.2-2' }}</td>
+                  <td>
+                    <button class='btn btn-primary' (click)='subUnSub(company)'>
+                      Show
+                    </button>
+                  </td>
                   <td>
                     <button type="button" class="btn btn-primary" (click) = 'onSellStock(company)'>Sell</button>
                     {{company.stocksPurchased}}

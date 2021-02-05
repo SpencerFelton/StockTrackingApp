@@ -27,6 +27,7 @@ import {subscriptionView} from './subscriptionView/subscriptionView.component';
 import {LoginComponent} from './Login/Login.component';
 import {TestCallsComponent} from './shared/TestShit/test-calls.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     FormsModule,
+    ChartsModule,
     HttpClientModule,
     InMemoryWebApiModule.forRoot(CompanyData),
     RouterModule.forRoot([

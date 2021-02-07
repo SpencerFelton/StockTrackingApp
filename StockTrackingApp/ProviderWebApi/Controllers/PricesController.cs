@@ -11,7 +11,8 @@ namespace ProviderWebApi.Controllers
     public class PricesController : ApiController
     {
         // GET api/prices
-        public IEnumerable<TransitStock> GetAllPriceUpdates()
+        // Returns the entire price history for every stock
+        public IEnumerable<TransitStock> GetAllPriceHistories()
         {
             PriceHistory[] priceHistories = DBHandler.GetPriceHistories();
             List<TransitStock> transitStocks = new List<TransitStock>();
@@ -23,6 +24,7 @@ namespace ProviderWebApi.Controllers
         }
 
         // GET api/prices/id
+        // Returns price history for a single stock referenced by ID
         public IEnumerable<TransitStock> GetStockPriceHistory(int id)
         {
             Stock stock = DBHandler.GetStock(id);
@@ -38,6 +40,7 @@ namespace ProviderWebApi.Controllers
         }
 
         // GET api/prices/price/id
+        // Returns current price for a single stock referenced by ID
         [HttpGet]
         [Route("api/prices/price/{id}")]
         public TransitStock GetCurrentPrice(int id)
@@ -48,6 +51,7 @@ namespace ProviderWebApi.Controllers
         }
 
         // GET api/prices/latest
+        // Returns latest price for all stocks
         [HttpGet]
         [Route("api/prices/latest")]
         public IEnumerable<TransitStock> GetLatestPriceAllStocks()
@@ -78,7 +82,7 @@ namespace ProviderWebApi.Controllers
 
         // POST api/prices
         [HttpPost]
-        public void Post([FromBody] TransitStock transitStock)
+        public void UpdateStockPrice([FromBody] TransitStock transitStock)
         {
             if (transitStock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
             DBHandler.UpdateStockPrice(transitStock); // may need to add a try-catch to return errors as status codes and stop the api breaking

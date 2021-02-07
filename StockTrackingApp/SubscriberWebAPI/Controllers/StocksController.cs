@@ -12,7 +12,7 @@ namespace SubscriberWebAPI.Controllers
     public class StocksController : ApiController
     {
         // GET api/stocks
-        public IEnumerable<TransitStock> Get()
+        public IEnumerable<TransitStock> GetAllStocks()
         {
             Stock[] stocks = DBHandler.GetStocks();
             List<TransitStock> transitStocks = new List<TransitStock>();
@@ -24,7 +24,7 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // GET api/stocks/4
-        public TransitStock Get(int id)
+        public TransitStock GetStockByID(int id)
         {
             Stock stock = DBHandler.GetStock(id);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -32,7 +32,7 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // GET api/stocks/ABBR
-        public TransitStock Get(string abbr)
+        public TransitStock GetStockByAbbreviation(string abbr)
         {
             Stock stock = DBHandler.GetStock(abbr);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);

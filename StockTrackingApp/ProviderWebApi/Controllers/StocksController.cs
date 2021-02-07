@@ -23,7 +23,7 @@ namespace ProviderWebApi.Controllers
         }
 
         // GET api/stocks/id
-        public TransitStock GetStock(int id)
+        public TransitStock GetStockByID(int id)
         {
             Stock stock = DBHandler.GetStock(id);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -31,6 +31,7 @@ namespace ProviderWebApi.Controllers
         }
 
         // POST api/stocks
+        // Post method to add new stock by name and abbreviation
         [HttpPost]
         public void AddStock([FromBody] Stock stock)
         {
@@ -40,6 +41,7 @@ namespace ProviderWebApi.Controllers
         }
 
         // DELETE api/stocks/id
+        // Delete method to delete stock by ID
         public void DeleteStock(int id)
         {
             Stock stock = DBHandler.GetStock(id);
@@ -49,6 +51,7 @@ namespace ProviderWebApi.Controllers
         }
 
         // PUT api/stocks/id
+        // Put method to modify stock, referenced by ID along with new name and abbreviation
         [HttpPut]
         public void ModifyStock([FromBody]Stock stock)
         {

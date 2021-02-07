@@ -1,6 +1,6 @@
 # 🚀 Stock Tracking App
 
-![StockTrackingApp-NetFramework](https://github.com/SpencerFelton/StockTrackingApp/workflows/StockTrackingApp-NetFramework/badge.svg)
+![build-test](https://github.com/SpencerFelton/StockTrackingApp/workflows/build-test/badge.svg)
 
 A stock tracking application built using C#, RabbitMQ and Angular. Originally started as our Capita Novus program group project, we continued developing it to finish its intended functionality. 
 

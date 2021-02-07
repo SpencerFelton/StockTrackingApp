@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using Newtonsoft.Json.Linq;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace ProviderWebApi.Models
 {
     public static class RabbitMQHandler
     {
-        public static void SendStockPrice(int stock_id, string name, string abbreviation, decimal price, DateTime dateTime)
+
+        public static ConnectionFactory MakeConnectionFactory()
         {
             // Building the connection factory, contains default username, password and localhost
             var factory = new ConnectionFactory()
@@ -19,6 +21,13 @@ namespace ProviderWebApi.Models
                 HostName = "localhost"
             };
 
+            return factory;
+        }
+
+        public static void SendMessage(JObject json)
+        {
+            var factory = MakeConnectionFactory();
+
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
@@ -26,33 +35,48 @@ namespace ProviderWebApi.Models
                 MessageSender messageSender = new MessageSender(channel);
                 messageSender.BindQueue("stock"); // Declare and Bind Queue "stock" to "stocks" exchange
 
-                string message = $"{stock_id},{name.Trim()},{abbreviation},{price},{dateTime}";
+                string message = json.ToString();
 
                 messageSender.SendMessage(message);
             }
         }
-        public static void SendStockPrice(TransitStock transitStock)
+
+        public static void createAddNewStockRMQMessage(Stock stock)
         {
-            // Building the connection factory, contains default username, password and localhost
-            var factory = new ConnectionFactory()
-            {
-                UserName = "guest",
-                Password = "guest",
-                HostName = "localhost"
-            };
+            JObject json = new JObject();
+            json.Add("methodName", "addNewStock");
+            json.Add("stockName", stock.name.Trim());
+            json.Add("stockAbbreviation", stock.abbr);
 
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                channel.ExchangeDeclare("stocks", ExchangeType.Direct); // Declare exchange "stock"
-                MessageSender messageSender = new MessageSender(channel);
-                messageSender.BindQueue("stock"); // Declare and Bind Queue "stock" to "stocks" exchange
+            SendMessage(json);
+        }
+        public static void createModifyStockRMQMessage(Stock stock)
+        {
+            JObject json = new JObject();
+            json.Add("methodName", "changeNameAbbr");
+            json.Add("stockID", stock.id);
+            json.Add("stockName", stock.name.Trim());
+            json.Add("stockAbbreviation", stock.abbr);
 
-                // string message = transitStock.price.ToString(); // change this to whatever message
-                string message = $"{transitStock.stock_id},{transitStock.name.Trim()},{transitStock.abbreviation},{transitStock.price},{transitStock.dateTime}";
+            SendMessage(json);
+        }
+        public static void createDeleteStockRMQMessage(Stock stock)
+        {
+            JObject json = new JObject();
+            json.Add("methodName", "deleteStock");
+            json.Add("stockID", stock.id);
 
-                messageSender.SendMessage(message);
-            }
+            SendMessage(json);
+        }
+        public static void createUpdateStockPriceRMQMessage(TransitStock transitStock)
+        {
+            JObject json = new JObject();
+            json.Add("methodName", "changePrice");
+            json.Add("stockID", transitStock.stock_id);
+            json.Add("stockPrice", transitStock.price);
+            json.Add("stockDateTime", transitStock.dateTime);
+
+            SendMessage(json);
         }
     }
 }

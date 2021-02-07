@@ -12,7 +12,8 @@ namespace SubscriberWebAPI.Controllers
     public class PricesController : ApiController
     {
         // GET api/prices
-        public IEnumerable<TransitStock> Get()
+        // Get full price history of all stocks
+        public IEnumerable<TransitStock> GetAllPriceHistories()
         {
             PriceHistory[] priceHistories = DBHandler.GetPriceHistories();
             List<TransitStock> transitStocks = new List<TransitStock>();
@@ -24,7 +25,8 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // GET api/prices/5
-        public IEnumerable<TransitStock> Get(int id)
+        // Get full stock price history for a single stock by ID
+        public IEnumerable<TransitStock> GetStockPriceHistory(int id)
         {
             Stock stock = DBHandler.GetStock(id);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -39,7 +41,8 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // GET api/prices/ABBR
-        public IEnumerable<TransitStock> Get(string abbr)
+        // Get a full stock price history for a single stock by abbreviation
+        public IEnumerable<TransitStock> GetCurrentPrice(string abbr)
         {
             Stock stock = DBHandler.GetStock(abbr);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -54,29 +57,21 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // GET api/prices/price/5
+        // Get a single price update by ID
         [HttpGet]
-        [Route("api/prices/price/{id}")]
-        public TransitStock GetPrice(int id)
+        [Route("api/prices/price/{price_id}")]
+        public TransitStock GetSinglePrice(int price_id)
         {
-            PriceHistory priceHistory = DBHandler.GetPriceHistory(id);
-            if (priceHistory == null) throw new HttpResponseException(HttpStatusCode.NotFound);
-            return new TransitStock(priceHistory);
-        }
-
-        // GET api/prices/price
-        [HttpGet]
-        [Route("api/prices/price")]
-        public TransitStock GetPrice([FromBody] TransitStock transitStock)
-        {
-            PriceHistory priceHistory = DBHandler.GetPriceHistory(transitStock.abbreviation, transitStock.dateTime);
+            PriceHistory priceHistory = DBHandler.GetPriceHistory(price_id);
             if (priceHistory == null) throw new HttpResponseException(HttpStatusCode.NotFound);
             return new TransitStock(priceHistory);
         }
 
         // GET api/prices/latest
+        // Get the latest price for all stocks
         [HttpGet]
         [Route("api/prices/latest")]
-        public IEnumerable<TransitStock> GetLatest()
+        public IEnumerable<TransitStock> GetLatestPriceAllStocks()
         {
             Stock[] stocks = DBHandler.GetStocks();
             List<TransitStock> transitStocks = new List<TransitStock>();
@@ -90,11 +85,12 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // GET api/prices/latest/5
+        // Get the current value of a stock by its stock id
         [HttpGet]
-        [Route("api/prices/latest/{id}")]
-        public TransitStock GetLatest(int id)
+        [Route("api/prices/latest/{stock_id}")]
+        public TransitStock GetStockLatestPrice(int stock_id)
         {
-            Stock stock = DBHandler.GetStock(id);
+            Stock stock = DBHandler.GetStock(stock_id);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
             PriceHistory priceHistory = DBHandler.GetMostRecentStockPriceHistory(stock);
             if (priceHistory == null) throw new HttpResponseException(HttpStatusCode.InternalServerError); // specifically, the db does not seem to have a price history for this stock - should be a necessity

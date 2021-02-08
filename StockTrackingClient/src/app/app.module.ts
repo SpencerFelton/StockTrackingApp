@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -8,6 +8,15 @@ import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSelectModule} from '@angular/material/select';
+
 
 
 
@@ -28,7 +37,8 @@ import {LoginComponent} from './Login/Login.component';
 import {TestCallsComponent} from './shared/TestShit/test-calls.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
-
+import {RegisterComponent} from './Register/Register.component';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,12 +49,15 @@ import { ChartsModule } from 'ng2-charts';
     StockViewer,
     subscriptionView,
     TestCallsComponent,
-    SortDirective
+    SortDirective,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ChartsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     InMemoryWebApiModule.forRoot(CompanyData),
     RouterModule.forRoot([
@@ -54,6 +67,7 @@ import { ChartsModule } from 'ng2-charts';
       { path: 'welcome', component:WelcomeComponent},
       { path: 'viewstock', component:StockViewer}, 
       { path: 'login', component:LoginComponent},
+      { path: 'register', component:RegisterComponent},
       { path: 'subscriptions', component:subscriptionView},
       {path: 'testing', component:TestCallsComponent},
       { path: '',redirectTo: 'welcome', pathMatch: 'full'},
@@ -64,8 +78,19 @@ import { ChartsModule } from 'ng2-charts';
     MatSnackBarModule,
     MatCardModule,
     MatIconModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatStepperModule,
+    MatFormFieldModule, 
+    MatInputModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule, 
+    MatToolbarModule,
+    MatSidenavModule,
+    MatSelectModule
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+

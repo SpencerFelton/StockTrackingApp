@@ -29,7 +29,7 @@ namespace ProviderWebApi.Models
             _channel.QueueBind(queueName, "stocks", "");
         }
 
-        public void SendMessage(string message)
+        public void SendMessage(string message) // send message as a stringified json object
         {
             var body = Encoding.UTF8.GetBytes(message);
             _channel.BasicPublish(exchange: "stocks", routingKey: "", basicProperties: null, body: body);

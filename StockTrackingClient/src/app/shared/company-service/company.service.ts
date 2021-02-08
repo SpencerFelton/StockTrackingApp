@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ICompany} from '../company';
+import {ICompany} from '../company-models/company';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {ObjectConverter} from '../ObjectConverter/object-converter';
 

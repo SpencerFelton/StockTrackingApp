@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ICompanyView} from '../companyView';
+import {ICompanyView} from '../company-models/companyView';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError, of } from 'rxjs';
 import {catchError, tap, map} from 'rxjs/operators';

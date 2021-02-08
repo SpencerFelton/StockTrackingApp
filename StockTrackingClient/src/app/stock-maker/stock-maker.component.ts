@@ -1,5 +1,5 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ICompany} from '../shared/company';
+import {ICompany} from '../shared/company-models/company';
 import {CompanyService} from '../shared/company-service/company.service';
 import {NotifierService} from '../shared/Notifications/notifier.service';
 

@@ -36,10 +36,7 @@ import {subscriptionView} from './subscriptionView/subscriptionView.component';
 import {LoginComponent} from './Login/Login.component';
 import {TestCallsComponent} from './shared/TestShit/test-calls.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-<<<<<<< HEAD
 import { ChartsModule } from 'ng2-charts';
-=======
->>>>>>> 23c466ff0ae8a6a256f17c92d4410725a77d56fb
 import {RegisterComponent} from './Register/Register.component';
 import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
@@ -52,20 +49,14 @@ import { MatNativeDateModule } from '@angular/material/core';
     StockViewer,
     subscriptionView,
     TestCallsComponent,
-<<<<<<< HEAD
     SortDirective,
-=======
->>>>>>> 23c466ff0ae8a6a256f17c92d4410725a77d56fb
     LoginComponent,
     RegisterComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-<<<<<<< HEAD
     ChartsModule,
-=======
->>>>>>> 23c466ff0ae8a6a256f17c92d4410725a77d56fb
     ReactiveFormsModule,
     HttpClientModule,
     InMemoryWebApiModule.forRoot(CompanyData),

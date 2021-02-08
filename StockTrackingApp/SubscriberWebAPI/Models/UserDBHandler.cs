@@ -92,7 +92,31 @@ namespace SubscriberWebAPI.Models
             }
         }
 
-        
+        public static Boolean CheckUsernameExists(string user) // Returns true if the given string exists in the username field exactly once
+        {
+            using(StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                if (entity.Users.Where(s => s.username == user).Count() == 1) 
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public static Boolean CheckEmailExists(string email) // Returns true if the given string exists in the email field exactly once
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                if (entity.Users.Where(s => s.username == email).Count() == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+
 
         public static Boolean IsUserInfoValid(User user)
         {

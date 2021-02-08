@@ -48,7 +48,7 @@ namespace SubscriberWebAPI.Models
                 if (entity.Stocks.Where(s => s.id == id).Count() == 1)
                 {
                     Stock stock = entity.Stocks.Single(s => s.id == id);
-                    foreach (PriceHistory price in stock.PriceHistories)
+                    foreach (PriceHistory price in stock.PriceHistories.ToList())
                     {
                         entity.PriceHistories.Remove(price);
                     }

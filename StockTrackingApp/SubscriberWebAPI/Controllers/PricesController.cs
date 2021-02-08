@@ -60,7 +60,7 @@ namespace SubscriberWebAPI.Controllers
         // Get a single price update by ID
         [HttpGet]
         [Route("api/prices/price/{price_id}")]
-        public TransitStock GetSinglePrice(int price_id)
+        public TransitStock GetSinglePrice(int id)
         {
             PriceHistory priceHistory = StockDBHandler.GetPriceHistory(id);
             if (priceHistory == null) throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -98,7 +98,7 @@ namespace SubscriberWebAPI.Controllers
         // Get the current value of a stock by its stock id
         [HttpGet]
         [Route("api/prices/latest/{stock_id}")]
-        public TransitStock GetStockLatestPrice(int stock_id)
+        public TransitStock GetStockLatestPrice(int id)
         {
             Stock stock = StockDBHandler.GetStock(id);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);

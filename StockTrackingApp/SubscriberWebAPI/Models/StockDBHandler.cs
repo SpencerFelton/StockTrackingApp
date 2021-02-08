@@ -25,7 +25,6 @@ namespace SubscriberWebAPI.Models
                     throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
                 if (stock.abbr.Length > maxStockAbbrLength || stock.abbr.Length <= 0)
                     throw new ArgumentOutOfRangeException($"Abbreviation cannot exceed {maxStockNameLength} characters in length");
-
                 if (entity.Stocks.Where(s => s.name.ToLower() == stock.name.ToLower()).Count() > 0)
                     throw new ArgumentException("Stock already exists with the name " + stock.name);
                 if (entity.Stocks.Where(s => s.abbr.ToUpper() == stock.abbr.ToUpper()).Count() > 0)

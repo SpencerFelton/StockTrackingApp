@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Common;
 
 namespace ProviderWebApi.Models
 {
@@ -23,65 +22,21 @@ namespace ProviderWebApi.Models
         /// <param name="abbreviation">The shorthand abbreviation of the stock. 4 character limit.</param>
         /// <param name="dateTime">The date and time when the price was accurate to.</param>
         /// <param name="price">The price of the stock at the given date and time, in USD.</param>
-        public static void AddStock(string name, string abbreviation, DateTime dateTime, decimal price)
+        public static void AddStock(Stock stock)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                if (name.Length > maxStockNameLength) 
+                if (stock.name.Length > maxStockNameLength) 
                     throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
-                if (abbreviation.Length > maxStockAbbrLength) 
-                    throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
+                if (stock.abbr.Length > maxStockAbbrLength) 
+                    throw new ArgumentOutOfRangeException($"Abbreviation cannot exceed {maxStockAbbrLength} characters in length");
                 
-                if (entity.Stocks.Where(s => s.name.ToLower() == name.ToLower()).Count() > 0) 
-                    throw new ArgumentException("Stock already exists with the name " + name);
-                if (entity.Stocks.Where(s => s.abbr.ToUpper() == abbreviation.ToUpper()).Count() > 0) 
-                    throw new ArgumentException("Stock already exists with the abbreviation " + abbreviation);
-                
-                // No exception thrown => Can create new stock
-                // Any exception thown after this will be a system error
-                Stock newStock = new Stock
-                {
-                    name = name, // name can be however
-                    abbr = abbreviation.ToUpper() // abbr should be capitalised
-                };
-                entity.Stocks.Add(newStock);
-                entity.SaveChanges();
-                newStock = entity.Stocks.Single(s => s.abbr == abbreviation);
-                PriceHistory priceHistory = new PriceHistory
-                {
-                    stock_id = newStock.id,
-                    time = dateTime,
-                    value = price
-                };
-                entity.PriceHistories.Add(priceHistory);
-                entity.SaveChanges();
-            }
-        }
-        /// <summary>
-        /// Creates a new <see cref="Stock"/> to the StockTracker database, then adds a new <see cref="PriceHistory"/> entry to ensure the stock has price data.
-        /// </summary>
-        /// <param name="transitStock">The <see cref="TransitStock"/> containing all the stock and priceHistory information required.</param>
-        public static void AddStock(TransitStock transitStock)
-        {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
-            {
-                if (transitStock.name.Length > maxStockNameLength)
-                    throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
-                if (transitStock.abbreviation.Length > maxStockAbbrLength)
-                    throw new ArgumentOutOfRangeException($"Abbreviation cannot exceed {maxStockNameLength} characters in length");
+                if (entity.Stocks.Where(s => s.name == stock.name).Count() > 0) 
+                    throw new ArgumentException("Stock already exists with the name " + stock.name);
+                if (entity.Stocks.Where(s => s.abbr.ToUpper() == stock.abbr.ToUpper()).Count() > 0) 
+                    throw new ArgumentException("Stock already exists with the abbreviation " + stock.abbr);
 
-                if (entity.Stocks.Where(s => s.name.ToLower() == transitStock.name.ToLower()).Count() > 0)
-                    throw new ArgumentException("Stock already exists with the name " + transitStock.name);
-                if (entity.Stocks.Where(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper()).Count() > 0)
-                    throw new ArgumentException("Stock already exists with the abbreviation " + transitStock.abbreviation);
-
-                // No exception thrown => Can create new stock
-                // Any exception thown after this will be a system error
-                Stock newStock = transitStock.ToStock();
-                entity.Stocks.Add(newStock);
-                entity.SaveChanges();
-                PriceHistory priceHistory = transitStock.ToPriceHistory();
-                entity.PriceHistories.Add(priceHistory);
+                entity.Stocks.Add(stock);
                 entity.SaveChanges();
             }
         }
@@ -90,38 +45,14 @@ namespace ProviderWebApi.Models
         /// Deletes a <see cref="Stock"/> and all its <see cref="PriceHistory"/> data from the StockTracker database.
         /// </summary>
         /// <param name="abbreviation">The abbreviation of the stock to be deleted.</param>
-        public static void DeleteStock(string abbreviation)
+        public static void DeleteStock(int id)
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                if (entity.Stocks.Where(s => s.abbr.ToUpper() == abbreviation.ToUpper()).Count() == 1)
+                if (entity.Stocks.Where(s => s.id == id).Count() == 1)
                 {
-                    Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == abbreviation.ToUpper());
-                    foreach (PriceHistory price in stock.PriceHistories)
-                    {
-                        entity.PriceHistories.Remove(price);
-                    }
-                    entity.Stocks.Remove(stock);
-                    entity.SaveChanges();
-                }
-                else
-                {
-                    throw new ArgumentException("Stock not found");
-                }
-            }
-        }
-        /// <summary>
-        /// Removes a <see cref="Stock"/> and all its <see cref="PriceHistory"/> data from the StockTracker database.
-        /// </summary>
-        /// <param name="transitStock">A <see cref="TransitStock"/> containing the abbreviation of the stock to be deleted.</param>
-        public static void DeleteStock(TransitStock transitStock)
-        {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
-            {
-                if (entity.Stocks.Where(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper()).Count() == 1)
-                {
-                    Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper());
-                    foreach (PriceHistory price in stock.PriceHistories)
+                    Stock stock = entity.Stocks.Single(s => s.id == id);
+                    foreach (PriceHistory price in stock.PriceHistories.ToList())
                     {
                         entity.PriceHistories.Remove(price);
                     }
@@ -135,29 +66,6 @@ namespace ProviderWebApi.Models
             }
         }
 
-        /// <summary>
-        /// Creates a new <see cref="PriceHistory"/> entry for a specified stock.
-        /// </summary>
-        /// <param name="abbreviation">The abbreviation of the stock.</param>>
-        /// <param name="dateTime">The date and time when the price was accurate to.</param>
-        /// <param name="price">The price of the stock at the given date and time, in USD.</param>
-        public static void UpdateStockPrice(string abbreviation, DateTime dateTime, decimal price)
-        {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
-            {
-                Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == abbreviation.ToUpper());
-
-                PriceHistory priceHistory = new PriceHistory
-                {
-                    stock_id = stock.id,
-                    time = dateTime,
-                    value = price
-                };
-
-                entity.PriceHistories.Add(priceHistory);
-                entity.SaveChanges();
-            }
-        }
         /// <summary>
         /// Creates a new <see cref="PriceHistory"/> entry for a specified stock.
         /// </summary>
@@ -166,16 +74,42 @@ namespace ProviderWebApi.Models
         {
             using (StockTrackerEntities entity = new StockTrackerEntities())
             {
-                Stock stock = entity.Stocks.Single(s => s.abbr.ToUpper() == transitStock.abbreviation.ToUpper());
-
-                PriceHistory priceHistory = new PriceHistory
+                if (entity.Stocks.Where(s => s.id == transitStock.stock_id).Count() == 1)
                 {
-                    stock_id = stock.id,
-                    time = transitStock.dateTime,
-                    value = transitStock.price
-                };
+                    Stock stock = entity.Stocks.Single(s => s.id == transitStock.stock_id);
 
-                entity.PriceHistories.Add(priceHistory);
+                    PriceHistory newHistory = new PriceHistory
+                    {
+                        stock_id = stock.id,
+                        time = transitStock.dateTime,
+                        value = transitStock.price
+                    };
+
+                    entity.PriceHistories.Add(newHistory);
+                    entity.SaveChanges();
+                }
+                else
+                {
+                    throw new ArgumentException("Stock not found");
+                }
+            }
+        }
+
+        public static void ModifyStock(Stock modifiedStock)
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                if (entity.Stocks.Where(s => s.id == modifiedStock.id).Count() == 1)
+                {
+                    Stock stock = entity.Stocks.Single(s => s.id == modifiedStock.id);
+                    stock.abbr = modifiedStock.abbr;
+                    stock.name = modifiedStock.name;
+                }
+                else
+                {
+                    throw new ArgumentException("Stock not found");
+                }
+
                 entity.SaveChanges();
             }
         }

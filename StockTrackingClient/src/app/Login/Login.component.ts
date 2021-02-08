@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators, AbstractControl} from '@angular/forms';
 import {LoginDetails} from './LoginDetails';
 import {InputType} from './InputEnum';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { RegisterComponent } from '../Register/Register.component';
 
 function validSelector(c: AbstractControl):{[ key: string] : boolean} | null {
   if(c.value !== null && c.value == 0){
@@ -43,13 +45,13 @@ export class LoginComponent implements OnInit{
   }
   
   
-  constructor(private formbuilder:FormBuilder){}
+  constructor(private formbuilder:FormBuilder, private dialog:MatDialog, private dialogRef:MatDialogRef<LoginComponent>){}
 
   ngOnInit(): void {
     this.LoginForm = this.formbuilder.group({
       accountType: ['', validSelector],
-      username: ['',[Validators.required, Validators.minLength(3)]],
-      password: ['',[Validators.required, Validators.minLength(3)]],
+      username: ['',{validators: [Validators.required, Validators.minLength(3)],updateOn: 'blur'}],
+      password: ['',{validators: [Validators.required, Validators.minLength(3)],updateOn: 'blur'}],
       keepSignIn: true
     });
 
@@ -94,14 +96,15 @@ export class LoginComponent implements OnInit{
         console.log(`if Touched is ${c.touched}`);
         console.log(`if dirty is ${c.dirty}`);
         console.log(`if errors present is ${c.errors}`);
-        if((c.touched || c.dirty) && c.errors){
+        if((c.touched && c.dirty) && c.errors){
           this.usernameMessage = Object.keys(c.errors).map(
           key => this.validationMessagesUsername[key]).join(' ');
         }
       break;
       case InputType.Password:
+        console.log(`Touched: ${c.touched}, Dirty: ${c.dirty}, Pristine: ${c.valid}`);
         this.passwordMessage= '';
-        if((c.touched || c.dirty) && c.errors){
+        if(c.errors){
           this.passwordMessage = Object.keys(c.errors).map(
           key => this.validationMessagesPassword[key]).join(' ');
         }
@@ -109,7 +112,19 @@ export class LoginComponent implements OnInit{
     }
   }
 
-  
+  openRegistration():void{
+    const dialogRef = this.dialog.open(RegisterComponent,{
+      width: '800px',
+      height: '500px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed')
+    });
+  }
+
+  closeLogin():void{
+    this.dialogRef.close();
+  }
 
   save():void{
 

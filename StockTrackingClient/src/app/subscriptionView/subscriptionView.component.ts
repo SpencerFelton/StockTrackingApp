@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyServiceClient } from '../shared/company-service-client/company-service-client';
-import { ICompanyView } from '../shared/companyView';
+import { ICompanyView } from '../shared/company-models/companyView';
 import {NotifierService} from '../shared/Notifications/notifier.service';
 
 

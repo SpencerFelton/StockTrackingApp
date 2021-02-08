@@ -3,6 +3,9 @@ import {FormArray, FormGroup, FormControl, FormBuilder, Validators, AbstractCont
 import {RegistrationDetails} from './RegistrationDetails';
 import {RegisterType} from './RegisterEnum';
 import { min } from 'rxjs/operators';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { LoginComponent } from '../Login/Login.component';
+
 
 
 function validSelector(c: AbstractControl):{[ key: string] : boolean} | null {
@@ -85,7 +88,7 @@ private validationMessageLastName = {
 
 
 
-  constructor(private formbuilder:FormBuilder){}
+  constructor(private formbuilder:FormBuilder, private dialog:MatDialog, private dialogRef:MatDialogRef<RegisterComponent>){}
     get RegistrarDetailsFunc(): FormArray{
       return this.RegisterForm.controls.RegistrarDetails as FormArray;
     }
@@ -283,6 +286,19 @@ private validationMessageLastName = {
     }
     
   }
+
+  openLogin():void{
+    const dialogRef = this.dialog.open(LoginComponent,{
+      width: '600px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed')
+    });
+  }
+
+  closeRegistration():void{
+    this.dialogRef.close();
+   }
 
   save():void{
 

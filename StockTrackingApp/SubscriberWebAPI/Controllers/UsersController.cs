@@ -12,9 +12,10 @@ namespace SubscriberWebAPI.Controllers
     [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class UsersController : ApiController
     {
-        // POST: User/Create
+        // POST: Users/AddUser
+        [Route("users/add-user")]
         [HttpPost]
-        public void AddUser(User user)
+        public void AddUser([FromBody] User user)
         {
             try
             {
@@ -28,7 +29,8 @@ namespace SubscriberWebAPI.Controllers
             }
         }
 
-        // DELETE: User/Delete/username
+        // DELETE: Users/Delete/username
+        [Route("users/{username}/delete")]
         [HttpDelete]
         public void DeleteUser(string username)
         {
@@ -37,13 +39,33 @@ namespace SubscriberWebAPI.Controllers
             UserDBHandler.DeleteUser(username);
         }
 
-        // PUT: User/Put/username
+        // PUT: Users/Put/username
+        [Route("users/{username}/modify")]
         [HttpPut]
-        public void ModifyUser(User user)
+        public void ModifyUser([FromBody] User user)
         {
             User userCheck = UserDBHandler.GetUserByUsername(user.username);
             if (user == null) throw new HttpResponseException(HttpStatusCode.NotFound);
             UserDBHandler.ModifyUser(user);
+        }
+
+        // GET: Users/Get/username
+        [Route("users/{username}")]
+        [HttpGet]
+        public User GetUserInfo(string username)
+        {
+            User user = UserDBHandler.GetUserByUsername(username);
+            if (user == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            return user;
+        }
+
+        // GET: Users
+        [Route("users")]
+        [HttpGet]
+        public IEnumerable<User> GetAllUsers()
+        {
+            User[] users = UserDBHandler.GetAllUsers();
+            return users;     
         }
     }
 }

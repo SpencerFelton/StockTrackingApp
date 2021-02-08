@@ -171,10 +171,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PricesController.cs" />
     <Compile Include="Controllers\StocksController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBHandler.cs" />
+    <Compile Include="Models\UserDBHandler.cs" />
+    <Compile Include="Models\StockDBHandler.cs" />
     <Compile Include="Models\PriceHistory.cs">
       <DependentUpon>StockModel.tt</DependentUpon>
     </Compile>
@@ -197,6 +199,9 @@
       <DependentUpon>StockModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\TransitStock.cs" />
+    <Compile Include="Models\User.cs">
+      <DependentUpon>StockModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -269,6 +274,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

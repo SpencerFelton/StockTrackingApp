@@ -20,7 +20,7 @@ namespace SubscriberWebAPI.Controllers
             {
                 if (user == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-                //UserDBHandler.AddUser(user);
+                UserDBHandler.AddUser(user);
             }
             catch
             {
@@ -28,10 +28,22 @@ namespace SubscriberWebAPI.Controllers
             }
         }
 
-        // POST: User/Delete/5
-        [HttpPost]
-        public void Delete(int id)
+        // DELETE: User/Delete/username
+        [HttpDelete]
+        public void DeleteUser(string username)
         {
+            User user = UserDBHandler.GetUserByUsername(username);
+            if (user == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            UserDBHandler.DeleteUser(username);
+        }
+
+        // PUT: User/Put/username
+        [HttpPut]
+        public void ModifyUser(User user)
+        {
+            User userCheck = UserDBHandler.GetUserByUsername(user.username);
+            if (user == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            UserDBHandler.ModifyUser(user);
         }
     }
 }

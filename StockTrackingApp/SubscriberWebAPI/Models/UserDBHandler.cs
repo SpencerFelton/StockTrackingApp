@@ -84,6 +84,14 @@ namespace SubscriberWebAPI.Models
             }
         }
 
+        public static User[] GetAllUsers()
+        {
+            using (StockTrackerEntities entity = new StockTrackerEntities())
+            {
+                return entity.Users.ToArray();
+            }
+        }
+
         
 
         public static Boolean IsUserInfoValid(User user)

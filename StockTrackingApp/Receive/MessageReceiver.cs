@@ -56,7 +56,7 @@ namespace Receive
             };
 
             //Calling API methods --- may need to be expanded upon for altering Subscriber side DB if expanded upon i.e deleting history etc
-            DBHandler.AddStock(stock);
+            StockDBHandler.AddStock(stock);
         }
 
         public void changeNameAbbr(JObject message)
@@ -68,7 +68,7 @@ namespace Receive
                 abbr = message.Value<string>("stockAbbreviation")
             };
 
-            DBHandler.ModifyStock(stock);
+            StockDBHandler.ModifyStock(stock);
         }
 
         public void deleteStock(JObject message)
@@ -77,7 +77,7 @@ namespace Receive
             {
                 id = message.Value<int>("stockID")
             };
-            DBHandler.DeleteStock(stock.id);
+            StockDBHandler.DeleteStock(stock.id);
         }
 
         public void changePrice(JObject message)

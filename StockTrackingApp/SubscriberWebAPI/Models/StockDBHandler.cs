@@ -10,7 +10,7 @@ namespace SubscriberWebAPI.Models
     /// <summary>
     /// A static class that provides access to CRUD operations with built in verification to the StockTracker database.
     /// </summary>
-    public static class DBHandler
+    public static class StockDBHandler
     {
         private const int maxStockNameLength = 30;
         private const int maxStockAbbrLength = 4;
@@ -48,7 +48,7 @@ namespace SubscriberWebAPI.Models
                 if (entity.Stocks.Where(s => s.id == id).Count() == 1)
                 {
                     Stock stock = entity.Stocks.Single(s => s.id == id);
-                    foreach (PriceHistory price in stock.PriceHistories)
+                    foreach (PriceHistory price in stock.PriceHistories.ToList())
                     {
                         entity.PriceHistories.Remove(price);
                     }

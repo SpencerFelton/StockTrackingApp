@@ -27,5 +27,6 @@ namespace SubscriberWebAPI.Models
     
         public virtual DbSet<PriceHistory> PriceHistories { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

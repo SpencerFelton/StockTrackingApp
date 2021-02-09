@@ -43,7 +43,7 @@ namespace SubscriberWebAPI.Models
         /// <param name="stock">The <see cref="Stock"/> instance with the relevant parameters of the <see cref="TransitStock"/>.</param>
         public TransitStock(Stock stock)
         {
-            PriceHistory priceHistory = DBHandler.GetMostRecentStockPriceHistory(stock);
+            PriceHistory priceHistory = StockDBHandler.GetMostRecentStockPriceHistory(stock);
             stock_id = stock.id;
             name = stock.name;
             abbreviation = stock.abbr;
@@ -56,7 +56,7 @@ namespace SubscriberWebAPI.Models
         /// <param name="priceHistory">The <see cref="PriceHistory"/> instance with the relevant parameters of the <see cref="TransitStock"/>.</param>
         public TransitStock(PriceHistory priceHistory)
         {
-            Stock stock = DBHandler.GetStock(priceHistory.stock_id);
+            Stock stock = StockDBHandler.GetStock(priceHistory.stock_id);
             stock_id = stock.id;
             name = stock.name;
             abbreviation = stock.abbr;
@@ -108,7 +108,7 @@ namespace SubscriberWebAPI.Models
             }
             else
             {
-                Stock stock = DBHandler.GetStock(this.abbreviation);
+                Stock stock = StockDBHandler.GetStock(this.abbreviation);
                 return new PriceHistory
                 {
                     stock_id = stock.id,

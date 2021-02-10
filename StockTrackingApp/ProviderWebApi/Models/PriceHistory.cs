@@ -18,7 +18,5 @@ namespace ProviderWebApi.Models
         public int stock_id { get; set; }
         public System.DateTime time { get; set; }
         public decimal value { get; set; }
-    
-        public virtual Stock Stock { get; set; }
     }
 }

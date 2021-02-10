@@ -1,92 +1,83 @@
-using ProviderWebApi.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
+using System.Web.Http.Description;
+using ProviderWebApi.Models;
 
 namespace ProviderWebApi.Controllers
 {
-    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class PricesController : ApiController
     {
-        // GET api/prices
-        // Returns the entire price history for every stock
-        public IEnumerable<TransitStock> GetAllPriceHistories()
+        private StockModel db = new StockModel();
+
+        // GET: api/prices
+        public IQueryable<PriceHistory> GetPriceHistories()
         {
-            PriceHistory[] priceHistories = DBHandler.GetPriceHistories();
-            List<TransitStock> transitStocks = new List<TransitStock>();
-            foreach (PriceHistory priceHistory in priceHistories)
+            return db.PriceHistories;
+        }
+
+        // GET: api/prices/5
+        [ResponseType(typeof(PriceHistory))]
+        public async Task<IHttpActionResult> GetPriceHistory(int id)
+        {
+            PriceHistory priceHistory = await db.PriceHistories.FindAsync(id);
+            if (priceHistory == null)
             {
-                transitStocks.Add(new TransitStock(priceHistory));
+                return NotFound();
             }
-            return transitStocks;
+
+            return Ok(priceHistory);
         }
 
-        // GET api/prices/id
-        // Returns price history for a single stock referenced by ID
-        public IEnumerable<TransitStock> GetStockPriceHistory(int id)
+        // POST: api/prices
+        [ResponseType(typeof(PriceHistory))]
+        public async Task<IHttpActionResult> PostPriceHistory(PriceHistory priceHistory)
         {
-            Stock stock = DBHandler.GetStock(id);
-            if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
-            PriceHistory[] priceHistories = DBHandler.GetPriceHistories(stock);
-            if (priceHistories.Length == 0) throw new HttpResponseException(HttpStatusCode.InternalServerError); // specifically, the db does not seem to have a price history for this stock - should be a necessity
-            List<TransitStock> transitStocks = new List<TransitStock>();
-            foreach (PriceHistory priceHistory in priceHistories)
+            if (!ModelState.IsValid)
             {
-                transitStocks.Add(new TransitStock(priceHistory));
+                return BadRequest(ModelState);
             }
-            return transitStocks;
+
+            db.PriceHistories.Add(priceHistory);
+            await db.SaveChangesAsync();
+
+            return CreatedAtRoute("DefaultApi", new { id = priceHistory.id }, priceHistory);
         }
 
-        // GET api/prices/price/id
-        // Returns current price for a single stock referenced by ID
-        [HttpGet]
-        [Route("api/prices/price/{id}")]
-        public TransitStock GetCurrentPrice(int id)
+        // DELETE: api/prices/5
+        [ResponseType(typeof(PriceHistory))]
+        public async Task<IHttpActionResult> DeletePriceHistory(int id)
         {
-            PriceHistory priceHistory = DBHandler.GetPriceHistory(id);
-            if (priceHistory == null) throw new HttpResponseException(HttpStatusCode.NotFound);
-            return new TransitStock(priceHistory);
-        }
-
-        // GET api/prices/latest
-        // Returns latest price for all stocks
-        [HttpGet]
-        [Route("api/prices/latest")]
-        public IEnumerable<TransitStock> GetLatestPriceAllStocks()
-        {
-            Stock[] stocks = DBHandler.GetStocks();
-            List<TransitStock> transitStocks = new List<TransitStock>();
-            foreach (Stock stock in stocks)
+            PriceHistory priceHistory = await db.PriceHistories.FindAsync(id);
+            if (priceHistory == null)
             {
-                PriceHistory priceHistory = DBHandler.GetMostRecentStockPriceHistory(stock);
-                if (priceHistory == null) { }
-                else
-                    transitStocks.Add(new TransitStock(priceHistory));
+                return NotFound();
+            }               
+
+            db.PriceHistories.Remove(priceHistory);
+            await db.SaveChangesAsync();
+
+            return Ok(priceHistory);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
             }
-            return transitStocks;
+
+            base.Dispose(disposing);
         }
 
-        // GET api/prices/latest/id
-        [HttpGet]
-        [Route("api/prices/latest/{id}")]
-        public TransitStock GetStockLatestPrice(int id)
+        private bool PriceHistoryExists(int id)
         {
-            Stock stock = DBHandler.GetStock(id);
-            if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
-            PriceHistory priceHistory = DBHandler.GetMostRecentStockPriceHistory(stock);
-            if (priceHistory == null) throw new HttpResponseException(HttpStatusCode.InternalServerError); // specifically, the db does not seem to have a price history for this stock - should be a necessity
-            return new TransitStock(priceHistory);
-        }
-
-        // POST api/prices
-        [HttpPost]
-        public void UpdateStockPrice([FromBody] TransitStock transitStock)
-        {
-            if (transitStock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
-            DBHandler.UpdateStockPrice(transitStock); // may need to add a try-catch to return errors as status codes and stop the api breaking
-            RabbitMQHandler.createUpdateStockPriceRMQMessage(transitStock); // may need to add a try catch to return errors as status codes and stop the api breaking
+            return db.PriceHistories.Count(e => e.id == id) > 0;
         }
     }
 }

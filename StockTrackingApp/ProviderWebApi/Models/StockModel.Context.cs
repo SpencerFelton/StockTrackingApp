@@ -13,10 +13,10 @@ namespace ProviderWebApi.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StockTrackerEntities : DbContext
+    public partial class StockModel : DbContext
     {
-        public StockTrackerEntities()
-            : base("name=StockTrackerEntities")
+        public StockModel()
+            : base("name=StockModel")
         {
         }
     

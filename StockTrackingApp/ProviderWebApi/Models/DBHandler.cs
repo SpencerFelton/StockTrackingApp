@@ -13,6 +13,7 @@ namespace ProviderWebApi.Models
     {
         private const int maxStockNameLength = 30;
         private const int maxStockAbbrLength = 4;
+        private static StockTrackerEntities db = new StockTrackerEntities();
 
         #region DATABASE MODIFIERS
         /// <summary>
@@ -24,20 +25,22 @@ namespace ProviderWebApi.Models
         /// <param name="price">The price of the stock at the given date and time, in USD.</param>
         public static void AddStock(Stock stock)
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
                 if (stock.name.Length > maxStockNameLength) 
                     throw new ArgumentOutOfRangeException($"Name cannot exceed {maxStockNameLength} characters in length");
                 if (stock.abbr.Length > maxStockAbbrLength) 
                     throw new ArgumentOutOfRangeException($"Abbreviation cannot exceed {maxStockAbbrLength} characters in length");
                 
-                if (entity.Stocks.Where(s => s.name == stock.name).Count() > 0) 
+                if (db.Stocks.Where(s => s.name == stock.name).Count() > 0) 
                     throw new ArgumentException("Stock already exists with the name " + stock.name);
-                if (entity.Stocks.Where(s => s.abbr.ToUpper() == stock.abbr.ToUpper()).Count() > 0) 
+                if (db.Stocks.Where(s => s.abbr.ToUpper() == stock.abbr.ToUpper()).Count() > 0) 
                     throw new ArgumentException("Stock already exists with the abbreviation " + stock.abbr);
 
-                entity.Stocks.Add(stock);
-                entity.SaveChanges();
+                db.Stocks.Add(stock);
+                db.SaveChanges();
+
+                RabbitMQHandler.createAddNewStockRMQMessage(stock); // may need a try-catch to return errors as status codes and stop the api breaking
             }
         }
 
@@ -47,17 +50,19 @@ namespace ProviderWebApi.Models
         /// <param name="abbreviation">The abbreviation of the stock to be deleted.</param>
         public static void DeleteStock(int id)
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
-                if (entity.Stocks.Where(s => s.id == id).Count() == 1)
+                if (db.Stocks.Where(s => s.id == id).Count() == 1)
                 {
-                    Stock stock = entity.Stocks.Single(s => s.id == id);
+                    Stock stock = db.Stocks.Single(s => s.id == id);
                     foreach (PriceHistory price in stock.PriceHistories.ToList())
                     {
-                        entity.PriceHistories.Remove(price);
+                        db.PriceHistories.Remove(price);
                     }
-                    entity.Stocks.Remove(stock);
-                    entity.SaveChanges();
+                    db.Stocks.Remove(stock);
+                    db.SaveChanges();
+
+                    RabbitMQHandler.createDeleteStockRMQMessage(stock);
                 }
                 else
                 {
@@ -72,11 +77,11 @@ namespace ProviderWebApi.Models
         /// <param name="transitStock">The <see cref="TransitStock"/> containing the abbreviation of the stock, the price and the associated date and time.</param>
         public static void UpdateStockPrice(TransitStock transitStock)
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
-                if (entity.Stocks.Where(s => s.id == transitStock.stock_id).Count() == 1)
+                if (db.Stocks.Where(s => s.id == transitStock.stock_id).Count() == 1)
                 {
-                    Stock stock = entity.Stocks.Single(s => s.id == transitStock.stock_id);
+                    Stock stock = db.Stocks.Single(s => s.id == transitStock.stock_id);
 
                     PriceHistory newHistory = new PriceHistory
                     {
@@ -85,8 +90,8 @@ namespace ProviderWebApi.Models
                         value = transitStock.price
                     };
 
-                    entity.PriceHistories.Add(newHistory);
-                    entity.SaveChanges();
+                    db.PriceHistories.Add(newHistory);
+                    db.SaveChanges();
                 }
                 else
                 {
@@ -97,20 +102,21 @@ namespace ProviderWebApi.Models
 
         public static void ModifyStock(Stock modifiedStock)
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
-                if (entity.Stocks.Where(s => s.id == modifiedStock.id).Count() == 1)
+                if (db.Stocks.Where(s => s.id == modifiedStock.id).Count() == 1)
                 {
-                    Stock stock = entity.Stocks.Single(s => s.id == modifiedStock.id);
+                    Stock stock = db.Stocks.Single(s => s.id == modifiedStock.id);
                     stock.abbr = modifiedStock.abbr;
                     stock.name = modifiedStock.name;
+                    RabbitMQHandler.createModifyStockRMQMessage(stock); // may need a try-catch to return errors as status codes and stop the api breaking
                 }
                 else
                 {
                     throw new ArgumentException("Stock not found");
                 }
 
-                entity.SaveChanges();
+                db.SaveChanges(); 
             }
         }
         #endregion
@@ -122,9 +128,9 @@ namespace ProviderWebApi.Models
         /// <returns>The count/number</returns>
         public static int StockCount()
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
-                return entity.Stocks.Count();
+                return db.Stocks.Count();
             }
         }
 
@@ -140,11 +146,11 @@ namespace ProviderWebApi.Models
         /// </remarks>
         public static int CheckStockExists(string name, string abbreviation)
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
                 int status = 0;
-                if (entity.Stocks.Where(s => s.name.ToLower() == name.ToLower()).Count() > 0) status += 2;
-                if (entity.Stocks.Where(s => s.abbr.ToUpper() == abbreviation.ToUpper()).Count() > 0) status += 1;
+                if (db.Stocks.Where(s => s.name.ToLower() == name.ToLower()).Count() > 0) status += 2;
+                if (db.Stocks.Where(s => s.abbr.ToUpper() == abbreviation.ToUpper()).Count() > 0) status += 1;
                 return status;
             }
         }
@@ -157,9 +163,9 @@ namespace ProviderWebApi.Models
         /// <returns>An <see cref="Array{Stock}"/> containing all the <see cref="Stock"/>s in the Stocks table.</returns>
         public static Stock[] GetStocks()
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
-                return entity.Stocks.ToArray();
+                return db.Stocks.ToArray();
             }
         }
 
@@ -170,9 +176,9 @@ namespace ProviderWebApi.Models
         /// <returns>The particular <see cref="Stock"/> if it exists, otherwise null.</returns>
         public static Stock GetStock(int id)
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
-                return entity.Stocks.SingleOrDefault(s => s.id == id);
+                return db.Stocks.SingleOrDefault(s => s.id == id);
             }
         }
         /// <summary>
@@ -182,9 +188,9 @@ namespace ProviderWebApi.Models
         /// <returns>The particular <see cref="Stock"/> if it exists, otherwise null.</returns>
         public static Stock GetStock(string abbreviation)
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
-                return entity.Stocks.SingleOrDefault(s => s.abbr == abbreviation);
+                return db.Stocks.SingleOrDefault(s => s.abbr == abbreviation);
             }
         }
 
@@ -195,9 +201,9 @@ namespace ProviderWebApi.Models
         /// <returns>The particular <see cref="Stock"/> if it exists, otherwise null.</returns>
         public static Stock GetStockFromName(string name)
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
-                return entity.Stocks.SingleOrDefault(s => s.name == name);
+                return db.Stocks.SingleOrDefault(s => s.name == name);
             }
         }
 
@@ -210,10 +216,10 @@ namespace ProviderWebApi.Models
         /// <exception cref="ArgumentOutOfRangeException"/>
         public static decimal GetMostRecentStockPrice(Stock stock) // Throws exceptions // May be problematic if implemented
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
                 if (stock == null) throw new ArgumentNullException();
-                Stock foundStock = entity.Stocks.SingleOrDefault(s => s.id == stock.id);
+                Stock foundStock = db.Stocks.SingleOrDefault(s => s.id == stock.id);
                 if (foundStock == null) throw new ArgumentOutOfRangeException();
                 decimal price = 0.00M;
                 DateTime dateTime = stock.PriceHistories.FirstOrDefault().time;
@@ -246,10 +252,10 @@ namespace ProviderWebApi.Models
         /// <returns>The <see cref="PriceHistory"/> of the <see cref="Stock"/> if exists, or null.</returns>
         public static PriceHistory GetMostRecentStockPriceHistory(Stock stock)
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
                 if (stock == null) return null;
-                Stock foundStock = entity.Stocks.SingleOrDefault(s => s.id == stock.id);
+                Stock foundStock = db.Stocks.SingleOrDefault(s => s.id == stock.id);
                 if (foundStock == null) return null;
                 PriceHistory latestPriceHistory = null;
                 bool first = true;
@@ -278,9 +284,9 @@ namespace ProviderWebApi.Models
         /// <returns>An <see cref="Array"/> containing all the <see cref="PriceHistory"/>s in the PriceHistory table.</returns>
         public static PriceHistory[] GetPriceHistories()
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
-                return entity.PriceHistories.ToArray();
+                return db.PriceHistories.ToArray();
             }
         }
         /// <summary>
@@ -290,10 +296,10 @@ namespace ProviderWebApi.Models
         /// <returns>An <see cref="Array"/> containing all the <see cref="PriceHistory"/>s if the <see cref="Stock"/> exists, otherwise an empty array.</returns>
         public static PriceHistory[] GetPriceHistories(Stock stock)
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
                 if (stock == null) return new PriceHistory[] { };
-                Stock foundStock = entity.Stocks.SingleOrDefault(s => s.id == stock.id);
+                Stock foundStock = db.Stocks.SingleOrDefault(s => s.id == stock.id);
                 if (stock == null) return new PriceHistory[] { };
                 return foundStock.PriceHistories.ToArray();
             }
@@ -306,9 +312,9 @@ namespace ProviderWebApi.Models
         /// <returns>The <see cref="PriceHistory"/> if exists, otherwise null.</returns>
         public static PriceHistory GetPriceHistory(int id)
         {
-            using (StockTrackerEntities entity = new StockTrackerEntities())
+            using (db)
             {
-                return entity.PriceHistories.SingleOrDefault(p => p.id == id);
+                return db.PriceHistories.SingleOrDefault(p => p.id == id);
             }
         }
         #endregion

@@ -37,7 +37,6 @@ namespace ProviderWebApi.Controllers
         {
             if (stock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
             DBHandler.AddStock(stock); // may need a try-catch to return errors as status codes and stop the api breaking
-            RabbitMQHandler.createAddNewStockRMQMessage(stock); // may need a try-catch to return errors as status codes and stop the api breaking
         }
 
         // DELETE api/stocks/id
@@ -47,7 +46,6 @@ namespace ProviderWebApi.Controllers
             Stock stock = DBHandler.GetStock(id);
             if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
             DBHandler.DeleteStock(id);
-            RabbitMQHandler.createDeleteStockRMQMessage(stock);
         }
 
         // PUT api/stocks/id
@@ -57,7 +55,6 @@ namespace ProviderWebApi.Controllers
         {
             if (stock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
             DBHandler.ModifyStock(stock);
-            RabbitMQHandler.createModifyStockRMQMessage(stock); // may need a try-catch to return errors as status codes and stop the api breaking
         }
     }
 }

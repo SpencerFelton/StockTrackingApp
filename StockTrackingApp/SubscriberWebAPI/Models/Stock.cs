@@ -14,17 +14,8 @@ namespace SubscriberWebAPI.Models
     
     public partial class Stock
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Stock()
-        {
-            this.PriceHistories = new HashSet<PriceHistory>();
-        }
-    
         public int id { get; set; }
         public string name { get; set; }
         public string abbr { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PriceHistory> PriceHistories { get; set; }
     }
 }

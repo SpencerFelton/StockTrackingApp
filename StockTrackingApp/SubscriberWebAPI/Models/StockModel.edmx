@@ -68,7 +68,6 @@
           <Property Name="stock_id" Type="Int32" Nullable="false" />
           <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="value" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="Stock" Relationship="Self.FK__PriceHist__value__267ABA7A" FromRole="PriceHistory" ToRole="Stocks" />
         </EntityType>
         <EntityType Name="Stock">
           <Key>
@@ -77,7 +76,6 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="abbr" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="PriceHistories" Relationship="Self.FK__PriceHist__value__267ABA7A" FromRole="Stocks" ToRole="PriceHistory" />
         </EntityType>
         <Association Name="FK__PriceHist__value__267ABA7A">
           <End Role="Stocks" Type="Self.Stock" Multiplicity="1" />

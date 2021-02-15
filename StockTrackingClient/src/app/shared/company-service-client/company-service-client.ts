@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ICompanyView} from '../companyView';
+import {ICompanyView} from '../company-models/companyView';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError, of } from 'rxjs';
 import {catchError, tap, map} from 'rxjs/operators';
@@ -16,6 +16,27 @@ export class CompanyServiceClient{
     id:number = 5;
 
     constructor(private http: HttpClient){}
+
+    logIn():Observable<any>{
+        console.log("not implemented");
+        //this class accepts an email
+        //it is a get request that gets the login information of the login email
+        //if the backend server can find the login information
+            //add information to clientLogin.service
+            //return a 1 that can then be used for the login page (say that you have sucessfully logged in or something)
+        //if it can't
+            //Throw an exception
+            //return a 0 basically saying that you don't have an account. Sign up!
+        return;
+    }
+
+    register():Observable<any>{
+        console.log("not implemented");
+        return;
+    }
+
+
+
 
     //Modify this for the web server
     getCompaniesClient():Observable<ICompanyView[]>{

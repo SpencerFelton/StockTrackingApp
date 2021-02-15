@@ -1,0 +1,19 @@
+.mat-button{
+    width:100%
+}
+
+img {
+    border-radius: 50%;
+    max-height: 48px;
+    max-width: 48px;
+    float:left
+}
+
+.info{
+    overflow:auto;
+    float:left;
+    width: 90px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    font-size: small;
+}

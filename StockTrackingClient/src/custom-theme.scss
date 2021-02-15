@@ -37,6 +37,29 @@ $APM-theme: mat-light-theme((
   color:white;
 }
 
+.link{
+  cursor: pointer;
+}
+
+.error{
+  color:red !important;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-toolbar {
+  z-index: 2;
+  position: relative;
+}
+
+mat-sidenav{
+  z-index: 2;
+  position: relative;
+}
+
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.

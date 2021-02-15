@@ -2,7 +2,7 @@ import { Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {NotifierService} from '../shared/Notifications/notifier.service';
 
 
-import{ICompany} from '../shared/company';
+import{ICompany} from '../shared/company-models/company';
 import { ActivatedRoute } from '@angular/router';
 import { CompanyService } from '../shared/company-service/company.service';
 import {Router} from '@angular/router';

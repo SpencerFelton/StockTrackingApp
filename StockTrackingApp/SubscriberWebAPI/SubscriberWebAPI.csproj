@@ -46,10 +46,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -171,36 +171,32 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PricesController.cs" />
     <Compile Include="Controllers\StocksController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\UserDBHandler.cs" />
-    <Compile Include="Models\StockDBHandler.cs" />
     <Compile Include="Models\PriceHistory.cs">
-      <DependentUpon>StockModel.tt</DependentUpon>
+      <DependentUpon>StockTrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Stock.cs">
-      <DependentUpon>StockModel.tt</DependentUpon>
+      <DependentUpon>StockTrackerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StockModel.Context.cs">
+    <Compile Include="Models\StockTrackerModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StockModel.Context.tt</DependentUpon>
+      <DependentUpon>StockTrackerModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StockModel.cs">
+    <Compile Include="Models\StockTrackerModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StockModel.tt</DependentUpon>
+      <DependentUpon>StockTrackerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StockModel.Designer.cs">
+    <Compile Include="Models\StockTrackerModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StockModel.edmx</DependentUpon>
+      <DependentUpon>StockTrackerModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\TransitStock.cs" />
     <Compile Include="Models\User.cs">
-      <DependentUpon>StockModel.tt</DependentUpon>
+      <DependentUpon>StockTrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -213,15 +209,15 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\StockModel.Context.tt">
+    <Content Include="Models\StockTrackerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockModel.edmx</DependentUpon>
-      <LastGenOutput>StockModel.Context.cs</LastGenOutput>
+      <DependentUpon>StockTrackerModel.edmx</DependentUpon>
+      <LastGenOutput>StockTrackerModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\StockModel.tt">
+    <Content Include="Models\StockTrackerModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockModel.edmx</DependentUpon>
-      <LastGenOutput>StockModel.cs</LastGenOutput>
+      <DependentUpon>StockTrackerModel.edmx</DependentUpon>
+      <LastGenOutput>StockTrackerModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -244,12 +240,12 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\StockModel.edmx">
+    <EntityDeploy Include="Models\StockTrackerModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>StockModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>StockTrackerModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\StockModel.edmx.diagram">
-      <DependentUpon>StockModel.edmx</DependentUpon>
+    <Content Include="Models\StockTrackerModel.edmx.diagram">
+      <DependentUpon>StockTrackerModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

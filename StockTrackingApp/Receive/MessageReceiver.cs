@@ -3,7 +3,9 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Text;
 using SubscriberWebAPI.Models;
+using SubscriberWebAPI.Controllers;
 using Newtonsoft.Json.Linq;
+using System.Data.Entity;
 
 namespace Receive
 {
@@ -11,7 +13,9 @@ namespace Receive
     {
         private readonly IModel _channel;
         private string queueName = "";
-        
+
+        private ClientStockTracker db = new ClientStockTracker();
+
         public MessageReceiver(IModel channel)
         {
             _channel = channel;
@@ -49,48 +53,50 @@ namespace Receive
 
         public void addNewStock(JObject message)
         {
-            Stock stock = new Stock() //Transit Stock format used within Subscriber API
+            Stock stock = new Stock()
             {
                 name = message.Value<string>("stockName"),
                 abbr = message.Value<string>("stockAbbreviation")
             };
-
-            //Calling API methods --- may need to be expanded upon for altering Subscriber side DB if expanded upon i.e deleting history etc
-            StockDBHandler.AddStock(stock);
+            db.Stocks.Add(stock);
+            db.SaveChanges();
         }
 
         public void changeNameAbbr(JObject message)
         {
-            Stock stock = new Stock() //Transit Stock format used within Subscriber API
+            Stock stock = new Stock()
             {
                 id = message.Value<int>("stockID"),
                 name = message.Value<string>("stockName"),
                 abbr = message.Value<string>("stockAbbreviation")
             };
 
-            StockDBHandler.ModifyStock(stock);
+            db.Entry(stock).State = EntityState.Modified;
+            db.SaveChanges();
         }
 
         public void deleteStock(JObject message)
         {
-            Stock stock = new Stock() //Transit Stock format used within Subscriber API
+            Stock stock = new Stock()
             {
                 id = message.Value<int>("stockID")
             };
-            StockDBHandler.DeleteStock(stock.id);
+            db.Stocks.Remove(stock);
+            db.SaveChanges();
         }
 
         public void changePrice(JObject message)
         {
-            TransitStock stock = new TransitStock() //Transit Stock format used within Subscriber API
+            PriceHistory price = new PriceHistory() //Transit Stock format used within Subscriber API
             {
                 stock_id = message.Value<int>("stockID"),
-                price = message.Value<decimal>("stockPrice"),
-                dateTime = message.Value<DateTime>("stockDateTime")
+                value = message.Value<decimal>("stockPrice"),
+                time = message.Value<DateTime>("stockDateTime")
             };
 
             //Calling API methods --- may need to be expanded upon for altering Subscriber side DB if expanded upon i.e deleting history etc
-            StockDBHandler.UpdateStockPrice(stock);
+            db.PriceHistories.Add(price);
+            db.SaveChanges();
         }
 
         public void determineAction(string methodName, JObject message)

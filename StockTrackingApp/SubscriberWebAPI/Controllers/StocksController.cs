@@ -1,42 +1,124 @@
-﻿using SubscriberWebAPI.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
+using System.Web.Http.Description;
+using SubscriberWebAPI.Models;
 
 namespace SubscriberWebAPI.Controllers
 {
-    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class StocksController : ApiController
     {
-        // GET api/stocks
-        public IEnumerable<TransitStock> GetAllStocks()
+        private ClientStockTracker db = new ClientStockTracker();
+
+        // GET: api/Stocks
+        public IQueryable<Stock> GetStocks()
         {
-            Stock[] stocks = StockDBHandler.GetStocks();
-            List<TransitStock> transitStocks = new List<TransitStock>();
-            foreach (Stock stock in stocks)
+            return db.Stocks;
+        }
+
+        // GET: api/Stocks/5
+        [ResponseType(typeof(Stock))]
+        public async Task<IHttpActionResult> GetStock(int id)
+        {
+            Stock stock = await db.Stocks.FindAsync(id);
+            if (stock == null)
             {
-                transitStocks.Add(new TransitStock(stock));
+                return NotFound();
             }
-            return transitStocks;
+
+            return Ok(stock);
         }
 
-        // GET api/stocks/4
-        public TransitStock GetStockByID(int id)
+        // PUT: api/Stocks/5
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PutStock(int id, Stock stock)
         {
-            Stock stock = StockDBHandler.GetStock(id);
-            if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
-            return new TransitStock(stock);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != stock.id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(stock).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!StockExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET api/stocks/ABBR
-        public TransitStock GetStockByAbbreviation(string abbr)
+        // POST: api/Stocks
+        [ResponseType(typeof(Stock))]
+        public async Task<IHttpActionResult> PostStock(Stock stock)
         {
-            Stock stock = StockDBHandler.GetStock(abbr);
-            if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
-            return new TransitStock(stock);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Stocks.Add(stock);
+            await db.SaveChangesAsync();
+
+            return CreatedAtRoute("DefaultApi", new { id = stock.id }, stock);
+        }
+
+        // DELETE: api/Stocks/5
+        [ResponseType(typeof(Stock))]
+        public async Task<IHttpActionResult> DeleteStock(int id)
+        {
+            Stock stock = await db.Stocks.FindAsync(id);
+            if (stock == null)
+            {
+                return NotFound();
+            }
+
+            db.Stocks.Remove(stock);
+            await db.SaveChangesAsync();
+
+            return Ok(stock);
+        }
+
+        public void AddStock(Stock stock)
+        {
+            db.Stocks.Add(stock);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool StockExists(int id)
+        {
+            return db.Stocks.Count(e => e.id == id) > 0;
         }
     }
 }

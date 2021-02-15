@@ -102,12 +102,6 @@ namespace SubscriberWebAPI.Controllers
             return Ok(priceHistory);
         }
 
-        public void AddPriceToDB(PriceHistory priceHistory)
-        {
-            db.PriceHistories.Add(priceHistory);
-            db.SaveChanges();
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -102,11 +102,6 @@ namespace SubscriberWebAPI.Controllers
             return Ok(stock);
         }
 
-        public void AddStock(Stock stock)
-        {
-            db.Stocks.Add(stock);
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

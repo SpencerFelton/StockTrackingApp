@@ -39,6 +39,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 import {RegisterComponent} from './Register/Register.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatTabsModule} from '@angular/material/tabs';
+
+// Import the Auth0 module from the SDK
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment as env } from '../environments/environment';
+
+import {AuthButtonComponent} from './Login-Auth0/login-auth0.component';
+import {AccountButtonComponent} from './AccountInformation/account-button.component';
+import {AccountViewComponent} from './AccountInformation/account.component';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +64,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     TestCallsComponent,
     SortDirective,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AuthButtonComponent,
+    AccountButtonComponent,
+    AccountViewComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -68,11 +85,18 @@ import { MatNativeDateModule } from '@angular/material/core';
       { path: 'viewstock', component:StockViewer}, 
       { path: 'login', component:LoginComponent},
       { path: 'register', component:RegisterComponent},
+      {path: 'account', component: AccountViewComponent},
       { path: 'subscriptions', component:subscriptionView},
       {path: 'testing', component:TestCallsComponent},
       { path: '',redirectTo: 'welcome', pathMatch: 'full'},
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'}    
     ]),
+    AuthModule.forRoot({
+      ...env.auth,
+      httpInterceptor:{
+          allowedList: [`${env.dev.serverUrl}/api/companies`],
+      }
+    }),
     MatDialogModule,
     MatCheckboxModule,    
     MatSnackBarModule,
@@ -87,7 +111,15 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatNativeDateModule, 
     MatToolbarModule,
     MatSidenavModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTabsModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="StockTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ClientStockTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="PriceHistory">
           <Key>
             <PropertyRef Name="id" />
@@ -47,7 +47,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="StockTrackerModelStoreContainer">
+        <EntityContainer Name="ClientStockTrackerModelStoreContainer">
           <EntitySet Name="PriceHistory" EntityType="Self.PriceHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stocks" EntityType="Self.Stocks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -56,10 +56,11 @@
             <End Role="PriceHistory" EntitySet="PriceHistory" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="StockTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ClientStockTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="PriceHistory">
           <Key>
             <PropertyRef Name="id" />
@@ -77,7 +78,20 @@
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="abbr" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <Association Name="FK__PriceHist__value__267ABA7A">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password_hash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="phone_number" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__PriceHist__value__2B3F6F97">
           <End Role="Stocks" Type="Self.Stock" Multiplicity="1" />
           <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -89,36 +103,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="StockTrackerEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ClientStockTracker" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="PriceHistories" EntityType="Self.PriceHistory" />
           <EntitySet Name="Stocks" EntityType="Self.Stock" />
-          <AssociationSet Name="FK__PriceHist__value__267ABA7A" Association="Self.FK__PriceHist__value__267ABA7A">
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__PriceHist__value__2B3F6F97" Association="Self.FK__PriceHist__value__2B3F6F97">
             <End Role="Stocks" EntitySet="Stocks" />
             <End Role="PriceHistory" EntitySet="PriceHistories" />
           </AssociationSet>
-          <EntitySet Name="Users" EntityType="StockTrackerModel.User" />
         </EntityContainer>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="username" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
-          <Property Name="password_hash" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="320" FixedLength="false" Unicode="true" />
-          <Property Name="first_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="phone_number" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StockTrackerModelStoreContainer" CdmEntityContainer="StockTrackerEntities">
+        <EntityContainerMapping StorageEntityContainer="ClientStockTrackerModelStoreContainer" CdmEntityContainer="ClientStockTracker">
           <EntitySetMapping Name="PriceHistories">
-            <EntityTypeMapping TypeName="StockTrackerModel.PriceHistory">
+            <EntityTypeMapping TypeName="ClientStockTrackerModel.PriceHistory">
               <MappingFragment StoreEntitySet="PriceHistory">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="stock_id" ColumnName="stock_id" />
@@ -128,7 +129,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Stocks">
-            <EntityTypeMapping TypeName="StockTrackerModel.Stock">
+            <EntityTypeMapping TypeName="ClientStockTrackerModel.Stock">
               <MappingFragment StoreEntitySet="Stocks">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -137,16 +138,16 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="StockTrackerModel.User">
+            <EntityTypeMapping TypeName="ClientStockTrackerModel.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="surname" ColumnName="surname" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
-                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

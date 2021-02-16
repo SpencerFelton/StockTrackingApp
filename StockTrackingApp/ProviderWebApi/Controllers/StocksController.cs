@@ -17,6 +17,9 @@ namespace ProviderWebApi.Controllers
         private StockModel db = new StockModel();
 
         // GET: api/stocks
+        [HttpGet]
+        [Route("private")]
+        [Authorize]
         public IQueryable<Stock> GetStocks()
         {
             return db.Stocks;

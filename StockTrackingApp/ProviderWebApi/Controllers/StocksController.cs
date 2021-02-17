@@ -18,14 +18,14 @@ namespace ProviderWebApi.Controllers
 
         // GET: api/stocks
         [HttpGet]
-        [Route("private")]
-        [Authorize]
-        public IQueryable<Stock> GetStocks()
+        public IHttpActionResult GetStocks()
         {
-            return db.Stocks;
+            return Ok(db.Stocks);
         }
 
         // GET: api/stocks/5
+        [HttpGet]
+        [Authorize]
         [ResponseType(typeof(Stock))]
         public async Task<IHttpActionResult> GetStock(int id)
         {

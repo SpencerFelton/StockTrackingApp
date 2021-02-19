@@ -28,6 +28,7 @@
     "bootstrap-material-design": "^4.1.1",
     "chart.js": "^2.9.4",
     "chartjs-plugin-annotation": "^0.5.7",
+    "moment": "^2.29.1",
     "ng2-charts": "^2.4.2",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

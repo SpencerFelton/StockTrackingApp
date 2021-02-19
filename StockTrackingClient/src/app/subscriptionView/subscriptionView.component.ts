@@ -59,7 +59,8 @@ export class subscriptionView implements OnInit {
     }
 
     subUnsub(company:ICompanyView): void {
-        company.subscribed = !company.subscribed
+        company.subscribed = !company.subscribed;
+        /*
         this.companyServiceClient.modifyStockClient(company).subscribe({
          next: () => {console.log("Sucessfully subscribed");
          if(company.subscribed) this.NotifierService.showNotification("Subscription added!", "OK","success","tick");
@@ -71,6 +72,7 @@ export class subscriptionView implements OnInit {
              this.NotifierService.showNotification("Error adding subscription!", "OK","success","cross");
          }
         });
+        */
      }
 
     ngOnInit(): void {
@@ -80,6 +82,7 @@ export class subscriptionView implements OnInit {
     }
 
     getSubscribedCompanies():void{
+        /*
         this.companyServiceClient.getSubscribedCompanies().subscribe({
             next: companies =>{
                 this.companies = companies;
@@ -89,9 +92,11 @@ export class subscriptionView implements OnInit {
             error: err => this.errorMessage = err
             
         });
+        */
     }
 
     onSellStock(company:ICompanyView): void{
+        /*
         if(company.stocksPurchased > 0){
             company.stocksPurchased -=1;
             this.companyServiceClient.modifyStockClient(company)
@@ -109,11 +114,13 @@ export class subscriptionView implements OnInit {
     }
         else{
         }
+        */
         
     }
 
     onBuyStock(company:ICompanyView): void{
         company.stocksPurchased +=1;
+        /*
         this.companyServiceClient.modifyStockClient(company)
         .subscribe({
             next: () =>{
@@ -126,5 +133,6 @@ export class subscriptionView implements OnInit {
                 this.NotifierService.showNotification("Error occured whilst buying stock!", "OK","error","cross");
             } 
     });
+    */
     }
 }

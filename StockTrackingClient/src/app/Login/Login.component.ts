@@ -21,7 +21,7 @@ function validSelector(c: AbstractControl):{[ key: string] : boolean} | null {
 
 export class LoginComponent implements OnInit{  
   LoginForm: FormGroup;
-  user: LoginDetails;
+  //user: LoginDetails;
   public pageTitle = 'Please Log In';
   accountTypeMessage:string;
   usernameMessage: string;

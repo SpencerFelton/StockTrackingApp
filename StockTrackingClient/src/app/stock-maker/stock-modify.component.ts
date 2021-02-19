@@ -4,7 +4,7 @@ import {NotifierService} from '../shared/Notifications/notifier.service';
 import {InputType} from './InputEnumStock';
 
 
-import{ICompany} from '../shared/company';
+import{ICompany} from '../shared/company-models/company';
 import { ActivatedRoute } from '@angular/router';
 import { CompanyService } from '../shared/company-service/company.service';
 import {Router} from '@angular/router';

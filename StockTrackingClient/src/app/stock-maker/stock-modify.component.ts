@@ -78,28 +78,32 @@ export class StockModify implements OnInit, OnChanges{
             this.ModifyStockForm = this.formbuilder.group({
                 companyName: [company.name,{validators: [Validators.required, Validators.minLength(3)],updateOn: 'blur'}],
                 companyShorthand: [{value: company.abbreviation, disabled: true}],
-                stockPrice: [company.price,{validators: [Validators.required],updateOn: 'blur'}]
+                stockPrice: [company.price,{validators: [Validators.required]}]
             }); 
         }
         
 
-          const selectorControl = this.ModifyStockForm.get("companyName");
-          selectorControl.valueChanges.subscribe(
+          const companyNameControl = this.ModifyStockForm.get("companyName");
+          companyNameControl.valueChanges.subscribe(
             value =>{
               console.log(String(value));
-              this.setMessage(InputType.CompanyName, selectorControl)
+              this.setMessage(InputType.CompanyName, companyNameControl)
             }
           )
 
-          const usernameControl = this.ModifyStockForm.get('companyShorthand');
-          usernameControl.valueChanges.subscribe(
+          const companyShorthandControl = this.ModifyStockForm.get('companyShorthand');
+          companyShorthandControl.valueChanges.subscribe(
             value => {console.log(String("connected to companyShorthand"));
-                      this.setMessage(InputType.CompanyShorthand, usernameControl)}
+                      this.setMessage(InputType.CompanyShorthand, companyShorthandControl)}
           )
-          const passwordControl = this.ModifyStockForm.get('stockPrice');
-          passwordControl.valueChanges.subscribe(
+
+          const stockPriceControl = this.ModifyStockForm.get('stockPrice');
+          stockPriceControl.valueChanges.subscribe(
             value => {console.log(String("connected to stockPrice"));
-                      this.setMessage(InputType.StockPrice, passwordControl)}
+                      console.log("Stock price is ");
+                      console.log(value);
+                      this.CompanyStock = value;
+                      this.setMessage(InputType.StockPrice, stockPriceControl)}
           )
           this.formGenerated = true;
     }

@@ -38,7 +38,12 @@
             formControlName="stockPrice"
             [ngClass] = "{'is-invalid': stockPriceMessage}"> 
         <mat-hint class = "error">{{stockPriceMessage}}</mat-hint>
+        
     </mat-form-field> 
+    <div>
+        <div>% Change</div>
+        <div><pm-percent [potentialStockPrice] = 'CompanyStock' [currentStockPrice] = 'company.price'></pm-percent></div> 
+    </div>
         <div>
             <button mat-flat-button 
                     color="primary"

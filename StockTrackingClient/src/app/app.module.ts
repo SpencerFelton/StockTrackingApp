@@ -19,9 +19,8 @@ import {MatSelectModule} from '@angular/material/select';
 
 
 
-
-import {CompanyData} from './shared/company-data';
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+//import {CompanyData} from './shared/company-data';
+//import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import {SortDirective} from './directive/sort.directive'
 //import {subscription} from 
 //import {CompanyDataClient} from './shared/company-data-client-DEPRICATED';
@@ -40,6 +39,7 @@ import { ChartsModule } from 'ng2-charts';
 import {RegisterComponent} from './Register/Register.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatTabsModule} from '@angular/material/tabs';
+import {StockChartComponent} from './shared/stock-chart/stock-chart.component';
 
 // Import the Auth0 module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
@@ -68,6 +68,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     AuthButtonComponent,
     AccountButtonComponent,
     AccountViewComponent,
+    StockChartComponent
 
   ],
   imports: [
@@ -76,7 +77,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     ChartsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    InMemoryWebApiModule.forRoot(CompanyData),
+    //InMemoryWebApiModule.forRoot(CompanyData),
     RouterModule.forRoot([
       { path: 'stockmaker', component: StockMaker},
       { path: 'stockviewer', component: StockViewer},
@@ -94,7 +95,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor:{
-          allowedList: [`${env.dev.serverUrl}/api/companies`],
+          allowedList: [`${env.dev.serverUrl}/api/`],
       }
     }),
     MatDialogModule,

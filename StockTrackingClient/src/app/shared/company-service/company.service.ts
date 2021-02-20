@@ -6,7 +6,6 @@ import {ObjectConverter} from '../ObjectConverter/object-converter';
 import {Observable, throwError, of } from 'rxjs';
 import {catchError, tap, map, retry} from 'rxjs/operators';
 import { CompanyServiceClient } from '../company-service-client/company-service-client';
-import { environment as env } from '../../../environments/environment';
 
 
 @Injectable({
@@ -46,7 +45,7 @@ export class CompanyService{
     //Calls all the companies. 
     getCompanies():Observable<any>{
         //const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.http.get<any>(`${env.dev.serverUrl}/api/companies`,{observe: 'body', responseType: 'json'})
+        return this.http.get<any>(`${this.trueUrl}`,{observe: 'body', responseType: 'json'})
         .pipe(
             //retry(3), //retry failed request up to three times
             tap(data => console.log('getCompanies: ' + JSON.stringify(data))),
@@ -62,7 +61,7 @@ export class CompanyService{
         console.log("using getcompany function");
         console.log(`id equals ${ids}`);
         if(ids != 0){
-            const url = `${this.clientUrl}/${ids}/`;
+            const url = `${this.trueUrl}/${ids}/`;
             return this.http.get<ICompany>(url)
             .pipe(
                 tap(data => console.log('getCompany: ' + JSON.stringify(data))),
@@ -76,7 +75,7 @@ export class CompanyService{
     //modify an existing company
     modifyCompany(company:ICompany): Observable<any>{
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        const url = `${this.clientUrl}/${company.id}`;
+        const url = `${this.trueUrl}/${company.id}`;
         //CHANGE THE CONVERTPROVIDER DEPENDING ON IF IT'S GONG TO THE BACKEND OR NOT
         var companySend = ObjectConverter.ConvertProvider(company, "id"); 
         return this.http.put<ICompany>(url, companySend, {headers: headers})
@@ -98,12 +97,12 @@ export class CompanyService{
         var companySend = ObjectConverter.ConvertProvider(company, "id"); 
         console.log("I am here!");
         //CHANGE THIS WHEN YOU ARE IMPLEMENTING THE BACKEND, THIS JUST CONNECTS THE TWO DATABASES TOGETHER.
-        this.companyServiceClient.addCompanyClient(companySend)
-        .subscribe();
+        //this.companyServiceClient.addCompanyClient(companySend)
+        //.subscribe();
         console.log(company);
 
         console.log("I am here too!");
-        return this.http.post<ICompany>(this.clientUrl, companySend, {headers:headers})
+        return this.http.post<ICompany>(this.trueUrl, companySend, {headers:headers})
         .pipe(
             tap(() => console.log('added company: ' + company.id)),
             map(()=> company),
@@ -115,8 +114,8 @@ export class CompanyService{
 
     deleteCompany(id: number):Observable<{}>{
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        const url = `${this.clientUrl}/${id}`;
-        this.companyServiceClient.deleteCompanyClient(id).subscribe();
+        const url = `${this.trueUrl}/${id}`;
+        //this.companyServiceClient.deleteCompanyClient(id).subscribe();
         return this.http.delete<ICompany>(url,{headers: headers});
     }
 

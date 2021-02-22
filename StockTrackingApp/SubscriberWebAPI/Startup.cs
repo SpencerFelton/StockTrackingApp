@@ -14,6 +14,7 @@ namespace SubscriberWebAPI
     {
         public void Configuration(IAppBuilder app)
         {
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll); //<--Allows Cors again
             var domain = $"https://{ConfigurationManager.AppSettings["Auth0Domain"]}/";
             var apiIdentifier = ConfigurationManager.AppSettings["Auth0ApiIdentifier"];
 

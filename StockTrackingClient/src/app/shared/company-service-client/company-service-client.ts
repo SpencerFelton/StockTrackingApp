@@ -54,7 +54,7 @@ export class CompanyServiceClient{
         */
         
        
-       return this.http.get<ICompanyView[]>(`${this.clienturl2}`)
+       return this.http.get<ICompanyView[]>(`${env.dev.serverUrlClient}/api/stocks`)
         .pipe(
             tap(data => console.log('getCompanies: ' + JSON.stringify(data))),
             catchError(this.handleError)

@@ -4,7 +4,7 @@ export const environment = {
     domain: "dev-bl7v-w7s.eu.auth0.com",
     clientId : "Txk66g88Utscp8lMVybnZAQP6Q5IcxFM",
     redirectUri: window.location.origin,
-    audience: "https://StockTracker.provider-api",
+    audience: "https://StockTracker.backend-api",
   },
   dev: {
     serverUrlProvider: "https://localhost:44326",

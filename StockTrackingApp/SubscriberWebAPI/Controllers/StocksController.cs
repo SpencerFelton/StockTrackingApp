@@ -18,6 +18,8 @@ namespace SubscriberWebAPI.Controllers
         private ClientStockTrackerEntities db = new ClientStockTrackerEntities();
 
         // GET: api/Stocks
+        [HttpGet]
+        [Authorize]
         public IQueryable<Stock> GetStocks()
         {
             return db.Stocks;

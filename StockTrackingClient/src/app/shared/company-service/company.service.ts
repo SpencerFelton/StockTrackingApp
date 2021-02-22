@@ -47,7 +47,7 @@ export class CompanyService{
     getCompanies():Observable<any>{
         //const headers = new HttpHeaders({'Content-Type': 'application/json'});
         //return this.http.get<any>(`${this.trueUrl}`,{observe: 'body', responseType: 'json'})
-        return this.http.get<any>(`${env.dev.serverUrl}/api/stocks`,{observe: 'body', responseType: 'json'})
+        return this.http.get<any>(`${env.dev.serverUrlProvider}/api/stocks`,{observe: 'body', responseType: 'json'})
         .pipe(
             //retry(3), //retry failed request up to three times
             tap(data => console.log('getCompanies: ' + JSON.stringify(data))),

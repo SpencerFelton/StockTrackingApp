@@ -7,6 +7,7 @@ export const environment = {
     audience: "https://StockTracker.provider-api",
   },
   dev: {
-    serverUrl: "https://localhost:44326",
+    serverUrlProvider: "https://localhost:44326",
+    serverUrlClient:"https://localhost:44353"
   },
 };

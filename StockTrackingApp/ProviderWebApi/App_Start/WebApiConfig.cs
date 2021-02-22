@@ -12,7 +12,7 @@ namespace ProviderWebApi
         {
             // Web API routes
             config.MapHttpAttributeRoutes();
-            config.EnableCors();
+            //config.EnableCors(); <--In order to enable CORS here, we need to do it through OWIN
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

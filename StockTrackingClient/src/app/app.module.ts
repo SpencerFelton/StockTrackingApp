@@ -95,7 +95,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor:{
-          allowedList: [`${env.dev.serverUrl}/api/`],
+          allowedList: [`${env.dev.serverUrl}/api/stocks`],
       }
     }),
     MatDialogModule,

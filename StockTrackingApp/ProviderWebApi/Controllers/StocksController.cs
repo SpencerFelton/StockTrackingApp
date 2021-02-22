@@ -9,15 +9,18 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ProviderWebApi.Models;
+using System.Web.Http.Cors;
 
 namespace ProviderWebApi.Controllers
 {
+    //[EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class StocksController : ApiController
     {
         private StockModel db = new StockModel();
 
         // GET: api/stocks
         [HttpGet]
+        [Authorize]
         public IHttpActionResult GetStocks()
         {
             return Ok(db.Stocks);

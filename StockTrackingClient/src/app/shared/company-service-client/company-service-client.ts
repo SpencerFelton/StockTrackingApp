@@ -15,7 +15,7 @@ import { environment as env } from '../../../environments/environment';
 export class CompanyServiceClient{
 
     private clientUrl  = '/api/companiesClient';
-    private clienturl2 = 'https://localhost:44326/api/stocks';
+    private clienturl2 = 'https://localhost:44353/api/stocks';
     private pricehistoryUrl = 'https://localhost:44353/api/prices'
     //id:number = 5;
 

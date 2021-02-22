@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ProviderWebApi.Models;
+using System.Web.Http.Cors;
 
 namespace ProviderWebApi.Controllers
 {
+    //[EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class PricesController : ApiController
     {
         private StockModel db = new StockModel();

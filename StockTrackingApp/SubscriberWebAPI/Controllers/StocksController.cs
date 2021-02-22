@@ -15,7 +15,7 @@ namespace SubscriberWebAPI.Controllers
 {
     public class StocksController : ApiController
     {
-        private ClientStockTracker db = new ClientStockTracker();
+        private ClientStockTrackerEntities db = new ClientStockTrackerEntities();
 
         // GET: api/Stocks
         public IQueryable<Stock> GetStocks()
@@ -24,6 +24,8 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // GET: api/Stocks/5
+        [HttpGet]
+        [Authorize]
         [ResponseType(typeof(Stock))]
         public async Task<IHttpActionResult> GetStock(int id)
         {
@@ -37,6 +39,8 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // PUT: api/Stocks/5
+        [HttpPut]
+        [Authorize]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutStock(int id, Stock stock)
         {

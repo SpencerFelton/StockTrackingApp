@@ -13,10 +13,10 @@ namespace SubscriberWebAPI.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ClientStockTracker : DbContext
+    public partial class ClientStockTrackerEntities : DbContext
     {
-        public ClientStockTracker()
-            : base("name=ClientStockTracker")
+        public ClientStockTrackerEntities()
+            : base("name=ClientStockTrackerEntities")
         {
         }
     
@@ -27,6 +27,5 @@ namespace SubscriberWebAPI.Models
     
         public virtual DbSet<PriceHistory> PriceHistories { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
-        public virtual DbSet<User> Users { get; set; }
     }
 }

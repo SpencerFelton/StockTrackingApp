@@ -9,8 +9,10 @@
 
 namespace SubscriberWebAPI.Models
 {
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class Stock
     {
         public int id { get; set; }

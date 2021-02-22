@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SubscriberWebAPI.Models
+namespace ProviderWebApi.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ClientStockTrackerEntities : DbContext
+    public partial class StockTrackerEntities : DbContext
     {
-        public ClientStockTrackerEntities()
-            : base("name=ClientStockTrackerEntities")
+        public StockTrackerEntities()
+            : base("name=StockTrackerEntities")
         {
         }
     

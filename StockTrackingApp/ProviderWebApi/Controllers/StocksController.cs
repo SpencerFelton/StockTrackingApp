@@ -1,121 +1,63 @@
-﻿using System;
+﻿using ProviderWebApi.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Description;
-using ProviderWebApi.Models;
+using System.Web.Http.Cors;
 
 namespace ProviderWebApi.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class StocksController : ApiController
     {
-        private StockModel db = new StockModel();
-
-        // GET: api/stocks
-        [HttpGet]
-        public IHttpActionResult GetStocks()
+        // GET api/stocks
+        public IEnumerable<TransitStock> GetAllStocks()
         {
-            return Ok(db.Stocks);
+            Stock[] stocks = DBHandler.GetStocks();
+            List<TransitStock> transitStocks = new List<TransitStock>();
+            foreach (Stock stock in stocks)
+            {
+                transitStocks.Add(new TransitStock(stock));
+            }
+            return transitStocks;
         }
 
-        // GET: api/stocks/5
-        [HttpGet]
-        [Authorize]
-        [ResponseType(typeof(Stock))]
-        public async Task<IHttpActionResult> GetStock(int id)
+        // GET api/stocks/id
+        public TransitStock GetStockByID(int id)
         {
-            Stock stock = await db.Stocks.FindAsync(id);
-            if (stock == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(stock);
+            Stock stock = DBHandler.GetStock(id);
+            if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            return new TransitStock(stock);
         }
 
-        // PUT: api/stocks/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutStock(int id, Stock stock)
+        // POST api/stocks
+        // Post method to add new stock by name and abbreviation
+        [HttpPost]
+        public void AddStock([FromBody] Stock stock)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != stock.id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(stock).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StockExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            if (stock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
+            DBHandler.AddStock(stock); // may need a try-catch to return errors as status codes and stop the api breaking
+            RabbitMQHandler.createAddNewStockRMQMessage(stock); // may need a try-catch to return errors as status codes and stop the api breaking
         }
 
-        // POST: api/stocks
-        [ResponseType(typeof(Stock))]
-        public async Task<IHttpActionResult> PostStock(Stock stock)
+        // DELETE api/stocks/id
+        // Delete method to delete stock by ID
+        public void DeleteStock(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Stocks.Add(stock);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = stock.id }, stock);
+            Stock stock = DBHandler.GetStock(id);
+            if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            DBHandler.DeleteStock(id);
+            RabbitMQHandler.createDeleteStockRMQMessage(stock);
         }
 
-        // DELETE: api/stocks/5
-        [ResponseType(typeof(Stock))]
-        public async Task<IHttpActionResult> DeleteStock(int id)
+        // PUT api/stocks/id
+        // Put method to modify stock, referenced by ID along with new name and abbreviation
+        [HttpPut]
+        public void ModifyStock([FromBody]Stock stock)
         {
-            Stock stock = await db.Stocks.FindAsync(id);
-            if (stock == null)
-            {
-                return NotFound();
-            }
-
-            db.Stocks.Remove(stock);
-            await db.SaveChangesAsync();
-
-            return Ok(stock);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool StockExists(int id)
-        {
-            return db.Stocks.Count(e => e.id == id) > 0;
+            if (stock == null) throw new HttpResponseException(HttpStatusCode.BadRequest);
+            DBHandler.ModifyStock(stock);
+            RabbitMQHandler.createModifyStockRMQMessage(stock); // may need a try-catch to return errors as status codes and stop the api breaking
         }
     }
 }

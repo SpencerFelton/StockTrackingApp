@@ -19,10 +19,10 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="abbr" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="abbr" Type="nchar" MaxLength="4" Nullable="false" />
         </EntityType>
-        <Association Name="FK__PriceHist__value__38996AB5">
+        <Association Name="FK__PriceHist__value__267ABA7A">
           <End Role="Stocks" Type="Self.Stocks" Multiplicity="1" />
           <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -37,7 +37,7 @@
         <EntityContainer Name="StockTrackerModelStoreContainer">
           <EntitySet Name="PriceHistory" EntityType="Self.PriceHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stocks" EntityType="Self.Stocks" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__PriceHist__value__38996AB5" Association="Self.FK__PriceHist__value__38996AB5">
+          <AssociationSet Name="FK__PriceHist__value__267ABA7A" Association="Self.FK__PriceHist__value__267ABA7A">
             <End Role="Stocks" EntitySet="Stocks" />
             <End Role="PriceHistory" EntitySet="PriceHistory" />
           </AssociationSet>
@@ -55,16 +55,18 @@
           <Property Name="stock_id" Type="Int32" Nullable="false" />
           <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="value" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK__PriceHist__value__267ABA7A" FromRole="PriceHistory" ToRole="Stocks" />
         </EntityType>
         <EntityType Name="Stock">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="abbr" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="abbr" Type="String" MaxLength="4" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PriceHistories" Relationship="Self.FK__PriceHist__value__267ABA7A" FromRole="Stocks" ToRole="PriceHistory" />
         </EntityType>
-        <Association Name="FK__PriceHist__value__38996AB5">
+        <Association Name="FK__PriceHist__value__267ABA7A">
           <End Role="Stocks" Type="Self.Stock" Multiplicity="1" />
           <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -76,10 +78,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="StockModel" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="StockTrackerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="PriceHistories" EntityType="Self.PriceHistory" />
           <EntitySet Name="Stocks" EntityType="Self.Stock" />
-          <AssociationSet Name="FK__PriceHist__value__38996AB5" Association="Self.FK__PriceHist__value__38996AB5">
+          <AssociationSet Name="FK__PriceHist__value__267ABA7A" Association="Self.FK__PriceHist__value__267ABA7A">
             <End Role="Stocks" EntitySet="Stocks" />
             <End Role="PriceHistory" EntitySet="PriceHistories" />
           </AssociationSet>
@@ -89,7 +91,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StockTrackerModelStoreContainer" CdmEntityContainer="StockModel">
+        <EntityContainerMapping StorageEntityContainer="StockTrackerModelStoreContainer" CdmEntityContainer="StockTrackerEntities">
           <EntitySetMapping Name="PriceHistories">
             <EntityTypeMapping TypeName="StockTrackerModel.PriceHistory">
               <MappingFragment StoreEntitySet="PriceHistory">

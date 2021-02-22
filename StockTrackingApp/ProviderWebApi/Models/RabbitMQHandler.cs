@@ -68,13 +68,13 @@ namespace ProviderWebApi.Models
 
             SendMessage(json);
         }
-        public static void createUpdateStockPriceRMQMessage(PriceHistory price)
+        public static void createUpdateStockPriceRMQMessage(TransitStock transitStock)
         {
             JObject json = new JObject();
             json.Add("methodName", "changePrice");
-            json.Add("stockID", price.stock_id);
-            json.Add("stockPrice", price.value);
-            json.Add("stockDateTime", price.time);
+            json.Add("stockID", transitStock.stock_id);
+            json.Add("stockPrice", transitStock.price);
+            json.Add("stockDateTime", transitStock.dateTime);
 
             SendMessage(json);
         }

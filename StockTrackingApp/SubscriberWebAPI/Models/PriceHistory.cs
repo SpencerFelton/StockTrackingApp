@@ -10,7 +10,7 @@
 namespace SubscriberWebAPI.Models
 {
     using System.ComponentModel.DataAnnotations;
-
+    
     public partial class PriceHistory
     {
         public int id { get; set; }

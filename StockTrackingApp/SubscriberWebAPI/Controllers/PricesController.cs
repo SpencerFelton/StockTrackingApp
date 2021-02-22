@@ -15,7 +15,7 @@ namespace SubscriberWebAPI.Controllers
 {
     public class PricesController : ApiController
     {
-        private ClientStockTrackerEntities db = new ClientStockTrackerEntities();
+        private ClientStockTracker db = new ClientStockTracker();
 
         // GET: api/Prices
         public IQueryable<PriceHistory> GetPriceHistories()

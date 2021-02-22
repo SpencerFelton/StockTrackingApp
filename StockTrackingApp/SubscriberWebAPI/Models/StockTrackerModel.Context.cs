@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProviderWebApi.Models
+namespace SubscriberWebAPI.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StockModel : DbContext
+    public partial class ClientStockTracker : DbContext
     {
-        public StockModel()
-            : base("name=StockModel")
+        public ClientStockTracker()
+            : base("name=ClientStockTracker")
         {
         }
     
@@ -27,5 +27,6 @@ namespace ProviderWebApi.Models
     
         public virtual DbSet<PriceHistory> PriceHistories { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

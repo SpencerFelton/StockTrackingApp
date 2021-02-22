@@ -7,18 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProviderWebApi.Models
+namespace SubscriberWebAPI.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class PriceHistory
+    public partial class User
     {
         public int id { get; set; }
-        public int stock_id { get; set; }
-        public System.DateTime time { get; set; }
-        public decimal value { get; set; }
-    
-        public virtual Stock Stock { get; set; }
+        public string username { get; set; }
+        public string password_hash { get; set; }
+        public string email { get; set; }
+        public string first_name { get; set; }
+        public string surname { get; set; }
+        public System.DateTime DOB { get; set; }
+        public string phone_number { get; set; }
     }
 }

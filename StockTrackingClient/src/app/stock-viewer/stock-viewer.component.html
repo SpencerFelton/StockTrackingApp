@@ -1,25 +1,8 @@
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
 <div class='card'>
     <div class='card-header'>
         {{pageTitle}}
     </div>
     <div class='card-body'>
-
-        <div class='flex-item'>
-          <div style='display: block;'>
-          <canvas baseChart width='400' height='100'
-                      [datasets]='lineChartData'
-                      [labels]='lineChartLabels'
-                      [options]='lineChartOptions'
-                      [colors]='lineChartColors'
-                      [legend]='lineChartLegend'
-                      [chartType]='lineChartType'
-                      [plugins]='lineChartPlugins'
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"></canvas>
-        </div>
         <div class='row'>
           <div class='col-md-2'>Filter by:</div>
           <div class='col-md-4'>
@@ -32,55 +15,14 @@
           </div>
         </div>
         <div class='table-responsive'>
-            <table class='table table-striped border mt-1' id='table1' *ngIf='filteredCompanies && filteredCompanies.length'>
+            <table class='table' id='table1' *ngIf='companies && companies.length'>
               <thead>
                 <tr>
-                  <th>
-                    <table>
-                      <tr>
-                        <td>Subscribe to Stock</td>
-                        <td>
-                          <i></i>
-                        </td>
-                      </tr>
-                    </table>
-                  </th>
-                  <th class='headerClass' *ngFor="let header of tableHeaders" scope="col" [appSort] = "filteredCompanies" attr.data-order="{{header[1]}}" attr.data-name="{{header[2]}}" (click)="sortColumn(header)">
-                    <table>
-                      <tr>
-                        <td>{{header[0]}}</td>
-                        <td>
-                          <i></i>
-                          <i class="fa fa-sort" *ngIf="sortedColumn !== header[0] && header[1] !== '0'"></i>
-                          <i class="fa fa-sort-up" *ngIf="header[1] === 'asc' && sortedColumn === header[0]"></i>
-                          <i class="fa fa-sort-down" *ngIf="header[1] === 'desc' && sortedColumn === header[0]"></i>
-                        </td>
-                      </tr>
-
-                    </table>
-                  </th>
-                  <th>
-                    <table>
-                      <tr>
-                        <td>View Stock Price History</td>
-                        <td>
-                          <i></i>
-                        </td>
-                      </tr>
-                    </table>
-                  </th>
-                  <th>
-                    <table>
-                      <tr>
-                        <td>Purchased Stocks</td>
-                        <td>
-                          <i></i>
-                        </td>
-                      </tr>
-                    </table>
-                  </th>
-
-
+                  <th>Subscribe to Stock</th>
+                  <th>CompanyName</th>
+                  <th>Shorthand</th>
+                  <th>Current Stock Price</th>
+                  <th>Purchased Stocks</th>
                 </tr>
               </thead>
               <tbody>
@@ -93,11 +35,6 @@
                   <td>{{company.name}}</td>
                   <td>{{company.abbreviation}}</td>
                   <td>{{company.price | currency:'USD':'symbol':'1.2-2' }}</td>
-                  <td>
-                    <button class='btn btn-primary' (click)='subUnSub(company)'>
-                      Show
-                    </button>
-                  </td>
                   <td>
                     <button type="button" class="btn btn-primary" (click) = 'onSellStock(company)'>Sell</button>
                     {{company.stocksPurchased}}

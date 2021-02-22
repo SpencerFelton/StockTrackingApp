@@ -1,7 +1,7 @@
 import {InMemoryDbService} from 'angular-in-memory-web-api';
 
-import {ICompany} from './company-models/company';
-import {ICompanyView} from './company-models/companyView';
+import {ICompany} from './company';
+import {ICompanyView} from './companyView';
 
 export class CompanyData implements InMemoryDbService{
     
@@ -90,8 +90,6 @@ export class CompanyData implements InMemoryDbService{
                 stocksPurchased: 0
             }
         ]
-
-        let registration
 
         return {companies, companiesClient};
     }

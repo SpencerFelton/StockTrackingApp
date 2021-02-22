@@ -1,5 +1,5 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ICompany} from '../shared/company-models/company';
+import {ICompany} from '../shared/company';
 import {CompanyService} from '../shared/company-service/company.service';
 import {NotifierService} from '../shared/Notifications/notifier.service';
 
@@ -14,9 +14,6 @@ export class StockMaker implements OnChanges, OnInit{
  
     pageTitle = "Change"
     statusString: string[] =["New", "Modify", "Update"];
-    sortedColumn: string;
-    tableHeaders: string[][] = [["Company Name", "desc", "name"], ["Shorthand", "desc", "abbreviation"], ["Current Stock Price", "desc", "price"]]
-    foundIndex: number;
     //individualStatus: number[];
 
     filteredCompanies: ICompany[];
@@ -56,21 +53,7 @@ export class StockMaker implements OnChanges, OnInit{
         });
     }
 
-    sortColumn(header: string[]): void {
-        //alert("ts sort alert");
-        this.sortedColumn = header[0];
-        for (let i=0; i<this.tableHeaders.length; i++){
-            if (this.tableHeaders[i][0] === header[0]){
-                this.foundIndex = i;
-                break;
-            }
-        }
-        if(header[1] === "desc"){
-            this.tableHeaders[this.foundIndex] = [header[0], "asc", header[2]];
-        }else if(header[1] === "asc"){
-            this.tableHeaders[this.foundIndex] = [header[0], "desc", header[2]];
-        }
-    }
+
 
 
     ngOnChanges(changes: SimpleChanges): void {

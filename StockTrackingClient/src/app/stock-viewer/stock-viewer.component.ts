@@ -1,12 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CompanyServiceClient } from '../shared/company-service-client/company-service-client';
-import { ICompanyView } from '../shared/company-models/companyView';
+import { ICompanyView } from '../shared/companyView';
 import {ObjectConverter} from '../shared/ObjectConverter/object-converter';
 import {NotifierService} from '../shared/Notifications/notifier.service';
-import {SortDirective} from '../directive/sort.directive'
-import { ChartDataSets, ChartOptions } from 'chart.js';
-import { BaseChartDirective, Color, Label } from 'ng2-charts';
-import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 @Component({
     selector: 'pm-stockview',
@@ -16,86 +12,6 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
 export class StockViewer implements OnInit {
     pageTitle: string = 'Stock List';
     errorMessage:string;
-    sortedColumn: string;
-    tableHeaders: string[][] = [["Company Name", "desc", "name"], ["Shorthand", "desc", "abbreviation"], ["Current Stock Price", "desc", "price"]]
-    foundIndex: number;
-
-    public lineChartData: ChartDataSets[] = [
-        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A', lineTension: 0},
-        { data: [65, 150, 120, 126, 70, 75, 110], label: 'Series B', lineTension: 0},
-        { data: [67, 40, 21, 100, 87, 48, 43], label: 'Series C', yAxisID: 'y-axis-1', lineTension: 0}
-    ];
-    public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];//maybe convert datetime type to a formatted string to fill this array?
-    public lineChartOptions: (ChartOptions & { annotation: any}) = {
-        responsive: true,
-        scales: {
-            xAxes: [{}],
-            yAxes: [
-                {
-                    id: 'y-axis-0',
-                    position: 'left',
-                },
-                {
-                    id: 'y-axis-1',
-                    position: 'right',
-                    gridLines: {
-                        color: 'rgba(255,0,0,0.3)',
-                    },
-                    ticks: {
-                        fontColor: 'red',
-                    }
-                }
-            ]
-        },
-        annotation: {
-            annotations: [
-                {
-                    type: 'line',
-                    mode: 'vertical',
-                    scaleID: 'x-axis-0',
-                    value: 'March',//change when history DB implemented
-                    borderColor: 'orange',
-                    borderWidth: 2,
-                    label: {
-                        enabled: true,
-                        fontColor: 'orange',
-                        content: 'lineAnno'
-                    }
-                },
-            ],
-        },
-    };
-    public lineChartColors: Color[] = [
-        {//grey
-            backgroundColor: 'rgba(148,159,177,0.2)',
-            borderColor: 'rgba(148,159,177,1)',
-            pointBackgroundColor: 'rgba(148,159,177,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-        },
-        {//dark grey
-            backgroundColor: 'rgba(77,83,96,0.2)',
-            borderColor: 'rgba(77,83,96,1)',
-            pointBackgroundColor: 'rgba(77,83,96,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(77,83,96,0.8)'
-        },
-        {//red
-            backgroundColor: 'rgba(255,0,0,0.3)',
-            borderColor: 'red',
-            pointBackgroundColor: 'rgba(148,159,177,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-        }
-    ];
-    public lineChartLegend = true;
-    public lineChartType = 'line';
-    public lineChartPlugins = [pluginAnnotations];
-
-    @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
     _listFilter: string = '';
     get listFilter(): string {
@@ -113,30 +29,6 @@ export class StockViewer implements OnInit {
     
     filteredCompanies: ICompanyView[];
     companies: ICompanyView[]= [];
-
-    public chartClicked({ event, active }: {event: MouseEvent, active: {}[] }): void {
-        console.log(event, active);
-    }
-    public chartHovered({ event, active }: {event: MouseEvent, active: {}[] }): void {
-        console.log(event, active);
-    }
-
-
-    sortColumn(header: string[]): void {
-        //alert("ts sort alert");
-        this.sortedColumn = header[0];
-        for (let i=0; i<this.tableHeaders.length; i++){
-            if (this.tableHeaders[i][0] === header[0]){
-                this.foundIndex = i;
-                break;
-            }
-        }
-        if(header[1] === "desc"){
-            this.tableHeaders[this.foundIndex] = [header[0], "asc", header[2]];
-        }else if(header[1] === "asc"){
-            this.tableHeaders[this.foundIndex] = [header[0], "desc", header[2]];
-        }
-    }
 
 
     performFilter(filterBy: string): ICompanyView[] {
@@ -157,10 +49,6 @@ export class StockViewer implements OnInit {
             this.NotifierService.showNotification("Error adding subscription!", "OK","success","cross");
         }
        });
-    }
-
-    showHistory(company: ICompanyView) : void {
-        //need to get history data from database
     }
 
     ngOnInit(): void {

@@ -1,6 +1,3 @@
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
 <div class='card'>
     <div class='card-header'>
         {{pageTitle}}
@@ -18,46 +15,14 @@
             </div>
         </div>
         <div class='table-responsive'>
-          <table class='table table-striped border mt-1' id='table1' *ngIf='filteredCompanies && filteredCompanies.length'>
+            <table class='table' id='table1' *ngIf='companies && companies.length'>
               <thead>
                 <tr>
-                  <th>
-                    <table>
-                      <tr>
-                        <td>Subscribe to Stock</td>
-                        <td>
-                          <i></i>
-                        </td>
-                      </tr>
-                    </table>
-                  </th>
-                  <th class='headerClass' *ngFor="let header of tableHeaders" scope="col" [appSort] = "filteredCompanies" attr.data-order="{{header[1]}}" attr.data-name="{{header[2]}}" (click)="sortColumn(header)">
-                    <table>
-                      <tr>
-                        <td>{{header[0]}}</td>
-                        <td>
-                          <i></i>
-                          <i class="fa fa-sort" *ngIf="sortedColumn !== header[0] && header[1] !== '0'"></i>
-                          <i class="fa fa-sort-up" *ngIf="header[1] === 'asc' && sortedColumn === header[0]"></i>
-                          <i class="fa fa-sort-down" *ngIf="header[1] === 'desc' && sortedColumn === header[0]"></i>
-                        </td>
-                      </tr>
-
-                    </table>
-                  </th>
-                  
-                  <th>
-                    <table>
-                      <tr>
-                        <td>Purchased Stocks</td>
-                        <td>
-                          <i></i>
-                        </td>
-                      </tr>
-                    </table>
-                  </th>
-
-
+                  <th>Subscribe to Stock</th>
+                  <th>CompanyNamesdgfsgs</th>
+                  <th>Shorthand</th>
+                  <th>Stock Price</th>
+                  <th>Purchased Stocks</th>
                 </tr>
               </thead>
               <tbody>

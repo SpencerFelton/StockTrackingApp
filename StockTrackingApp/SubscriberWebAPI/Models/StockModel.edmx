@@ -22,19 +22,6 @@
           <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="abbr" Type="varchar" MaxLength="4" Nullable="false" />
         </EntityType>
-        <EntityType Name="Users">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="16" Nullable="false" />
-          <Property Name="password_hash" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="email" Type="nvarchar" MaxLength="320" Nullable="false" />
-          <Property Name="first_name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="surname" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="DOB" Type="datetime" Nullable="false" />
-          <Property Name="phone_number" Type="varchar" MaxLength="15" />
-        </EntityType>
         <Association Name="FK__PriceHist__value__2B3F6F97">
           <End Role="Stocks" Type="Self.Stocks" Multiplicity="1" />
           <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
@@ -50,7 +37,6 @@
         <EntityContainer Name="ClientStockTrackerModelStoreContainer">
           <EntitySet Name="PriceHistory" EntityType="Self.PriceHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stocks" EntityType="Self.Stocks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__PriceHist__value__2B3F6F97" Association="Self.FK__PriceHist__value__2B3F6F97">
             <End Role="Stocks" EntitySet="Stocks" />
             <End Role="PriceHistory" EntitySet="PriceHistory" />
@@ -78,19 +64,6 @@
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="abbr" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="username" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="password_hash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="phone_number" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-        </EntityType>
         <Association Name="FK__PriceHist__value__2B3F6F97">
           <End Role="Stocks" Type="Self.Stock" Multiplicity="1" />
           <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
@@ -103,10 +76,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ClientStockTracker" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ClientStockTrackerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="PriceHistories" EntityType="Self.PriceHistory" />
           <EntitySet Name="Stocks" EntityType="Self.Stock" />
-          <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK__PriceHist__value__2B3F6F97" Association="Self.FK__PriceHist__value__2B3F6F97">
             <End Role="Stocks" EntitySet="Stocks" />
             <End Role="PriceHistory" EntitySet="PriceHistories" />
@@ -117,7 +89,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ClientStockTrackerModelStoreContainer" CdmEntityContainer="ClientStockTracker">
+        <EntityContainerMapping StorageEntityContainer="ClientStockTrackerModelStoreContainer" CdmEntityContainer="ClientStockTrackerEntities">
           <EntitySetMapping Name="PriceHistories">
             <EntityTypeMapping TypeName="ClientStockTrackerModel.PriceHistory">
               <MappingFragment StoreEntitySet="PriceHistory">
@@ -134,20 +106,6 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="abbr" ColumnName="abbr" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="ClientStockTrackerModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
-                <ScalarProperty Name="surname" ColumnName="surname" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

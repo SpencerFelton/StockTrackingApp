@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -36,39 +33,52 @@ namespace SubscriberWebAPI.Controllers
             return Ok(priceHistory);
         }
 
-        // PUT: api/Prices/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutPriceHistory(int id, PriceHistory priceHistory)
+        // GET: api/Prices/5/Latest
+        [Route("api/prices/{stock_id}/latest")]
+        [ResponseType(typeof(PriceHistory))]
+        public async Task<IHttpActionResult> GetStockLatestPrice(int stock_id)
         {
-            if (!ModelState.IsValid)
+            PriceHistory priceHistory = await db.PriceHistories.Where(e => e.stock_id == stock_id).OrderByDescending(e => e.time).FirstOrDefaultAsync();
+            if (priceHistory == null)
             {
-                return BadRequest(ModelState);
+                return NotFound();
             }
 
-            if (id != priceHistory.id)
+            return Ok(priceHistory);
+        }
+
+        // GET: api/Prices/Latest
+        [Route("api/prices/latest")]
+        [ResponseType(typeof(PriceHistory))]
+        public IHttpActionResult GetLatestPrices()
+        {
+            List<PriceHistory> priceHistories = db.PriceHistories.GroupBy(e => e.stock_id).Select(f => f.OrderByDescending(g => g.time).FirstOrDefault()).ToList();
+            if (priceHistories == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            db.Entry(priceHistory).State = EntityState.Modified;
+            return Ok(priceHistories);
+        }
 
-            try
+        // GET: api/Prices/Latest
+        [Route("api/prices/latestinfo")]
+        [ResponseType(typeof(PriceHistory))]
+        public IHttpActionResult GetLatestPricesAndStock()
+        {
+            List<Stock> stocks = db.Stocks.ToList();
+            List<TransitStock> transits = new List<TransitStock>();
+
+            foreach (Stock s in stocks)
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PriceHistoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                TransitStock tran = new TransitStock(s);
+                transits.Add(tran);
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            if (transits == null)
+                return NotFound();
+
+            return Ok(transits);
         }
 
         // POST: api/Prices

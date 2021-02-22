@@ -14,7 +14,7 @@ namespace Receive
         private readonly IModel _channel;
         private string queueName = "";
 
-        private ClientStockTracker db = new ClientStockTracker();
+        private ClientStockTrackerEntities db = new ClientStockTrackerEntities();
 
         public MessageReceiver(IModel channel)
         {

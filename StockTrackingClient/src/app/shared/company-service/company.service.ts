@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {ICompany} from '../company';
+import {ICompany} from '../company-models/company';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {ObjectConverter} from '../ObjectConverter/object-converter';
 
 import {Observable, throwError, of } from 'rxjs';
 import {catchError, tap, map, retry} from 'rxjs/operators';
 import { CompanyServiceClient } from '../company-service-client/company-service-client';
+import { environment as env } from '../../../environments/environment';
 
 
 @Injectable({
@@ -24,10 +25,28 @@ export class CompanyService{
 
     constructor(private http: HttpClient, private companyServiceClient:CompanyServiceClient ){}
 
+    logIn():Observable<any>{
+        console.log("not implemented");
+        //this class accepts an email
+        //it is a get request that gets the login information of the login email
+        //if the backend server can find the login information
+            //add information to clientLogin.service
+            //return a 1 that can then be used for the login page (say that you have sucessfully logged in or something)
+        //if it can't
+            //Throw an exception
+            //return a 0 basically saying that you don't have an account. Sign up!
+        return;
+    }
+
+    register():Observable<any>{
+        console.log("not implemented");
+        return;
+    }
+
     //Calls all the companies. 
     getCompanies():Observable<any>{
         //const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.http.get<any>(this.clientUrl,{observe: 'body', responseType: 'json'})
+        return this.http.get<any>(`${env.dev.serverUrl}/api/companies`,{observe: 'body', responseType: 'json'})
         .pipe(
             //retry(3), //retry failed request up to three times
             tap(data => console.log('getCompanies: ' + JSON.stringify(data))),

@@ -65,9 +65,9 @@ namespace ProviderWebApi.Controllers
         // GET: api/Prices/Latestinfo
         [Route("api/prices/latestinfo")]
         [ResponseType(typeof(PriceHistory))]
-        public IHttpActionResult GetLatestPricesAndStock()
+        public async Task<IHttpActionResult> GetLatestPricesAndStock()
         {
-            List<Stock> stocks = db.Stocks.ToList();
+            List<Stock> stocks = await db.Stocks.ToListAsync();
             List<TransitStock> transits = new List<TransitStock>();
 
             foreach (Stock s in stocks)
@@ -97,14 +97,6 @@ namespace ProviderWebApi.Controllers
             return Ok(transit);
         }
 
-
-
-
-
-
-
-
-
         // POST: api/prices
         [ResponseType(typeof(PriceHistory))]
         public async Task<IHttpActionResult> PostPriceHistory(PriceHistory priceHistory)
@@ -117,7 +109,7 @@ namespace ProviderWebApi.Controllers
             db.PriceHistories.Add(priceHistory);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = priceHistory.id }, priceHistory);
+            return Ok(priceHistory);
         }
 
         // DELETE: api/prices/5

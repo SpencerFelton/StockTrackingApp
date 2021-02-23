@@ -36,9 +36,9 @@ namespace SubscriberWebAPI.Controllers
         // GET: api/Prices/Latest
         [Route("api/prices/latest")]
         [ResponseType(typeof(PriceHistory))]
-        public IHttpActionResult GetLatestPrices()
+        public async Task<IHttpActionResult> GetLatestPrices()
         {
-            List<PriceHistory> priceHistories = db.PriceHistories.GroupBy(e => e.stock_id).Select(f => f.OrderByDescending(g => g.time).FirstOrDefault()).ToList();
+            List<PriceHistory> priceHistories = await db.PriceHistories.GroupBy(e => e.stock_id).Select(f => f.OrderByDescending(g => g.time).FirstOrDefault()).ToListAsync();
             if (priceHistories == null)
             {
                 return NotFound();
@@ -64,9 +64,9 @@ namespace SubscriberWebAPI.Controllers
         // GET: api/Prices/Latestinfo
         [Route("api/prices/latestinfo")]
         [ResponseType(typeof(PriceHistory))]
-        public IHttpActionResult GetLatestPricesAndStock()
+        public async Task<IHttpActionResult> GetLatestPricesAndStock()
         {
-            List<Stock> stocks = db.Stocks.ToList();
+            List<Stock> stocks = await db.Stocks.ToListAsync();
             List<TransitStock> transits = new List<TransitStock>();
 
             foreach (Stock s in stocks)

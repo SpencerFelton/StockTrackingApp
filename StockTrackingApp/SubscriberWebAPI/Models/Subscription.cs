@@ -9,16 +9,10 @@
 
 namespace SubscriberWebAPI.Models
 {
-    using System.ComponentModel.DataAnnotations;
-
-    public partial class Stock
+    public partial class Subscription
     {
         public int id { get; set; }
-        [Required]
-        [StringLength(30)]
-        public string name { get; set; }
-        [Required]
-        [StringLength(4)]
-        public string abbr { get; set; }
+        public int user_id { get; set; }
+        public int stock_id { get; set; }
     }
 }

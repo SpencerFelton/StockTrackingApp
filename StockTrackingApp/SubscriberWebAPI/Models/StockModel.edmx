@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ClientStockTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ClientStockTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="PriceHistory">
           <Key>
             <PropertyRef Name="id" />
@@ -22,6 +22,14 @@
           <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="abbr" Type="varchar" MaxLength="4" Nullable="false" />
         </EntityType>
+        <EntityType Name="Subscriptions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="stock_id" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK__PriceHist__value__2B3F6F97">
           <End Role="Stocks" Type="Self.Stocks" Multiplicity="1" />
           <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
@@ -34,16 +42,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_subscriptions">
+          <End Role="Stocks" Type="Self.Stocks" Multiplicity="1" />
+          <End Role="Subscriptions" Type="Self.Subscriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stocks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subscriptions">
+              <PropertyRef Name="stock_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ClientStockTrackerModelStoreContainer">
           <EntitySet Name="PriceHistory" EntityType="Self.PriceHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stocks" EntityType="Self.Stocks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subscriptions" EntityType="Self.Subscriptions" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__PriceHist__value__2B3F6F97" Association="Self.FK__PriceHist__value__2B3F6F97">
             <End Role="Stocks" EntitySet="Stocks" />
             <End Role="PriceHistory" EntitySet="PriceHistory" />
           </AssociationSet>
+          <AssociationSet Name="FK_subscriptions" Association="Self.FK_subscriptions">
+            <End Role="Stocks" EntitySet="Stocks" />
+            <End Role="Subscriptions" EntitySet="Subscriptions" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ClientStockTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -83,7 +107,32 @@
             <End Role="Stocks" EntitySet="Stocks" />
             <End Role="PriceHistory" EntitySet="PriceHistories" />
           </AssociationSet>
+          <EntitySet Name="Subscriptions" EntityType="ClientStockTrackerModel.Subscription" />
+          <AssociationSet Name="FK_subscriptions" Association="ClientStockTrackerModel.FK_subscriptions">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="Subscription" EntitySet="Subscriptions" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Subscription">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="stock_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_subscriptions">
+          <End Type="ClientStockTrackerModel.Stock" Role="Stock" Multiplicity="1" />
+          <End Type="ClientStockTrackerModel.Subscription" Role="Subscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subscription">
+              <PropertyRef Name="stock_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -106,6 +155,15 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="abbr" ColumnName="abbr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subscriptions">
+            <EntityTypeMapping TypeName="ClientStockTrackerModel.Subscription">
+              <MappingFragment StoreEntitySet="Subscriptions">
+                <ScalarProperty Name="stock_id" ColumnName="stock_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -18,21 +18,34 @@ namespace ProviderWebApi.Controllers
     {
         private StockModel db = new StockModel();
 
-        // GET: api/stocks
-        [HttpGet]
-        [Authorize]
-        public IHttpActionResult GetStocks()
+        // GET: api/Stocks
+        public IQueryable<Stock> GetStocks()
         {
-            return Ok(db.Stocks);
+            return db.Stocks;
         }
 
-        // GET: api/stocks/5
+        // GET: api/Stocks/5
         [HttpGet]
         [Authorize]
         [ResponseType(typeof(Stock))]
         public async Task<IHttpActionResult> GetStock(int id)
         {
             Stock stock = await db.Stocks.FindAsync(id);
+            if (stock == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(stock);
+        }
+
+        // GET: api/Stocks/abbr
+        [HttpGet]
+        [Authorize]
+        [ResponseType(typeof(Stock))]
+        public async Task<IHttpActionResult> GetStock(string abbr)
+        {
+            Stock stock = await db.Stocks.FindAsync(abbr);
             if (stock == null)
             {
                 return NotFound();
@@ -91,7 +104,7 @@ namespace ProviderWebApi.Controllers
             return CreatedAtRoute("DefaultApi", new { id = stock.id }, stock);
         }
 
-        // DELETE: api/stocks/5
+        // DELETE: api/Stocks/5
         [ResponseType(typeof(Stock))]
         public async Task<IHttpActionResult> DeleteStock(int id)
         {
@@ -102,6 +115,7 @@ namespace ProviderWebApi.Controllers
             }
 
             db.Stocks.Remove(stock);
+            db.PriceHistories.RemoveRange(db.PriceHistories.Where(e => e.stock_id == stock.id));
             await db.SaveChangesAsync();
 
             return Ok(stock);

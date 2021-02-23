@@ -33,20 +33,6 @@ namespace SubscriberWebAPI.Controllers
             return Ok(priceHistory);
         }
 
-        // GET: api/Prices/5/Latest
-        [Route("api/prices/{stock_id}/latest")]
-        [ResponseType(typeof(PriceHistory))]
-        public async Task<IHttpActionResult> GetStockLatestPrice(int stock_id)
-        {
-            PriceHistory priceHistory = await db.PriceHistories.Where(e => e.stock_id == stock_id).OrderByDescending(e => e.time).FirstOrDefaultAsync();
-            if (priceHistory == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(priceHistory);
-        }
-
         // GET: api/Prices/Latest
         [Route("api/prices/latest")]
         [ResponseType(typeof(PriceHistory))]
@@ -61,7 +47,21 @@ namespace SubscriberWebAPI.Controllers
             return Ok(priceHistories);
         }
 
-        // GET: api/Prices/Latest
+        // GET: api/Prices/5/Latest
+        [Route("api/prices/{stock_id}/latest")]
+        [ResponseType(typeof(PriceHistory))]
+        public async Task<IHttpActionResult> GetStockLatestPrice(int stock_id)
+        {
+            PriceHistory priceHistory = await db.PriceHistories.Where(e => e.stock_id == stock_id).OrderByDescending(e => e.time).FirstOrDefaultAsync();
+            if (priceHistory == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(priceHistory);
+        }
+
+        // GET: api/Prices/Latestinfo
         [Route("api/prices/latestinfo")]
         [ResponseType(typeof(PriceHistory))]
         public IHttpActionResult GetLatestPricesAndStock()
@@ -81,35 +81,19 @@ namespace SubscriberWebAPI.Controllers
             return Ok(transits);
         }
 
-        // POST: api/Prices
+        // GET: api/Prices/5/latestinfo
+        [Route("api/prices/{stock_id}/latestinfo")]
         [ResponseType(typeof(PriceHistory))]
-        public async Task<IHttpActionResult> PostPriceHistory(PriceHistory priceHistory)
+        public async Task<IHttpActionResult> GetLatestPriceAndStock(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            Stock stock = await db.Stocks.FindAsync(id);
+            PriceHistory priceHistory = await db.PriceHistories.FirstOrDefaultAsync(e => e.stock_id == stock.id);
+            TransitStock transit = new TransitStock(stock, priceHistory);
 
-            db.PriceHistories.Add(priceHistory);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = priceHistory.id }, priceHistory);
-        }
-
-        // DELETE: api/Prices/5
-        [ResponseType(typeof(PriceHistory))]
-        public async Task<IHttpActionResult> DeletePriceHistory(int id)
-        {
-            PriceHistory priceHistory = await db.PriceHistories.FindAsync(id);
-            if (priceHistory == null)
-            {
+            if (transit == null)
                 return NotFound();
-            }
 
-            db.PriceHistories.Remove(priceHistory);
-            await db.SaveChangesAsync();
-
-            return Ok(priceHistory);
+            return Ok(transit);
         }
 
         protected override void Dispose(bool disposing)

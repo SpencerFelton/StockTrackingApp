@@ -38,70 +38,17 @@ namespace SubscriberWebAPI.Controllers
             return Ok(stock);
         }
 
-        // PUT: api/Stocks/5
-        [HttpPut]
+        // GET: api/Stocks/abbr
+        [HttpGet]
         [Authorize]
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutStock(int id, Stock stock)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != stock.id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(stock).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StockExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Stocks
         [ResponseType(typeof(Stock))]
-        public async Task<IHttpActionResult> PostStock(Stock stock)
+        public async Task<IHttpActionResult> GetStock(string abbr)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Stocks.Add(stock);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = stock.id }, stock);
-        }
-
-        // DELETE: api/Stocks/5
-        [ResponseType(typeof(Stock))]
-        public async Task<IHttpActionResult> DeleteStock(int id)
-        {
-            Stock stock = await db.Stocks.FindAsync(id);
+            Stock stock = await db.Stocks.FindAsync(abbr);
             if (stock == null)
             {
                 return NotFound();
             }
-
-            db.Stocks.Remove(stock);
-            await db.SaveChangesAsync();
 
             return Ok(stock);
         }

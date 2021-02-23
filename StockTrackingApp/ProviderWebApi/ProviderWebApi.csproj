@@ -265,6 +265,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StockModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\TransitStock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Support\AsyncHelper.cs" />

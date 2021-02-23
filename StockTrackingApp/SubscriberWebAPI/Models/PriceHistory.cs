@@ -9,16 +9,18 @@
 
 namespace SubscriberWebAPI.Models
 {
-    using System;
-    using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class PriceHistory
     {
         public int id { get; set; }
+        [Required]
         public int stock_id { get; set; }
+        [Required]
+        [DataType(DataType.DateTime)]
         public System.DateTime time { get; set; }
+        [Required]
+        [DataType(DataType.Currency)]
         public decimal value { get; set; }
-    
-        public virtual Stock Stock { get; set; }
     }
 }

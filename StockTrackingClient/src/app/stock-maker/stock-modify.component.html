@@ -1,9 +1,125 @@
-<div class='card'>
-    <div class='card-header'>
-        {{pageTitle}}
+<mat-card>
+    <mat-card-title>
+    {{pageTitle}}
+    </mat-card-title>
+    <mat-card-content>
+        <div *ngIf="formGenerated">
+        <form 
+                *ngIf="!isZero"
+                (ngSubmit) = "save()" 
+                [formGroup] = "ModifyStockForm">
+    <mat-form-field appearance="outline">
+        <mat-label for="companyNameID">Company Name</mat-label>
+        <input matInput required
+            id="companyNameID"
+            type="text"
+            placeholder="CompanyName"
+            formControlName="companyName"
+            [ngClass] = "{'is-invalid': companyNameMessage}"> 
+        <mat-hint class = "error">{{companyNameMessage}}</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label for="companyShorthandID">Company Shorthand</mat-label>
+        <input matInput 
+            id="companyShorthandID"
+            type="text"
+            placeholder="CompanyShorthand"
+            formControlName="companyShorthand"
+            [ngClass] = "{'is-invalid': companyShorthandMessage}"> 
+        <mat-hint class = "error">{{companyShorthandMessage}}</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label for="stockPriceID">Stock Price</mat-label>
+        <input matInput 
+            id="stockPriceID"
+            type="text"
+            placeholder="CompanyStock"
+            formControlName="stockPrice"
+            [ngClass] = "{'is-invalid': stockPriceMessage}"> 
+        <mat-hint class = "error">{{stockPriceMessage}}</mat-hint>
+        
+    </mat-form-field> 
+    <div>
+        <div>% Change</div>
+        <div><pm-percent [potentialStockPrice] = 'CompanyStock' [currentStockPrice] = 'company.price'></pm-percent></div> 
     </div>
-    <div class ="card-body">
-        <div *ngIf = '!isZero' class="form-group">
+        <div>
+            <button mat-flat-button 
+                    color="primary"
+                    [routerLink] = "['/stockmaker']">
+                    Cancel</button>
+            <button mat-flat-button 
+                    color="primary"
+                    type="submit"
+                    [disabled]="!ModifyStockForm.valid">
+                    Save Changes</button>
+            <button mat-flat-button 
+                    color="primary"
+                    (click) = 'onDelete()'>
+                    Delete stock</button>
+          </div>
+    </form>
+    <form 
+                *ngIf="isZero"
+                (ngSubmit) = "save()" 
+                [formGroup] = "ModifyStockForm">
+    <mat-form-field appearance="outline">
+        <mat-label for="companyNameID">Company Name</mat-label>
+        <input matInput required
+            id="companyNameID"
+            type="text"
+            placeholder="CompanyName"
+            formControlName="companyName"
+            [ngClass] = "{'is-invalid': companyNameMessage}"> 
+        <mat-hint class = "error">{{companyNameMessage}}</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label for="companyShorthandID">Company Shorthand</mat-label>
+        <input matInput 
+            id="companyShorthandID"
+            type="text"
+            placeholder="CompanyShorthand"
+            formControlName="companyShorthand"
+            [ngClass] = "{'is-invalid': companyShorthandMessage}"> 
+        <mat-hint class = "error">{{companyShorthandMessage}}</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label for="stockPriceID">Stock Price</mat-label>
+        <input matInput 
+            id="stockPriceID"
+            type="text"
+            placeholder="CompanyStock"
+            formControlName="stockPrice"
+            [ngClass] = "{'is-invalid': stockPriceMessage}"> 
+        <mat-hint class = "error">{{stockPriceMessage}}</mat-hint>
+    </mat-form-field> 
+        <div>
+            <button mat-flat-button 
+                    color="primary"
+                    [routerLink] = "['/stockmaker']">
+                    Cancel</button>
+            <button mat-flat-button 
+                    color="primary"
+                    type="submit"
+                    [disabled]="!ModifyStockForm.valid">
+                    Save Changes</button>
+            <button mat-flat-button 
+                    color="primary"
+                    (click) = 'onDelete()'>
+                    Delete stock</button>
+          </div>
+    </form>
+
+
+        </div>
+           
+    </mat-card-content>
+
+</mat-card>
+<!--
+<div *ngIf = '!isZero' class="form-group">
             <div class = "col-md-4">
             <div>
                 <div>Company Name</div>
@@ -56,3 +172,6 @@
         
     </div>
 </div>
+
+-->
+        

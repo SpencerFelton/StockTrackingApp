@@ -1,42 +1,70 @@
-﻿using SubscriberWebAPI.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
+using System.Web.Http.Description;
+using SubscriberWebAPI.Models;
 
 namespace SubscriberWebAPI.Controllers
 {
-    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class StocksController : ApiController
     {
-        // GET api/stocks
-        public IEnumerable<TransitStock> Get()
+        private ClientStockTrackerEntities db = new ClientStockTrackerEntities();
+
+        // GET: api/Stocks
+        public IQueryable<Stock> GetStocks()
         {
-            Stock[] stocks = DBHandler.GetStocks();
-            List<TransitStock> transitStocks = new List<TransitStock>();
-            foreach (Stock stock in stocks)
+            return db.Stocks;
+        }
+
+        // GET: api/Stocks/5
+        [HttpGet]
+        [Authorize]
+        [ResponseType(typeof(Stock))]
+        public async Task<IHttpActionResult> GetStock(int id)
+        {
+            Stock stock = await db.Stocks.FindAsync(id);
+            if (stock == null)
             {
-                transitStocks.Add(new TransitStock(stock));
+                return NotFound();
             }
-            return transitStocks;
+
+            return Ok(stock);
         }
 
-        // GET api/stocks/4
-        public TransitStock Get(int id)
+        // GET: api/Stocks/abbr
+        [HttpGet]
+        [Authorize]
+        [ResponseType(typeof(Stock))]
+        public async Task<IHttpActionResult> GetStock(string abbr)
         {
-            Stock stock = DBHandler.GetStock(id);
-            if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
-            return new TransitStock(stock);
+            Stock stock = await db.Stocks.FindAsync(abbr);
+            if (stock == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(stock);
         }
 
-        // GET api/stocks/ABBR
-        public TransitStock Get(string abbr)
+        protected override void Dispose(bool disposing)
         {
-            Stock stock = DBHandler.GetStock(abbr);
-            if (stock == null) throw new HttpResponseException(HttpStatusCode.NotFound);
-            return new TransitStock(stock);
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool StockExists(int id)
+        {
+            return db.Stocks.Count(e => e.id == id) > 0;
         }
     }
 }

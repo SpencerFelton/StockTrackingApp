@@ -13,10 +13,10 @@ namespace SubscriberWebAPI.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StockTrackerEntities : DbContext
+    public partial class ClientStockTrackerEntities : DbContext
     {
-        public StockTrackerEntities()
-            : base("name=StockTrackerEntities")
+        public ClientStockTrackerEntities()
+            : base("name=ClientStockTrackerEntities")
         {
         }
     

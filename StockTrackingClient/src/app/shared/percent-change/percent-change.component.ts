@@ -14,8 +14,10 @@ export class PercentChangeComponent implements OnChanges{
     percentChange: number;
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.percentChange = (this.potentialStockPrice- this.currentStockPrice)/(this.currentStockPrice)*100;  
+        this.percentChange = (this.potentialStockPrice- this.currentStockPrice)/(this.currentStockPrice)*100;
+        console.log("Potential stock price:");
         console.log(this.potentialStockPrice);
+        console.log("Current stock price:");
         console.log(this.currentStockPrice);
         console.log(this.percentChange);
     }

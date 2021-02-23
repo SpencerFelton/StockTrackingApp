@@ -14,5 +14,11 @@ namespace SubscriberWebAPI.Models
         public int id { get; set; }
         public int user_id { get; set; }
         public int stock_id { get; set; }
+
+        public Subscription(int stock_id, string user_id)
+        {
+            this.user_id = user_id;
+            this.stock_id = stock_id;
+        }
     }
 }

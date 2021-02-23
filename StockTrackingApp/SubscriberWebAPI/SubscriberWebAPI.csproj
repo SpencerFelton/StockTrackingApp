@@ -220,6 +220,7 @@
     <Compile Include="Controllers\PricesController.cs" />
     <Compile Include="Controllers\ScopeAuthorizeAttribute.cs" />
     <Compile Include="Controllers\StocksController.cs" />
+    <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

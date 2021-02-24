@@ -16,7 +16,7 @@ export class CompanyServiceClient{
 
     private clientUrl  = '/api/companiesClient';
     private clienturl2 = 'https://localhost:44353/api/stocks';
-    private pricehistoryUrl = 'https://localhost:44353/api/prices'
+    private pricehistoryUrl = 'https://localhost:44353/api/prices';
     //id:number = 5;
 
     constructor(private http: HttpClient){}

@@ -26,9 +26,12 @@ namespace SubscriberWebAPI.Controllers
 
         // GET: api/Subscriptions/5
         [ResponseType(typeof(Subscription))]
-        public async Task<IHttpActionResult> GetSubscription(int id)
+        public async Task<IHttpActionResult> GetUserSubscriptionByStockID(int id)
         {
-            Subscription subscription = await db.Subscriptions.FindAsync(id);
+            string user_id = getUserIDFromHeader(this.Request.Headers);
+
+            Subscription subscription = await db.Subscriptions.Where(e => e.stock_id == id && e.user_id == user_id).FirstOrDefaultAsync();
+
             if (subscription == null)
             {
                 return NotFound();
@@ -37,17 +40,27 @@ namespace SubscriberWebAPI.Controllers
             return Ok(subscription);
         }
 
+        // GET: api/Subscriptions/5
+        [ResponseType(typeof(Subscription))]
+        public async Task<IHttpActionResult> GetAllUserSubscriptions()
+        {
+            string user_id = getUserIDFromHeader(this.Request.Headers);
+
+            List<Subscription> subscriptions = await db.Subscriptions.Where(e => e.user_id == user_id).ToListAsync();
+
+            if (subscriptions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subscriptions);
+        }
+
         // POST: api/Subscriptions
         [ResponseType(typeof(Subscription))]
         public async Task<IHttpActionResult> PostSubscription(int stock_id)
         {
-            HttpRequestHeaders header = this.Request.Headers;
-            string user_id = string.Empty;
-
-            if (header.Contains("sub"))
-            {
-                user_id = header.GetValues("sub").First();
-            }
+            string user_id = getUserIDFromHeader(this.Request.Headers);
 
             Subscription sub = new Subscription(stock_id, user_id);
 
@@ -91,6 +104,18 @@ namespace SubscriberWebAPI.Controllers
             await db.SaveChangesAsync();
 
             return Ok(subscription);
+        }
+
+        public string getUserIDFromHeader(HttpRequestHeaders headers)
+        {
+            string user_id = string.Empty;
+
+            if (headers.Contains("sub"))
+            {
+                user_id = headers.GetValues("sub").First();
+            }
+
+            return user_id;
         }
 
         protected override void Dispose(bool disposing)

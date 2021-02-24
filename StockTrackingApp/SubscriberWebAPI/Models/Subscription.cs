@@ -7,12 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace SubscriberWebAPI.Models
 {
     public partial class Subscription
     {
         public int id { get; set; }
-        public int user_id { get; set; }
+        [Required]
+        public string user_id { get; set; }
+        [Required]
         public int stock_id { get; set; }
 
         public Subscription(int stock_id, string user_id)

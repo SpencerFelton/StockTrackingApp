@@ -223,6 +223,7 @@
     <Compile Include="Controllers\PricesController.cs" />
     <Compile Include="Controllers\ScopeAuthorizeAttribute.cs" />
     <Compile Include="Controllers\StocksController.cs" />
+    <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,6 +248,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StockModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Subscription.cs">
+      <DependentUpon>StockModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TransitStock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Support\AsyncHelper.cs" />

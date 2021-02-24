@@ -7,18 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace SubscriberWebAPI.Models
 {
-    using System.ComponentModel.DataAnnotations;
-
-    public partial class Stock
+    public partial class Subscription
     {
         public int id { get; set; }
         [Required]
-        [StringLength(30)]
-        public string name { get; set; }
+        public string user_id { get; set; }
         [Required]
-        [StringLength(4)]
-        public string abbr { get; set; }
+        public int stock_id { get; set; }
+
+        public Subscription(int stock_id, string user_id)
+        {
+            this.user_id = user_id;
+            this.stock_id = stock_id;
+        }
     }
 }

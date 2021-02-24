@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -36,70 +33,67 @@ namespace SubscriberWebAPI.Controllers
             return Ok(priceHistory);
         }
 
-        // PUT: api/Prices/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutPriceHistory(int id, PriceHistory priceHistory)
+        // GET: api/Prices/Latest
+        [Route("api/prices/latest")]
+        [ResponseType(typeof(PriceHistory))]
+        public async Task<IHttpActionResult> GetLatestPrices()
         {
-            if (!ModelState.IsValid)
+            List<PriceHistory> priceHistories = await db.PriceHistories.GroupBy(e => e.stock_id).Select(f => f.OrderByDescending(g => g.time).FirstOrDefault()).ToListAsync();
+            if (priceHistories == null)
             {
-                return BadRequest(ModelState);
+                return NotFound();
             }
 
-            if (id != priceHistory.id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(priceHistory).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PriceHistoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(priceHistories);
         }
 
-        // POST: api/Prices
+        // GET: api/Prices/5/Latest
+        [Route("api/prices/{stock_id}/latest")]
         [ResponseType(typeof(PriceHistory))]
-        public async Task<IHttpActionResult> PostPriceHistory(PriceHistory priceHistory)
+        public async Task<IHttpActionResult> GetStockLatestPrice(int stock_id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.PriceHistories.Add(priceHistory);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = priceHistory.id }, priceHistory);
-        }
-
-        // DELETE: api/Prices/5
-        [ResponseType(typeof(PriceHistory))]
-        public async Task<IHttpActionResult> DeletePriceHistory(int id)
-        {
-            PriceHistory priceHistory = await db.PriceHistories.FindAsync(id);
+            PriceHistory priceHistory = await db.PriceHistories.Where(e => e.stock_id == stock_id).OrderByDescending(e => e.time).FirstOrDefaultAsync();
             if (priceHistory == null)
             {
                 return NotFound();
             }
 
-            db.PriceHistories.Remove(priceHistory);
-            await db.SaveChangesAsync();
-
             return Ok(priceHistory);
+        }
+
+        // GET: api/Prices/Latestinfo
+        [Route("api/prices/latestinfo")]
+        [ResponseType(typeof(PriceHistory))]
+        public async Task<IHttpActionResult> GetLatestPricesAndStock()
+        {
+            List<Stock> stocks = await db.Stocks.ToListAsync();
+            List<TransitStock> transits = new List<TransitStock>();
+
+            foreach (Stock s in stocks)
+            {
+                TransitStock tran = new TransitStock(s);
+                transits.Add(tran);
+            }
+
+            if (transits == null)
+                return NotFound();
+
+            return Ok(transits);
+        }
+
+        // GET: api/Prices/5/latestinfo
+        [Route("api/prices/{stock_id}/latestinfo")]
+        [ResponseType(typeof(PriceHistory))]
+        public async Task<IHttpActionResult> GetLatestPriceAndStock(int id)
+        {
+            Stock stock = await db.Stocks.FindAsync(id);
+            PriceHistory priceHistory = await db.PriceHistories.FirstOrDefaultAsync(e => e.stock_id == stock.id);
+            TransitStock transit = new TransitStock(stock, priceHistory);
+
+            if (transit == null)
+                return NotFound();
+
+            return Ok(transit);
         }
 
         protected override void Dispose(bool disposing)

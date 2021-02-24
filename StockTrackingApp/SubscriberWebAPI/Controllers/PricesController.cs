@@ -71,8 +71,9 @@ namespace SubscriberWebAPI.Controllers
 
             foreach (Stock s in stocks)
             {
-                TransitStock tran = new TransitStock(s);
-                transits.Add(tran);
+                PriceHistory latest = await db.PriceHistories.Where(e => e.stock_id == s.id).OrderByDescending(e => e.time).FirstOrDefaultAsync();
+                TransitStock transit = new TransitStock(s, latest);
+                transits.Add(transit);
             }
 
             if (transits == null)

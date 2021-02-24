@@ -21,16 +21,17 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // GET: api/Prices/5
+        [Route("api/prices/{stock_id}")]
         [ResponseType(typeof(PriceHistory))]
-        public async Task<IHttpActionResult> GetPriceHistory(int id)
+        public async Task<IHttpActionResult> GetStockPriceHistory(int stock_id)
         {
-            PriceHistory priceHistory = await db.PriceHistories.FindAsync(id);
-            if (priceHistory == null)
+            List<PriceHistory> prices = await db.PriceHistories.Where(e => e.stock_id == stock_id).ToListAsync();
+            if (prices == null)
             {
                 return NotFound();
             }
 
-            return Ok(priceHistory);
+            return Ok(prices);
         }
 
         // GET: api/Prices/Latest
@@ -64,15 +65,15 @@ namespace SubscriberWebAPI.Controllers
         // GET: api/Prices/Latestinfo
         [Route("api/prices/latestinfo")]
         [ResponseType(typeof(PriceHistory))]
-        public async Task<IHttpActionResult> GetLatestPricesAndStock()
+        public async Task<IHttpActionResult> GetAllStocksWithLatestPrice()
         {
             List<Stock> stocks = await db.Stocks.ToListAsync();
-            List<TransitStock> transits = new List<TransitStock>();
+            List<StockWithPrice> transits = new List<StockWithPrice>();
 
             foreach (Stock s in stocks)
             {
                 PriceHistory latest = await db.PriceHistories.Where(e => e.stock_id == s.id).OrderByDescending(e => e.time).FirstOrDefaultAsync();
-                TransitStock transit = new TransitStock(s, latest);
+                StockWithPrice transit = new StockWithPrice(s, latest);
                 transits.Add(transit);
             }
 
@@ -83,13 +84,14 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // GET: api/Prices/5/latestinfo
+        [HttpGet]
         [Route("api/prices/{stock_id}/latestinfo")]
         [ResponseType(typeof(PriceHistory))]
-        public async Task<IHttpActionResult> GetLatestPriceAndStock(int id)
+        public async Task<IHttpActionResult> GetStockWithLatestPrice(int stock_id)
         {
-            Stock stock = await db.Stocks.FindAsync(id);
-            PriceHistory priceHistory = await db.PriceHistories.FirstOrDefaultAsync(e => e.stock_id == stock.id);
-            TransitStock transit = new TransitStock(stock, priceHistory);
+            Stock stock = await db.Stocks.FindAsync(stock_id);
+            PriceHistory latest = await db.PriceHistories.Where(e => e.stock_id == stock.id).OrderByDescending(e => e.time).FirstOrDefaultAsync();
+            StockWithPrice transit = new StockWithPrice(stock, latest);
 
             if (transit == null)
                 return NotFound();

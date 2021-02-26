@@ -17,6 +17,7 @@ namespace SubscriberWebAPI.Controllers
     public class SubscriptionsController : ApiController
     {
         private ClientStockTrackerEntities db = new ClientStockTrackerEntities();
+        private String UserIDFieldName = "sub";
 
         // GET: api/Subscriptions
         public IQueryable<Subscription> GetSubscriptions()
@@ -25,6 +26,7 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // GET: api/Subscriptions/5
+        [Route("api/subscriptions/{stock_id}")]
         [ResponseType(typeof(Subscription))]
         public async Task<IHttpActionResult> GetUserSubscriptionByStockID(int id)
         {
@@ -41,6 +43,7 @@ namespace SubscriberWebAPI.Controllers
         }
 
         // GET: api/Subscriptions/5
+        [Route("api/subscriptions/ViewAll")]
         [ResponseType(typeof(Subscription))]
         public async Task<IHttpActionResult> GetAllUserSubscriptions()
         {
@@ -56,20 +59,33 @@ namespace SubscriberWebAPI.Controllers
             return Ok(subscriptions);
         }
 
-        // POST: api/Subscriptions
+        // POST: api/Subscriptions/5
+        [Route("api/subscriptions/{stock_id}")]
         [ResponseType(typeof(Subscription))]
         public async Task<IHttpActionResult> PostSubscription(int stock_id)
         {
             string user_id = getUserIDFromHeader(this.Request.Headers);
 
-            Subscription sub = new Subscription(stock_id, user_id);
+            if (user_id == "")
+            {
+                return Content(HttpStatusCode.BadRequest, "No user ID found in request header");
+            }
+
+            Subscription sub = new Subscription(user_id, stock_id);
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Subscriptions.Add(sub);
+            if (StockExists(stock_id))
+            {
+                db.Subscriptions.Add(sub);
+            }
+            else
+            {
+                return Content(HttpStatusCode.NotFound, "Stock does not exist");
+            }
 
             try
             {
@@ -77,7 +93,7 @@ namespace SubscriberWebAPI.Controllers
             }
             catch (DbUpdateException)
             {
-                if (SubscriptionExists(sub.id))
+                if (SubscriptionExists(user_id, stock_id))
                 {
                     return Conflict();
                 }
@@ -106,15 +122,23 @@ namespace SubscriberWebAPI.Controllers
             return Ok(subscription);
         }
 
+        public bool UserIDHeaderExists(HttpRequestHeaders headers)
+        {
+            if (headers.Contains(UserIDFieldName))
+            {
+                return true;
+            }
+            else return false;
+        }
+
         public string getUserIDFromHeader(HttpRequestHeaders headers)
         {
             string user_id = string.Empty;
 
-            if (headers.Contains("sub"))
+            if (headers.Contains(UserIDFieldName))
             {
-                user_id = headers.GetValues("sub").First();
+                user_id = headers.GetValues(UserIDFieldName).First();
             }
-
             return user_id;
         }
 
@@ -127,9 +151,14 @@ namespace SubscriberWebAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool SubscriptionExists(int id)
+        private bool SubscriptionExists(String user_id, int stock_id)
         {
-            return db.Subscriptions.Count(e => e.id == id) > 0;
+            return db.Subscriptions.Count(e => e.user_id == user_id && e.stock_id == stock_id) > 0;
+        }
+
+        private bool StockExists(int stock_id)
+        {
+            return db.Stocks.Count(e => e.id == stock_id) > 0;
         }
     }
 }

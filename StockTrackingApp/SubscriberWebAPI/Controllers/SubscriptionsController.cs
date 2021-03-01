@@ -28,11 +28,11 @@ namespace SubscriberWebAPI.Controllers
         // GET: api/Subscriptions/5
         [Route("api/subscriptions/{stock_id}")]
         [ResponseType(typeof(Subscription))]
-        public async Task<IHttpActionResult> GetUserSubscriptionByStockID(int id)
+        public async Task<IHttpActionResult> GetUserSubscriptionByStockID(int stock_id)
         {
             string user_id = getUserIDFromHeader(this.Request.Headers);
 
-            Subscription subscription = await db.Subscriptions.Where(e => e.stock_id == id && e.user_id == user_id).FirstOrDefaultAsync();
+            Subscription subscription = await db.Subscriptions.Where(e => e.stock_id == stock_id && e.user_id == user_id).FirstOrDefaultAsync();
 
             if (subscription == null)
             {
@@ -71,7 +71,7 @@ namespace SubscriberWebAPI.Controllers
                 return Content(HttpStatusCode.BadRequest, "No user ID found in request header");
             }
 
-            Subscription sub = new Subscription(user_id, stock_id);
+            Subscription sub = new Subscription { stock_id = stock_id, user_id = user_id };
 
             if (!ModelState.IsValid)
             {
@@ -103,7 +103,7 @@ namespace SubscriberWebAPI.Controllers
                 }
             }
 
-            return Ok(sub);
+            return Ok();
         }
 
         // DELETE: api/Subscriptions/5

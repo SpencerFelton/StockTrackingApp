@@ -88,12 +88,12 @@ namespace ProviderWebApi.Controllers
             return Ok(transits);
             */
             List<Stock> stocks = await db.Stocks.ToListAsync();
-            List<TransitStock> transits = new List<TransitStock>();
+            List<StockWithPrice> transits = new List<StockWithPrice>();
 
             foreach (Stock s in stocks)
             {
                 PriceHistory latest = await db.PriceHistories.Where(e => e.stock_id == s.id).OrderByDescending(e => e.time).FirstOrDefaultAsync();
-                TransitStock transit = new TransitStock(s, latest);
+                StockWithPrice transit = new StockWithPrice(s, latest);
                 transits.Add(transit);
             }
 
@@ -109,26 +109,9 @@ namespace ProviderWebApi.Controllers
         [ResponseType(typeof(PriceHistory))]
         public async Task<IHttpActionResult> GetStockWithLatestPrice(int stock_id)
         {
-<<<<<<< Updated upstream
             Stock stock = await db.Stocks.FindAsync(stock_id);
             PriceHistory latest = await db.PriceHistories.Where(e => e.stock_id == stock.id).OrderByDescending(e => e.time).FirstOrDefaultAsync();
             StockWithPrice transit = new StockWithPrice(stock, latest);
-=======
-            /*
-            Stock stock = await db.Stocks.FindAsync(id);
-            PriceHistory priceHistory = await db.PriceHistories.FirstOrDefaultAsync(e => e.stock_id == stock.id);
-            TransitStock transit = new TransitStock(stock, priceHistory);
->>>>>>> Stashed changes
-
-            if (transit == null)
-                return NotFound();
-
-            return Ok(transit);
-            */
-
-            Stock stock = await db.Stocks.FindAsync(id);
-            PriceHistory latest = await db.PriceHistories.Where(e => e.stock_id == stock.id).OrderByDescending(e => e.time).FirstOrDefaultAsync();
-            TransitStock transit = new TransitStock(stock, latest);
 
             if (transit == null)
                 return NotFound();

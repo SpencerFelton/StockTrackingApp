@@ -10,6 +10,10 @@ import {NotifierService} from '../shared/Notifications/notifier.service';
     styleUrls: ['./subscriptionView.component.css']
 })
 export class subscriptionView implements OnInit {
+    
+
+
+
     pageTitle: string = 'Subscription List';
     errorMessage:string;
     sortedColumn: string;

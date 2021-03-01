@@ -8,16 +8,45 @@
     <mat-card-content>
         <div class="chart-container">
             <canvas id="linechart"></canvas>
+        </div>        
+        
+        <div> 
+            <mat-form-field appearance="outline">
+                <mat-label>Slider Tick Options</mat-label>
+                <mat-select [(value)]="selected" (selectionChange)="sliderConfigure($event)">
+                  <mat-option value="1">100 Ticks</mat-option>
+                  <mat-option value="2">200 Ticks</mat-option>
+                  <mat-option value="3">300 Ticks</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Scale Type</mat-label>
+                <mat-select [(value)]="selected" (selectionChange)="sliderConfigure($event)">
+                  <mat-option value="1">Linear</mat-option>
+                  <mat-option value="2">Logarithmic</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Scale Type</mat-label>
+                <mat-select [(value)]="selected" (selectionChange)="sliderConfigure($event)">
+                  <mat-option value="1">Linear</mat-option>
+                  <mat-option value="2">Logarithmic</mat-option>
+                </mat-select>
+              </mat-form-field>
+
         </div>
 
         <div class="buttons">
-            <mat-slider
+            <mat-slider #chartSlider
                 thumbLabel
                 [displayWith]="formatLabel"
-                tickInterval="1000"
-                min="1"
-                max="100000"></mat-slider>
-        </div>
+                [tickInterval]="step"
+                [min]="min"
+                [max]="max"
+                [(value)] = "value"
+                (input) = "onInputChange($event)"></mat-slider>
+            </div>
+
 
         <div *ngIf = "type=='provider'">
             <hr> 
@@ -29,6 +58,14 @@
             </div>
             
         </div>
+        <div *ngIf = "type=='client'">
+            <hr> 
+            <h1> Actions </h1>
+            <div class = "buttons"> 
+               <button class="subUnsub" mat-stroked-button>Subscribe</button>
+            </div>
+        </div>
+
     </mat-card-content>
 </mat-card>
 

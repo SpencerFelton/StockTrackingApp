@@ -1,7 +1,7 @@
 //TODO: Sort by time period
 
 
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 
 import {ChartDataSets, ChartOptions, Chart} from 'chart.js';
 import {BaseChartDirective,Color, Label} from 'ng2-charts';
@@ -10,6 +10,7 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import {ICompanyView} from '../company-models/companyView';
 
 import { CompanyServiceClient } from '../company-service-client/company-service-client';
+import { fromEvent } from 'rxjs';
 
 
 @Component({
@@ -21,6 +22,8 @@ import { CompanyServiceClient } from '../company-service-client/company-service-
 export class StockChartComponent implements OnChanges, OnInit{
     @Input() stockId:number; //<--Change to abbr once abbr implementation is complete
     @Input() type:string;
+
+    @ViewChild('chartSlider') chartSlider:ElementRef;
     
     chart:any;
     stockInformation:any; //<-stock info
@@ -30,9 +33,20 @@ export class StockChartComponent implements OnChanges, OnInit{
     name:string = '';
     abbreviation:string = '';
     lineLabel:any;
+    min = 0;
+    max = 100;
+    chartEarliestDate:any;
+    chartLatestDate:any;
+    step = 1;
+    values = 0;
+    oneDayOff = new Date();
+    value = 0;
+    selected = "1";
+  
 
 
     formatLabel(value: number) {
+      //console.log(value);
       if (value >= 1000) {
         return Math.round(value / 1000) + 'k';
       }
@@ -44,16 +58,17 @@ export class StockChartComponent implements OnChanges, OnInit{
     constructor(private companyServiceClient:CompanyServiceClient){
     }
 
+
      getCompany(id:number){
         if(id != 0){
             this.companyServiceClient.getCompanyClient(id)
             .subscribe({
             next: (company: any) => {
                 this.stockInformation = company;
-                console.log("(1)asdas");
+                //console.log("(1)asdas");
                 this.name = this.stockInformation.name;
                 this.abbreviation = this.stockInformation.abbreviation;
-                console.log("PLEASE ACKNOWLEDGE ME!");},
+                },
                 error: err => this.errorMessage = err
             })
 
@@ -69,7 +84,9 @@ export class StockChartComponent implements OnChanges, OnInit{
                 console.log("Added to StockHistory!");
                 this.data = this.dataGenerator(this.stockHistory);
                 this.lineLabel = this.labelGenerator(this.stockHistory);
-                this.generateChart();},
+                this.earliestAndLatestDates(this.data);
+                this.updateChartDataFromStart(this.chart, this.data, this.lineLabel, this.chartLatestDate.t);
+                },
                 error: err => this.errorMessage = err
             })
 
@@ -93,18 +110,21 @@ export class StockChartComponent implements OnChanges, OnInit{
 
 
     ngOnInit(): void {
-        console.log("hello");
+        this.generateChart();
+        this.getCompany(this.stockId);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.getCompany(this.stockId);
         this.getCompanyHistory(this.stockId);
+        console.log()
+        
+        
     }
 
     generateChart():void{
-        if(!this.chart) {
           this.chart = new Chart("linechart", {
             type: 'line',
+            
             options: {
               responsive: true,
               maintainAspectRatio: false,
@@ -112,21 +132,16 @@ export class StockChartComponent implements OnChanges, OnInit{
                 xAxes: [{
                   type: 'time',
                   ticks: {
-                    //min: new Date(2000,1,1,0,0,0,0),
-                    //max: new Date(2018,1,1,0,0,0,0)
                   },
                   time:
                   {
-                    //THIS IS WHAT I WANT TO CHANGE WITH THE FUNCTION
                   }
                 }]
               }
             },
-            data: {
-              labels: this.lineLabel,
+            data: {  
               datasets: [{
                 label: 'Demo',
-                data: this.data,
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
@@ -146,28 +161,109 @@ export class StockChartComponent implements OnChanges, OnInit{
                 borderWidth: 1
               }]
             }
-          });  
-        } else{
-            this.updateChartDataFromStart(this.chart, this.data)
-        }
-        
-        //this.chart.update();
-
+          });
     }
     
 
-    
+      sliderConfigure(event:any){
+          console.log("We are here!");
+           switch(event.value){
+             case "1":
+              console.log("1 Chosen!");
+              this.max = 100;
+               break;
+             case "2":
+              console.log("2 Chosen!");
+              this.max = 200;
+               break;
+             case "3":
+              console.log("3 Chosen!");
+              this.max = 300;
+               break;
+           } 
+      }
 
-      updateChartDataFromStart(chart, data){
+      updateChartDataFromStart(chart, data, labels, max){
+        if(data.length != 0){
         chart.data.datasets[0].data = data;
+        chart.data.labels[0] = labels;
+        chart.options.scales.xAxes[0].ticks.max = max;
+        this.updateChartAxis(this.value);
+        console.log("Initial values");
+        console.log(`Value: ${this.value}`);
+        console.log(`Maximum: ${new Date(this.chart.options.scales.xAxes[0].ticks.max) }`);
+        console.log(`Minimum: ${new Date(this.chart.options.scales.xAxes[0].ticks.min) }`);
         chart.update();
+        }
+
       }
 
       updateChartData(chart, data,index){
         chart.data.datasets[index].data = data;
         chart.update();
       }
+
+      onInputChange(event: any) {
+        this.value = event.value;
+        //console.log(`Latest Date: ${this.chartLatestDate.t}`);
+        //console.log(`Earliest Date: ${this.chartEarliestDate.t}`);
+        //console.log(`Latest Date again: ${new Date(this.chartLatestDate.t)}`);
+        var result = new Date();
+        //console.log(`Earliest Date again: ${(new Date(result.setDate(new Date(this.chartLatestDate.t).getDate() - 1)))}`);
+  
+        this.updateChartAxis(this.value);
+        console.log("After moving slider");
+        console.log(`Value: ${this.value}`);
+        console.log(`Maximum: ${new Date(this.chart.options.scales.xAxes[0].ticks.max) }`);
+        console.log(`Minimum: ${new Date(this.chart.options.scales.xAxes[0].ticks.min) }`);
+        
+      }
+
+      updateChartAxis(value:number){
+        
+          var increments = ( this.oneDayOff.getTime() - new Date(this.chartEarliestDate.t).getTime())/(this.max - this.min);
+        //console.log(this.chart);
+        //console.log(`Increments: ${increments}`);
+        if(this.chart){
+          //console.log(value);
+          this.chart.options.scales.xAxes[0].ticks.min = this.oneDayOff.getTime() - value*increments;
+            if(this.data.length <=1){
+              this.chart.options.scales.xAxes[0].ticks.max = new Date(this.chartLatestDate.t).getTime() - value*increments;
+            }
+          this.chart.update();
+        }
+        //console.log(`Earliest Date: ${this.chartEarliestDate.t}`);
+        //console.log(`Latest Date: ${this.chartLatestDate.t}`);
+        
+        
+        //console.log(``);
+      }
+      //- value*increments
       
+
+
+      earliestAndLatestDates(data:any){
+        this.chartEarliestDate = this.data.reduce(function (min,obj){
+          return obj.t < min.t? obj: min;
+        });
+
+        this.chartLatestDate = this.data.reduce(function (max,obj){
+          return obj.t > max.t? obj: max;
+        });
+
+        this.oneDayOff = new Date(this.chartLatestDate.t);
+        this.oneDayOff.setDate(this.oneDayOff.getDate()-1);
+        console.log(`One day off: ${this.oneDayOff}`);
+        console.log(`Earliest Time: ${this.chartEarliestDate.t}`);
+        console.log(`Latest Time: ${this.chartLatestDate.t}`);
+      
+
+      }  
+
+
+      valueChanged(e) {
+        console.log('e', e);
+    }
     
 }
 

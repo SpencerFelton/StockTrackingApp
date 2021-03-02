@@ -1,13 +1,14 @@
-<h1 mat-dialog-title>Hi {{data.name}}</h1>
+<h1 mat-dialog-title>{{data.subbed? 'Unsubscribe From' : 'Subscribe To'}}  Stock</h1>
 <div mat-dialog-content>
-    <div *ngIf="subUnsub">
+    <div *ngIf ="!data.subbed">
         <p>Are you sure you want to subscribe to this stock?</p>
     </div>
-    <div *ngIf="!subUnsub">
+    <div *ngIf ="data.subbed">
         <p>Are you sure you want to unsubscribe from this stock?</p>
     </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Yes</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Cancel</button>
+  <button mat-button (click)="subUnsub()">Yes</button>
+  <button mat-button cdkFocusInitial
+  (click)="close()">Cancel</button>
 </div>

@@ -27,7 +27,7 @@ export class StockChartComponent implements OnChanges, OnInit{
     @ViewChild('chartSlider') chartSlider:ElementRef;
     
     chart:any;
-    stockInformation:any; //<-stock info
+    stockInformation:any;
     stockHistory:any[]; //<-- stock history (is any)
     data:any[] = [];
     errorMessage:string;
@@ -84,8 +84,8 @@ export class StockChartComponent implements OnChanges, OnInit{
           })
          
        }
+      }
         
-    }
 
      getCompanyHistory(id:number){
        if(this.type == "client"){
@@ -134,7 +134,6 @@ export class StockChartComponent implements OnChanges, OnInit{
 
     ngOnInit(): void {
         this.generateChart();
-        this.getCompany(this.stockId);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -232,41 +231,22 @@ export class StockChartComponent implements OnChanges, OnInit{
       }
 
       onInputChange(event: any) {
-        this.value = event.value;
-        //console.log(`Latest Date: ${this.chartLatestDate.t}`);
-        //console.log(`Earliest Date: ${this.chartEarliestDate.t}`);
-        //console.log(`Latest Date again: ${new Date(this.chartLatestDate.t)}`);
-        var result = new Date();
-        //console.log(`Earliest Date again: ${(new Date(result.setDate(new Date(this.chartLatestDate.t).getDate() - 1)))}`);
-  
+        this.value = event.value; 
         this.updateChartAxis(this.value);
-        console.log("After moving slider");
-        console.log(`Value: ${this.value}`);
-        console.log(`Maximum: ${new Date(this.chart.options.scales.xAxes[0].ticks.max) }`);
-        console.log(`Minimum: ${new Date(this.chart.options.scales.xAxes[0].ticks.min) }`);
-        
       }
 
       updateChartAxis(value:number){
         
           var increments = ( this.oneDayOff.getTime() - new Date(this.chartEarliestDate.t).getTime())/(this.max - this.min);
-        //console.log(this.chart);
-        //console.log(`Increments: ${increments}`);
         if(this.chart){
-          //console.log(value);
           this.chart.options.scales.xAxes[0].ticks.min = this.oneDayOff.getTime() - value*increments;
             if(this.data.length <=1){
               this.chart.options.scales.xAxes[0].ticks.max = new Date(this.chartLatestDate.t).getTime() - value*increments;
             }
           this.chart.update();
         }
-        //console.log(`Earliest Date: ${this.chartEarliestDate.t}`);
-        //console.log(`Latest Date: ${this.chartLatestDate.t}`);
-        
-        
-        //console.log(``);
       }
-      //- value*increments
+
       
 
 

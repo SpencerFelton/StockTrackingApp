@@ -6,6 +6,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {AddStockPriceComponent} from "./add-stock-price/add-stock-price.component";
+import {UpdateStockNameComponent} from './update-stock-name/update-stock-name.component';
 
 export interface stockData {
     id:number;
@@ -36,6 +39,8 @@ export class StockMaker implements OnChanges, OnInit{
     errorMessage="";
     stockShown:any[] = [,false];
     type = "provider";
+    companyData:stockData[];
+    companyInfo:stockData;
 
     displayedColumns:string[] = ['name', 'abbr', 'stockPrice'];
     dataSource: MatTableDataSource<stockData>;
@@ -43,7 +48,9 @@ export class StockMaker implements OnChanges, OnInit{
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor(private companyService: CompanyService, private notiferService:NotifierService){
+    constructor(private companyService: CompanyService, 
+        private notiferService:NotifierService,
+        private dialog:MatDialog){
 
     }
 
@@ -68,6 +75,32 @@ export class StockMaker implements OnChanges, OnInit{
           this.dataSource.paginator.firstPage();
         }
       }
+
+      openAddStockDialog(stock_id:number, stockprice:string) {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        
+        dialogConfig.data = {
+            id:stock_id,
+            currentStockPrice:stockprice
+        };
+
+        this.dialog.open(AddStockPriceComponent, dialogConfig);
+    }
+
+    openUpdateStockNameDialog(stock_id:number, stockName:string) {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        
+        dialogConfig.data = {
+            id:stock_id,
+            currentStockName:stockName
+        };
+
+        this.dialog.open(UpdateStockNameComponent, dialogConfig);
+    }
     
       
 
@@ -75,13 +108,18 @@ export class StockMaker implements OnChanges, OnInit{
     getCompanies(): void{
         this.companyService.getCompanies().subscribe({
             next: companies =>{
-                this.dataSource = new MatTableDataSource (this.companyFormatter(companies));
+                this.companyData = this.companyFormatter(companies);
+                this.dataSource = new MatTableDataSource (this.companyData);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
                 console.log("Obtained data!");
             },
             error: err => this.errorMessage = err     
         });
+    }
+    //finds the company information from the companyData object
+    getCompanyFromCompanyData(stockId:number){
+        this.companyInfo = this.companyData.find(x=> x.id == stockId);
     }
 
     companyFormatter(rawCompanyData:any[]):stockData[]{
@@ -119,109 +157,5 @@ export class StockMaker implements OnChanges, OnInit{
     }
 
     selectStock():void {
-
     }
-
-
-    /*
-    showHistory(stockId: number) : void {
-        console.log("Here is the stockshown");
-        console.log(String(this.stockShown[0]));
-        console.log("Here is the stockid");
-        console.log(stockId);
-
-        if(this.stockShown[0] == stockId){
-            this.stockShown[1] = !this.stockShown[1];  
-        } else{
-            this.stockShown[1] = true;
-            this.stockShown[0] = stockId;
-        }
-    }
-
-
-    
-
-
-
-
-
-    /*
-    pageTitle = "Change"
-    statusString: string[] =["New", "Modify", "Update"];
-    sortedColumn: string;
-    tableHeaders: string[][] = [["Company Name", "desc", "name"], ["Shorthand", "desc", "abbreviation"], ["Current Stock Price", "desc", "price"]]
-    foundIndex: number;
-    //individualStatus: number[];
-
-    filteredCompanies: ICompany[];
-
-
-    companies: ICompany[] = []
-
-    _listFilter:string;
-    errorMessage: string;
-
-    get listFilter():string{
-        return this._listFilter;
-    }
-
-    set listFilter(value: string){
-        this._listFilter = value;
-        this.filteredCompanies = this._listFilter? this.performFilter(this.listFilter): this.companies;
-    }
-
-    constructor(private companyService: CompanyService, private notiferService:NotifierService){
-        this.listFilter = '';
-    }
-
-    ngOnInit(): void {
-        this.getCompanies();  
-    }
-
-    getCompanies(): void{
-        this.companyService.getCompanies().subscribe({
-            next: companies =>{
-                this.companies = companies;
-                this.filteredCompanies = this.companies;
-                //this.individualStatus = new Array(companies.length).fill(0);
-            },
-            error: err => this.errorMessage = err
-            
-        });
-    }
-
-    sortColumn(header: string[]): void {
-        //alert("ts sort alert");
-        this.sortedColumn = header[0];
-        for (let i=0; i<this.tableHeaders.length; i++){
-            if (this.tableHeaders[i][0] === header[0]){
-                this.foundIndex = i;
-                break;
-            }
-        }
-        if(header[1] === "desc"){
-            this.tableHeaders[this.foundIndex] = [header[0], "asc", header[2]];
-        }else if(header[1] === "asc"){
-            this.tableHeaders[this.foundIndex] = [header[0], "desc", header[2]];
-        }
-    }
-
-
-    ngOnChanges(changes: SimpleChanges): void {
-        /*
-        for(var i = 0; i<this.companies.length; i++){
-            console.log(this.companies[i].stockPriceNew);
-        }
-        */
-    /*    
-    }
-    
-    performFilter(filterBy: string) :ICompany[]{
-        filterBy = filterBy.toLocaleLowerCase();
-        return this.companies.filter((company:ICompany) =>
-                                    company.name.toLocaleLowerCase().indexOf(filterBy) !== -1);
-      }
-      */
-      
-
 }

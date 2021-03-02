@@ -1,11 +1,4 @@
-<mat-card>
-    <mat-card-title>
-    {{name}}
-    </mat-card-title>
-    <mat-card-subtitle>
-        {{abbreviation}}
-    </mat-card-subtitle>
-    <mat-card-content>
+
         <div class="chart-container">
             <canvas id="linechart"></canvas>
         </div>        
@@ -36,7 +29,7 @@
 
         </div>
 
-        <div class="buttons">
+        <div class="slider">
             <mat-slider #chartSlider
                 thumbLabel
                 [displayWith]="formatLabel"
@@ -46,31 +39,3 @@
                 [(value)] = "value"
                 (input) = "onInputChange($event)"></mat-slider>
             </div>
-
-
-        <div *ngIf = "type=='provider'">
-            <hr> 
-            <h1> Actions </h1>
-            <div class = "buttons"> 
-               <button class="name" mat-stroked-button>Update Stock Name</button> 
-                <button class="price" mat-stroked-button>Add New Stock Price</button> 
-                <button class="delete" mat-stroked-button>Delete This Stock</button>  
-            </div>
-            
-        </div>
-        <div *ngIf = "type=='client'">
-            <hr> 
-            <h1> Actions </h1>
-            <div class = "buttons"> 
-               <button class="subUnsub" mat-stroked-button>Subscribe</button>
-            </div>
-        </div>
-
-    </mat-card-content>
-</mat-card>
-
-
-<!--
-(chartHover)="chartHovered($event)"
-(chartClick)="chartClicked($event)"
--->

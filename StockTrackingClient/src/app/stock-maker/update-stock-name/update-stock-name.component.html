@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>Update Stock Name</h1>
+<form 
+(ngSubmit) = "UpdateStockName()" 
+[formGroup] = "UpdateStockNameForm">
+
+<div mat-dialog-content>
+
+    <mat-form-field appearance="outline">
+        <mat-label for="currentStockNameID">Current Stock Name</mat-label>
+        <input matInput required
+            id="currentStockNameID"
+            type="text"
+            placeholder="stockName"
+            formControlName="currentStockName"> 
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label for="newStockNameID">New Stock Name</mat-label>
+        <input matInput 
+            id="newStockNameID"
+            type="text"
+            placeholder="NewStockName"
+            formControlName="newStockName"
+            [ngClass] = "{'is-invalid': newStockNameMessage}"> 
+        <mat-hint class = "error">{{newStockNameMessage}}</mat-hint>
+    </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-flat-button 
+    color="primary"
+    type="submit"
+    [disabled]="!UpdateStockNameForm.valid">
+    Save Changes</button>
+  <button mat-button cdkFocusInitial
+  (click)="close()">Cancel</button>
+</div>
+</form> 

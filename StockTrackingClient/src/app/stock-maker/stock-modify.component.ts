@@ -1,3 +1,4 @@
+/*
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { NotifierService } from '../shared/Notifications/notifier.service';
@@ -245,3 +246,4 @@ export class StockModify implements OnInit, OnChanges {
   }
 
 }
+*/

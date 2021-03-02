@@ -6,6 +6,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {SubscribeUnsubscribeComponent} from "./subscribe-unsubscribe/subscribe-unsubscribe.component";
 
 export interface stockData {
     id:number;
@@ -35,7 +37,10 @@ export class StockViewer implements OnInit {
     pageTitle="Stock List";
     errorMessage="";
     stockShown:any[] = [,false];
-    type = "client";
+    type = "client";    
+    companyInfo:stockData;
+    companyData:stockData[];
+    subscribedCompanyData:stockData[];
 
     displayedColumns:string[] = ['name', 'abbr', 'stockPrice'];
     dataSource: MatTableDataSource<stockData>;
@@ -43,15 +48,20 @@ export class StockViewer implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor(private companyService: CompanyServiceClient, private notiferService:NotifierService){
+    constructor(private companyService: CompanyServiceClient, 
+        private notiferService:NotifierService,
+        private dialog: MatDialog){
 
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         console.log('Method not implemented.');
     }
+
+    //TODO: Implement subscribes tock injectable that does all the calls and stores the subscribedstock
     ngOnInit(): void {
         this.getCompanies();
+        this.getSubscribedStock();
     }
     /*
     ngAfterViewInit() {
@@ -69,19 +79,71 @@ export class StockViewer implements OnInit {
         }
       }
     
+
       
 
     //calls on companyService to get the data from the server
     getCompanies(): void{
         this.companyService.getCompaniesClient().subscribe({
             next: companies =>{
-                this.dataSource = new MatTableDataSource (this.companyFormatter(companies));
+                this.companyData = this.companyFormatter(companies);
+                this.dataSource = new MatTableDataSource (this.companyData);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
                 console.log("Obtained data!");
             },
             error: err => this.errorMessage = err     
         });
+    }
+    
+    getSubscribedStock():void{
+        this.companyService.getSubscribedCompanies().subscribe({
+            next: subscribedCompanies =>{
+                this.subscribedCompanyData = this.companyFormatter(subscribedCompanies);
+                console.log("Got company data!")
+                console.log(this.subscribedCompanyData);
+            }
+        })
+    }
+
+
+    isSubscribed(stock_id):boolean{
+        console.log("I am here!!!!!");
+        console.log(this.subscribedCompanyData);
+        if(this.subscribedCompanyData.find(company => company.id == stock_id)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    openSubscribedDialog(stock_id:number) {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        
+        dialogConfig.data = {
+            id:stock_id,
+            subbed:this.isSubscribed(stock_id)
+        };
+
+        this.dialog.open(SubscribeUnsubscribeComponent, dialogConfig);
+    }
+
+
+    subscribeToStock(stock_id:number){
+        this.companyService.subscribeToStock(stock_id).subscribe({
+            next: subscribedCompanies =>{
+                //this.subscribedCompanyData = this.companyFormatter(subscribedCompanies);
+                console.log("subscribed to stock!")
+            }
+        })
+    }
+    
+
+        //finds the company information from the companyData object
+    getCompanyFromCompanyData(stockId:number){
+        this.companyInfo = this.companyData.find(x=> x.id == stockId);
     }
 
     companyFormatter(rawCompanyData:any[]):stockData[]{

@@ -142,8 +142,10 @@ export class CompanyService{
     //this adds a stock price to an already existing stock
     addStockPrice(stock_id:number, price:number){
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
+        
         var priceObj = {
-            "id": stock_id,
+            "stock_id": stock_id,
+            "time": new Date().toDateString(),
             "value": price
         };
         return this.http.post<any>(`${env.dev.serverUrlProvider}/api/prices/`, priceObj,{headers:headers})
@@ -152,6 +154,10 @@ export class CompanyService{
             map(()=> priceObj),
             catchError(this.handleError)
         );
+    }
+    //TODO:IMPLEMENT THIS ONCE THE BACKEND HAS IT IMPLEMENTED
+    updateStockName():void{
+
     }
     
 

@@ -11,6 +11,7 @@ import {ICompanyView} from '../company-models/companyView';
 
 import { CompanyServiceClient } from '../company-service-client/company-service-client';
 import { fromEvent } from 'rxjs';
+import { CompanyService } from '../company-service/company.service';
 
 
 @Component({
@@ -55,14 +56,14 @@ export class StockChartComponent implements OnChanges, OnInit{
 
     
 
-    constructor(private companyServiceClient:CompanyServiceClient){
+    constructor(private companyServiceClient:CompanyServiceClient,
+                private companyService:CompanyService){
     }
 
 
-     getCompany(id:number){
-        if(id != 0){
-            this.companyServiceClient.getCompanyClient(id)
-            .subscribe({
+     getCompany(id:number){        
+       if(this.type == "client"){
+            this.companyServiceClient.getCompanyClient(id).subscribe({
             next: (company: any) => {
                 this.stockInformation = company;
                 //console.log("(1)asdas");
@@ -71,14 +72,24 @@ export class StockChartComponent implements OnChanges, OnInit{
                 },
                 error: err => this.errorMessage = err
             })
-
-        }
+       }else{
+        this.companyService.getCompany(id).subscribe({
+          next: (company: any) => {
+              this.stockInformation = company;
+              //console.log("(1)asdas");
+              this.name = this.stockInformation.name;
+              this.abbreviation = this.stockInformation.abbreviation;
+              },
+              error: err => this.errorMessage = err
+          })
+         
+       }
+        
     }
 
      getCompanyHistory(id:number){
-        if(id != 0){
-            this.companyServiceClient.getCompanyClientHistory(id)
-            .subscribe({
+       if(this.type == "client"){
+            this.companyServiceClient.getCompanyClientHistory(id).subscribe({
             next: (stockHistory: any) => {
                 this.stockHistory = stockHistory;
                 console.log("Added to StockHistory!");
@@ -90,7 +101,19 @@ export class StockChartComponent implements OnChanges, OnInit{
                 error: err => this.errorMessage = err
             })
 
-        }
+       }else{
+          this.companyService.getCompanyHistory(id).subscribe({
+          next: (stockHistory: any) => {
+              this.stockHistory = stockHistory;
+              console.log("Added to StockHistory!");
+              this.data = this.dataGenerator(this.stockHistory);
+              this.lineLabel = this.labelGenerator(this.stockHistory);
+              this.earliestAndLatestDates(this.data);
+              this.updateChartDataFromStart(this.chart, this.data, this.lineLabel, this.chartLatestDate.t);
+              },
+              error: err => this.errorMessage = err
+          })
+       }  
     }
 
         //data generator takes the raw stock history data and turns it into data that the graph can then plot
@@ -136,6 +159,11 @@ export class StockChartComponent implements OnChanges, OnInit{
                   time:
                   {
                   }
+                }],
+                yAxes:[{
+                  ticks: {
+                    min:0
+                  },
                 }]
               }
             },

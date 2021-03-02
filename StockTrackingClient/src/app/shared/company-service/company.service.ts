@@ -73,6 +73,18 @@ export class CompanyService{
         }
     }
 
+    getCompanyHistory(id:number):Observable<any>{
+        if(id != 0){
+            const url = `${env.dev.serverUrlProvider}/api/Prices/${id}`;
+            return this.http.get<any>(url)
+            .pipe(
+                tap(data => console.log('priceHistory: ' + JSON.stringify(data))),
+                catchError(this.handleError)
+            );
+        }
+    }
+
+
     //Modify this for the web server
     //modify an existing company
     modifyCompany(company:ICompany): Observable<any>{

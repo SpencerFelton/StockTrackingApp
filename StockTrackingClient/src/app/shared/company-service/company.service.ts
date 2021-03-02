@@ -145,7 +145,7 @@ export class CompanyService{
         
         var priceObj = {
             "stock_id": stock_id,
-            "time": new Date().toDateString(),
+            "time": new Date(),
             "value": price
         };
         return this.http.post<any>(`${env.dev.serverUrlProvider}/api/prices/`, priceObj,{headers:headers})

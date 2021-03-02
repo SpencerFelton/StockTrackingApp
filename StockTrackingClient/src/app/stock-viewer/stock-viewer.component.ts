@@ -108,12 +108,16 @@ export class StockViewer implements OnInit {
 
 
     isSubscribed(stock_id):boolean{
-        console.log("I am here!!!!!");
+        //console.log("I am here!!!!!");
         console.log(this.subscribedCompanyData);
-        if(this.subscribedCompanyData.find(company => company.id == stock_id)){
-            return true;
-        }else{
+        console.log(this.subscribedCompanyData.find(company => company.id == stock_id)== undefined);
+        if(this.subscribedCompanyData.find(company => company.id == stock_id) == undefined){
+            console.log("I Am unsubscribed!");
             return false;
+            
+        }else{
+            console.log("I Am subscribed!");
+            return true;
         }
     }
 

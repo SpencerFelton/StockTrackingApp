@@ -98,6 +98,7 @@ export class CompanyServiceClient{
     }
 
     subscribeToStock(stock_id:number){
+        console.log("50");
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this.http.post<any>(`${env.dev.serverUrlClient}/api/subscriptions/${stock_id}`,{headers:headers})
         .pipe(

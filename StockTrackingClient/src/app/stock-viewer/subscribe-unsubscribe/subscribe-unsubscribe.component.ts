@@ -21,6 +21,7 @@ export class SubscribeUnsubscribeComponent{
 
 
     subUnsub():void{
+        console.log("60");
         if(this.data.subbed){
             this.companyService.unsubscribeToStock(this.data.id).subscribe({
                 next: subscribedCompanies =>{
@@ -31,7 +32,7 @@ export class SubscribeUnsubscribeComponent{
         }else{
             this.companyService.subscribeToStock(this.data.id).subscribe({
                 next: subscribedCompanies =>{
-                    console.log("Get data")
+                    console.log("I am here!(x100)")
                 },
                 error: err => this.errorMessage = err 
             });

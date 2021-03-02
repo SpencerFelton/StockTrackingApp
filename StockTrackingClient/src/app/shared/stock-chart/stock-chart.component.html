@@ -6,28 +6,8 @@
         {{abbreviation}}
     </mat-card-subtitle>
     <mat-card-content>
-        <div class="chart-container">
+        <div style='display: block;'>
             <canvas id="linechart"></canvas>
-        </div>
-
-        <div class="buttons">
-            <mat-slider
-                thumbLabel
-                [displayWith]="formatLabel"
-                tickInterval="1000"
-                min="1"
-                max="100000"></mat-slider>
-        </div>
-
-        <div *ngIf = "type=='provider'">
-            <hr> 
-            <h1> Actions </h1>
-            <div class = "buttons"> 
-               <button class="name" mat-stroked-button>Update Stock Name</button> 
-                <button class="price" mat-stroked-button>Add New Stock Price</button> 
-                <button class="delete" mat-stroked-button>Delete This Stock</button>  
-            </div>
-            
         </div>
     </mat-card-content>
 </mat-card>

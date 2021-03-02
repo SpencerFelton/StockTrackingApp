@@ -104,7 +104,11 @@
                     color="primary"
                     type="submit"
                     [disabled]="!ModifyStockForm.valid">
-                    Create Stock</button>
+                    Save Changes</button>
+            <button mat-flat-button 
+                    color="primary"
+                    (click) = 'onDelete()'>
+                    Delete stock</button>
           </div>
     </form>
 

@@ -11,18 +11,7 @@ import {AuthService} from '@auth0/auth0-angular';
 
 export class AccountViewComponent{
 
-    username:string;
-    email:string;
-    accountType:string;
-    data:any;
+    constructor(public auth: AuthService){}
 
-    constructor(public auth: AuthService){
-        /*
-        if(auth.user$ ){
-            //this.username = auth.user$.username;
-            this.data = user.email;
-            console.log(this.data);
-        }
-        */
-    }
+
 }

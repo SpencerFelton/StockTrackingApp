@@ -30,10 +30,8 @@
     "chartjs-plugin-annotation": "^0.5.7",
     "moment": "^2.29.1",
     "ng2-charts": "^2.4.2",
-    "polyfill": "^0.1.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
-    "web-animations-js": "^2.3.2",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {

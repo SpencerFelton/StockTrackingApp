@@ -1,0 +1,71 @@
+﻿<h2 mat-dialog-title>
+    {{pageTitle}}
+    <button class="close" mat-button (click)="closeLogin()">X</button>
+</h2>
+  <mat-dialog-content>
+    <form (ngSubmit) = "save()" 
+          [formGroup] = "LoginForm">
+        <!--
+      <div>
+        <label for="accountTypeID">Account type </label>
+        <select id="accountTypeID"
+                class="form-control"
+                formControlName="accountType"
+                [ngClass] = "{'is-invalid': accountTypeMessage}">
+                <option selected value = 0>Please choose</option>
+                <option value = "1">Client</option>
+                <option value = "2">Provider</option>
+                
+        </select>
+        <span class="invalid-feedback">
+          {{accountTypeMessage}}
+        </span>
+    
+      </div>-->
+      <mat-form-field appearance="outline">
+        <mat-label for="accountTypeID">Account Type</mat-label>
+        <mat-select  required id="accountTypeID"
+                    formControlName="accountType"
+                    [ngClass] = "{'is-invalid': accountTypeMessage}">
+                    <mat-option selected value = 0>Please choose</mat-option>
+                    <mat-option value = "1">Client</mat-option>
+                    <mat-option value = "2">Provider</mat-option>
+        </mat-select>
+        <mat-hint class = "error">{{accountTypeMessage}}</mat-hint>  
+      </mat-form-field>
+          
+        <mat-form-field appearance="outline">
+          <mat-label for="usernameID">Username</mat-label>
+          <input matInput required
+            id="usernameID"
+            type="text"
+            placeholder="example"
+            formControlName="username"
+            [ngClass] = "{'is-invalid': usernameMessage}"> 
+            <mat-hint class = "error">{{usernameMessage}}</mat-hint>        
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+          <mat-label for="passwordID">Password</mat-label>
+          <input matInput required
+            id="passwordID"
+            type="password"
+            placeholder="password"
+            formControlName="password"
+            [ngClass] = "{'is-invalid': passwordMessage}"> 
+            <mat-hint class = "error">{{passwordMessage}}</mat-hint>        
+          </mat-form-field>
+      <div>
+        <mat-checkbox formControlName="keepSignIn" id="rememberMeID">Remember Me</mat-checkbox>
+      </div>
+      <div>
+        Don't have an account? <a class="link" title="Make a new account" (click)="closeLogin()" (click) = "openRegistration()">Sign up</a>
+      </div>
+      <div>
+        <button mat-flat-button 
+                color="primary"
+                type="submit"
+                [disabled]="!LoginForm.valid">
+                Log in</button>
+      </div>
+    </form>
+  </mat-dialog-content>

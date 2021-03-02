@@ -36,8 +36,8 @@ export class StockViewer implements OnInit {
         this.listFilter = '';
     }
     
-    filteredCompanies: any[];
-    companies: any[]= [];
+    filteredCompanies: ICompanyView[];
+    companies: ICompanyView[]= [];
 
     public chartClicked({ event, active }: {event: MouseEvent, active: {}[] }): void {
         console.log(event, active);

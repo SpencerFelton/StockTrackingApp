@@ -1,7 +1,7 @@
 
 import { Component } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
-import {LoginComponent} from './Login/Login.component';
+//import {LoginComponent} from './Login/Login.component';
 
 @Component({
   selector: 'pm-root',
@@ -13,6 +13,7 @@ export class AppComponent {
 
   constructor(public dialog:MatDialog){}
 
+  /*
   dialogRef:MatDialogRef<LoginComponent, any>;
 
   openLogin():void{
@@ -27,7 +28,5 @@ export class AppComponent {
       console.log('The dialog was closed')
     });
   }
-
-  
-
+  */
 }

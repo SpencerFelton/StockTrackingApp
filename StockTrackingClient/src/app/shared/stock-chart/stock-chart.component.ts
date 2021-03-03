@@ -120,7 +120,7 @@ export class StockChartComponent implements OnChanges, OnInit{
     dataGenerator(companyHistory:any[]):any{
         let dataGenerated:any[] = [];
         companyHistory.forEach(element => {
-            dataGenerated.push({t:element.dateTime+'Z',y:element.price});
+            dataGenerated.push({t:element.time+'Z',y:element.value});
         });      
         return dataGenerated;
     }
@@ -148,6 +148,8 @@ export class StockChartComponent implements OnChanges, OnInit{
             type: 'line',
             
             options: {
+              responsive: true,
+              maintainAspectRatio: false,
               scales: {
                 xAxes: [{
                   type: 'time',

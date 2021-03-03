@@ -24,7 +24,17 @@ export interface stockData {
 @Component({
     selector: "pm-stockmaker",
     templateUrl: "./stock-maker.component.html",
-    styleUrls: ["./stock-maker.component.css"]
+    styleUrls: ["./stock-maker.component.css"],
+    animations:[
+        trigger('moveUp', [
+            state('active', style({backgroundColor: '#999999' })),
+            //state ('inactive', style(*)),
+            transition('* <=> active', [
+                animate(100)
+            ]),
+
+        ])
+    ]
 })
 
 export class StockMaker implements OnChanges, OnInit{

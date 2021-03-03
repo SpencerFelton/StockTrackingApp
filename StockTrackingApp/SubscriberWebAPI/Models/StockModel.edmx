@@ -27,7 +27,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="user_id" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="user_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="stock_id" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK__PriceHist__value__2B3F6F97">
@@ -78,7 +78,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="user_id" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="user_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="stock_id" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK__PriceHist__value__2B3F6F97">

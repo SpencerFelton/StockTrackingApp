@@ -31,7 +31,6 @@ import {SortDirective} from './directive/sort.directive'
 import { AppComponent } from './app.component';
 import {StockMaker} from './stock-maker/stock-maker.component';
 import {PercentChangeComponent} from './shared/percent-change/percent-change.component';
-//import {StockModify} from './stock-maker/stock-modify.component';
 import {WelcomeComponent} from './home/welcome.component';
 import {StockViewer} from './stock-viewer/stock-viewer.component';
 import {subscriptionView} from './subscriptionView/subscriptionView.component';
@@ -64,7 +63,6 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     AppComponent,
     StockMaker,
     PercentChangeComponent,
-    //StockModify,
     WelcomeComponent,
     StockViewer,
     subscriptionView,

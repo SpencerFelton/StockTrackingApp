@@ -46,7 +46,8 @@ import {StockChartComponent} from './shared/stock-chart/stock-chart.component';
 import {SubscribeUnsubscribeComponent} from './stock-viewer/subscribe-unsubscribe/subscribe-unsubscribe.component';
 import {AddStockPriceComponent} from './stock-maker/add-stock-price/add-stock-price.component';
 import {UpdateStockNameComponent} from './stock-maker/update-stock-name/update-stock-name.component';
-
+import {DeleteStockComponent} from './stock-maker/delete-stock/delete-stock.component';
+import {CreateNewStockComponent} from './stock-maker/create-new-stock/create-new-stock.component';
 // Import the Auth0 module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
@@ -77,7 +78,9 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     StockChartComponent,
     SubscribeUnsubscribeComponent,
     AddStockPriceComponent,
-    UpdateStockNameComponent
+    UpdateStockNameComponent,
+    DeleteStockComponent,
+    CreateNewStockComponent
   ],
   imports: [
     BrowserModule,

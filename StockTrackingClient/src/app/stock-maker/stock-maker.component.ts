@@ -9,6 +9,10 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {AddStockPriceComponent} from "./add-stock-price/add-stock-price.component";
 import {UpdateStockNameComponent} from './update-stock-name/update-stock-name.component';
+import {DeleteStockComponent} from './delete-stock/delete-stock.component';
+import {CreateNewStockComponent} from './create-new-stock/create-new-stock.component';
+
+
 
 export interface stockData {
     id:number;
@@ -102,6 +106,30 @@ export class StockMaker implements OnChanges, OnInit{
 
         this.dialog.open(UpdateStockNameComponent, dialogConfig);
     }
+
+    openDeleteStockDialog(stock_id:number, stockName:string, abbr:string) {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        
+        dialogConfig.data = {
+            id:stock_id,
+            name:stockName,
+            abbr:abbr
+        };
+
+        this.dialog.open(DeleteStockComponent, dialogConfig);
+    }
+
+    openCreateStockDialog() {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        this.dialog.open(CreateNewStockComponent, dialogConfig);
+    }
+    
+    
+
     
       
 

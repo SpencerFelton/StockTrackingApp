@@ -126,7 +126,7 @@ export class CompanyService{
     }
     */
     //this adds a new company stock without any stock price associated to it
-    addCompanyNoPrice(name:string, abbr:string):Observable<any>{
+    createNewStock(name:string, abbr:string):Observable<any>{
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         var companyObj = { "name": name,
                             "abbr": abbr
@@ -164,7 +164,7 @@ export class CompanyService{
             "abbr":abbr
         };
 
-        
+
         //this.companyServiceClient.deleteCompanyClient(id).subscribe();
         return this.http.put<any>(`${env.dev.serverUrlProvider}/api/stocks/${id}`, stocksObj,{headers:headers})
         .pipe(

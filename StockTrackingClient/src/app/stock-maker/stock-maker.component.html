@@ -17,7 +17,7 @@
             <div class = "buttons"> 
                <button class="name" mat-stroked-button (click) = "openUpdateStockNameDialog(companyInfo.id,companyInfo.name,companyInfo.abbr)">Update Stock Name</button> 
                 <button class="price" mat-stroked-button (click) = "openAddStockDialog(companyInfo.id,companyInfo.stockPrice)">Add New Stock Price</button> 
-                <button class="delete" mat-stroked-button>Delete This Stock</button>  
+                <button class="delete" mat-stroked-button (click)="openDeleteStockDialog(companyInfo.id,companyInfo.name,companyInfo.abbr)">Delete This Stock</button>  
             </div>
     </mat-card-content>
     </mat-card>
@@ -48,7 +48,7 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticker Symbol  </th>
                     <td mat-cell *matCellDef="let row"> {{row.abbr}} </td>
                     <td mat-footer-cell *matFooterCellDef>
-                        <button mat-stroked-button [routerLink] = "['/stockmaker/editstock/',0]">New Stock</button> 
+                        <button mat-stroked-button (click)="openCreateStockDialog()">New Stock</button> 
                     </td>
                 </ng-container>
 

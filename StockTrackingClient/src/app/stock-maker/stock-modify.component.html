@@ -1,33 +1,10 @@
-<mat-card>
+<!--
+   <mat-card>
     <mat-card-title>
     {{pageTitle}}
     </mat-card-title>
     <mat-card-content>
-        <div *ngIf="formGenerated">
-        <form 
-                *ngIf="!isZero"
-                (ngSubmit) = "save()" 
-                [formGroup] = "ModifyStockForm">
-    <mat-form-field appearance="outline">
-        <mat-label for="companyNameID">Company Name</mat-label>
-        <input matInput required
-            id="companyNameID"
-            type="text"
-            placeholder="CompanyName"
-            formControlName="companyName"
-            [ngClass] = "{'is-invalid': companyNameMessage}"> 
-        <mat-hint class = "error">{{companyNameMessage}}</mat-hint>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label for="companyShorthandID">Company Shorthand</mat-label>
-        <input matInput 
-            id="companyShorthandID"
-            type="text"
-            placeholder="CompanyShorthand"
-            formControlName="companyShorthand"
-            [ngClass] = "{'is-invalid': companyShorthandMessage}"> 
-        <mat-hint class = "error">{{companyShorthandMessage}}</mat-hint>
-    </mat-form-field>
+
 
     <mat-form-field appearance="outline">
         <mat-label for="stockPriceID">Stock Price</mat-label>
@@ -117,7 +94,9 @@
            
     </mat-card-content>
 
-</mat-card>
+</mat-card> 
+-->
+
 <!--
 <div *ngIf = '!isZero' class="form-group">
             <div class = "col-md-4">

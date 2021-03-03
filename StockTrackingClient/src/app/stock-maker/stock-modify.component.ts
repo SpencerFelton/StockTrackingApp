@@ -1,7 +1,8 @@
-import { Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {FormGroup, FormControl, FormBuilder, Validators, AbstractControl} from '@angular/forms';
-import {NotifierService} from '../shared/Notifications/notifier.service';
-import {InputType} from './InputEnumStock';
+/*
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { NotifierService } from '../shared/Notifications/notifier.service';
+import { InputType } from './InputEnumStock';
 
 
 import{ICompany} from '../shared/company-models/company';
@@ -213,15 +214,5 @@ export class StockModify implements OnInit, OnChanges{
         })
     }
 
-    }
-    onDelete(): void{
-        if(confirm(`Are you sure you want to delete the company ${this.company.abbreviation} (${this.company.name}) and all it's related stocks and data? (WARNING: THIS ACTION CANNOT BE UNDONE)`)){
-             this.companyService.deleteCompany(this.company.id)
-             .subscribe({
-                 next: () => this.router.navigate(['/stockmaker']),
-                 error: err => this.errorMessage = err
-             });
-         }
-    }
-      
 }
+*/

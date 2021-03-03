@@ -1,0 +1,38 @@
+
+
+h1{
+    text-align: center;
+}
+
+.chart-container{
+    position: relative;
+        margin: auto;
+        height: 40vh;
+        width: 90%;
+}
+
+.name{
+    margin:10px;
+}
+
+.price{
+    margin:10px;
+} 
+
+.delete{
+    margin:10px;
+}
+
+.slider{
+    display: flex;
+    justify-content: space-between;
+}
+
+.mat-slider{
+    margin:auto;
+    width:90%;
+}
+
+.mat-form-field{
+    
+}

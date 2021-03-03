@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Delete Stock</h1>
+
+<div mat-dialog-content>
+    Are you sure you want to perminently delete the stock {{data.name}} ({{data.abbr}})?
+    Warning: This action cannot be undone
+
+</div>
+<div mat-dialog-actions>
+    <button mat-flat-button 
+    color="primary"
+    (click) = "deleteStock()">
+    Delete</button>
+  <button mat-button cdkFocusInitial
+  (click)="close()">Cancel</button>
+</div>

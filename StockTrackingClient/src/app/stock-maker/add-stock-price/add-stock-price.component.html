@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Add Stock Price</h1>
+<form 
+(ngSubmit) = "AddNewStockPrice()" 
+[formGroup] = "AddStockPriceForm">
+
+<div mat-dialog-content>
+
+    <mat-form-field appearance="outline">
+        <mat-label for="currentStockPriceID">Current Stock Price</mat-label>
+        <input matInput required
+            id="currentStockPriceID"
+            type="text"
+            placeholder="StockPrice"
+            formControlName="currentStockPrice"> 
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label for="newStockPriceID">New Stock Price</mat-label>
+        <input matInput 
+            id="newStockPriceID"
+            type="text"
+            placeholder="NewStockPrice"
+            formControlName="newStockPrice"
+            [ngClass] = "{'is-invalid': newPriceMessage}"> 
+        <mat-hint class = "error">{{newPriceMessage}}</mat-hint>
+    </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-flat-button 
+    color="primary"
+    type="submit"
+    [disabled]="!AddStockPriceForm.valid">
+    Save Changes</button>
+  <button mat-button cdkFocusInitial
+  type="button"
+  (click)="close()">Cancel</button>
+</div>
+</form> 

@@ -17,6 +17,7 @@ export class CompanyServiceClient{
     private clientUrl  = '/api/companiesClient';
     private clienturl2 = 'https://localhost:44353/api/stocks';
     private pricehistoryUrl = 'https://localhost:44353/api/prices';
+    private clienturl3 = 'https://localhost:44353';
     //id:number = 5;
 
     constructor(private http: HttpClient){}
@@ -88,14 +89,35 @@ export class CompanyServiceClient{
     }
     
     //may not be how to actually do the call for subscribed companies
-    getSubscribedCompanies():Observable<ICompanyView[]>{
-        const url = `${this.clienturl2}?subscribed=true`;
-        return this.http.get<ICompanyView[]>(url)
+    getSubscribedCompanies():Observable<any>{
+        const url = `${env.dev.serverUrlClient}/api/Subscriptions/ViewAll`;
+        return this.http.get<any>(url)
         .pipe(
-            tap(data => console.log('getCompany: ' + JSON.stringify(data))),
+            tap(data => console.log('get subscribed companies: ' + JSON.stringify(data))),
             catchError(this.handleError)
         );
     }
+
+    subscribeToStock(stock_id:number){
+        console.log("50");
+        const headers = new HttpHeaders({'Content-Type': 'application/json'});
+        return this.http.post<any>(`${env.dev.serverUrlClient}/api/subscriptions/${stock_id}`,{headers:headers})
+        .pipe(
+            tap(() => console.log('subscribed to stock!')),
+            catchError(this.handleError)
+        );
+
+    }
+
+    unsubscribeToStock(stock_id:number){
+        const headers = new HttpHeaders({'Content-Type': 'application/json'});
+        return this.http.delete<any>(`${env.dev.serverUrlClient}/api/subscriptions/${stock_id}`,{headers:headers})
+        .pipe(
+            tap(() => console.log('unsubscribed to stock!')),
+            catchError(this.handleError)
+        );
+    }
+
 
 
 

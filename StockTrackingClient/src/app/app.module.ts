@@ -28,7 +28,7 @@ import {SortDirective} from './directive/sort.directive'
 import { AppComponent } from './app.component';
 import {StockMaker} from './stock-maker/stock-maker.component';
 import {PercentChangeComponent} from './shared/percent-change/percent-change.component';
-import {StockModify} from './stock-maker/stock-modify.component';
+//import {StockModify} from './stock-maker/stock-modify.component';
 import {WelcomeComponent} from './home/welcome.component';
 import {StockViewer} from './stock-viewer/stock-viewer.component';
 import {subscriptionView} from './subscriptionView/subscriptionView.component';
@@ -40,7 +40,11 @@ import {RegisterComponent} from './Register/Register.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import {StockChartComponent} from './shared/stock-chart/stock-chart.component';
-
+import {SubscribeUnsubscribeComponent} from './stock-viewer/subscribe-unsubscribe/subscribe-unsubscribe.component';
+import {AddStockPriceComponent} from './stock-maker/add-stock-price/add-stock-price.component';
+import {UpdateStockNameComponent} from './stock-maker/update-stock-name/update-stock-name.component';
+import {DeleteStockComponent} from './stock-maker/delete-stock/delete-stock.component';
+import {CreateNewStockComponent} from './stock-maker/create-new-stock/create-new-stock.component';
 // Import the Auth0 module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
@@ -57,7 +61,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     AppComponent,
     StockMaker,
     PercentChangeComponent,
-    StockModify,
+    //StockModify,
     WelcomeComponent,
     StockViewer,
     subscriptionView,
@@ -68,8 +72,12 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     AuthButtonComponent,
     AccountButtonComponent,
     AccountViewComponent,
-    StockChartComponent
-
+    StockChartComponent,
+    SubscribeUnsubscribeComponent,
+    AddStockPriceComponent,
+    UpdateStockNameComponent,
+    DeleteStockComponent,
+    CreateNewStockComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +89,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     RouterModule.forRoot([
       { path: 'stockmaker', component: StockMaker},
       { path: 'stockviewer', component: StockViewer},
-      { path: 'stockmaker/editstock/:id', component: StockModify},
+      //{ path: 'stockmaker/editstock/:id', component: StockModify},
       { path: 'welcome', component:WelcomeComponent},
       { path: 'viewstock', component:StockViewer}, 
       { path: 'login', component:LoginComponent},
@@ -95,7 +103,16 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor:{
-          allowedList: [`${env.dev.serverUrlProvider}/api/stocks`, `${env.dev.serverUrlClient}/api/stocks`],
+          allowedList: [//`${env.dev.serverUrlProvider}/api/stocks`, 
+          `${env.dev.serverUrlClient}/api/*`, 
+          /*
+          `${env.dev.serverUrlProvider}/api/prices/latestinfo`, 
+          `${env.dev.serverUrlClient}/api/prices/latestinfo`, 
+          `${env.dev.serverUrlClient}/api/Subscriptions/ViewAll`,
+          `${env.dev.serverUrlClient}/api/subscriptions/`,
+          */
+          `${env.dev.serverUrlProvider}/api/*`
+        ],
       }
     }),
     MatDialogModule,

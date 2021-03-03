@@ -1,9 +1,26 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {ICompany} from '../shared/company-models/company';
 import {CompanyService} from '../shared/company-service/company.service';
 import {NotifierService} from '../shared/Notifications/notifier.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {AddStockPriceComponent} from "./add-stock-price/add-stock-price.component";
+import {UpdateStockNameComponent} from './update-stock-name/update-stock-name.component';
+import {DeleteStockComponent} from './delete-stock/delete-stock.component';
+import {CreateNewStockComponent} from './create-new-stock/create-new-stock.component';
 
 
+
+export interface stockData {
+    id:number;
+    name: string;
+    abbr:string;
+    stockPrice:string;
+  }
+  
 @Component({
     selector: "pm-stockmaker",
     templateUrl: "./stock-maker.component.html",
@@ -11,81 +28,153 @@ import {NotifierService} from '../shared/Notifications/notifier.service';
 })
 
 export class StockMaker implements OnChanges, OnInit{
- 
-    pageTitle = "Change"
-    statusString: string[] =["New", "Modify", "Update"];
-    sortedColumn: string;
-    tableHeaders: string[][] = [["Company Name", "desc", "name"], ["Shorthand", "desc", "abbreviation"], ["Current Stock Price", "desc", "price"]]
-    foundIndex: number;
-    //individualStatus: number[];
+    
+    pageTitle="Provider stocks";
+    errorMessage="";
+    stockShown:any[] = [,false];
+    type = "provider";
+    companyData:stockData[];
+    companyInfo:stockData;
 
-    filteredCompanies: ICompany[];
+    displayedColumns:string[] = ['name', 'abbr', 'stockPrice'];
+    dataSource: MatTableDataSource<stockData>;
 
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
 
-    companies: ICompany[] = []
+    constructor(private companyService: CompanyService, 
+        private notiferService:NotifierService,
+        private dialog:MatDialog){
 
-    _listFilter:string;
-    errorMessage: string;
-
-    get listFilter():string{
-        return this._listFilter;
     }
 
-    set listFilter(value: string){
-        this._listFilter = value;
-        this.filteredCompanies = this._listFilter? this.performFilter(this.listFilter): this.companies;
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log('Method not implemented.');
     }
-
-    constructor(private companyService: CompanyService, private notiferService:NotifierService){
-        this.listFilter = '';
-    }
-
     ngOnInit(): void {
-        this.getCompanies();  
+        this.getCompanies();
+    }
+    /*
+    ngAfterViewInit() {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+      */
+    
+      applyFilter(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+    
+        if (this.dataSource.paginator) {
+          this.dataSource.paginator.firstPage();
+        }
+      }
+
+      openAddStockDialog(stock_id:number, stockprice:string) {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        
+        dialogConfig.data = {
+            id:stock_id,
+            currentStockPrice:stockprice
+        };
+
+        this.dialog.open(AddStockPriceComponent, dialogConfig);
     }
 
+    openUpdateStockNameDialog(stock_id:number, stockName:string, abbr:string) {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        
+        dialogConfig.data = {
+            id:stock_id,
+            currentStockName:stockName,
+            abbreviation:abbr
+        };
+
+        this.dialog.open(UpdateStockNameComponent, dialogConfig);
+    }
+
+    openDeleteStockDialog(stock_id:number, stockName:string, abbr:string) {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        
+        dialogConfig.data = {
+            id:stock_id,
+            name:stockName,
+            abbr:abbr
+        };
+
+        this.dialog.open(DeleteStockComponent, dialogConfig);
+    }
+
+    openCreateStockDialog() {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        this.dialog.open(CreateNewStockComponent, dialogConfig);
+    }
+    
+    
+
+    
+      
+
+    //calls on companyService to get the data from the server
     getCompanies(): void{
         this.companyService.getCompanies().subscribe({
             next: companies =>{
-                this.companies = companies;
-                this.filteredCompanies = this.companies;
-                //this.individualStatus = new Array(companies.length).fill(0);
+                this.companyData = this.companyFormatter(companies);
+                this.dataSource = new MatTableDataSource (this.companyData);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+                console.log("Obtained data!");
             },
-            error: err => this.errorMessage = err
-            
+            error: err => this.errorMessage = err     
         });
     }
+    //finds the company information from the companyData object
+    getCompanyFromCompanyData(stockId:number){
+        this.companyInfo = this.companyData.find(x=> x.id == stockId);
+    }
 
-    sortColumn(header: string[]): void {
-        //alert("ts sort alert");
-        this.sortedColumn = header[0];
-        for (let i=0; i<this.tableHeaders.length; i++){
-            if (this.tableHeaders[i][0] === header[0]){
-                this.foundIndex = i;
-                break;
+    companyFormatter(rawCompanyData:any[]):stockData[]{
+        console.log("We are here!");
+        console.log(JSON.stringify(rawCompanyData));
+        var allStocks:stockData[] = [];
+        rawCompanyData.forEach(element => {
+            if(element.priceHistory != null){
+                console.log(element.id);
+                console.log(element.name);
+                allStocks.push({id:element.stock_id, name:element.name, abbr:element.abbreviation,stockPrice:element.priceHistory.value});
+            }else{
+                allStocks.push({id:element.stock_id, name:element.name, abbr:element.abbreviation,stockPrice:"N/A"});
             }
+            
+        });
+
+        return allStocks;
+    }
+    //,
+    showHistory(stockId: number) : void {
+        console.log("Here is the stockshown");
+        console.log(String(this.stockShown[0]));
+        console.log("Here is the stockid");
+        console.log(stockId);
+
+        if(this.stockShown[0] == stockId){
+            this.stockShown[1] = !this.stockShown[1];  
+        } else{
+            this.stockShown[1] = true;
+            this.stockShown[0] = stockId;
         }
-        if(header[1] === "desc"){
-            this.tableHeaders[this.foundIndex] = [header[0], "asc", header[2]];
-        }else if(header[1] === "asc"){
-            this.tableHeaders[this.foundIndex] = [header[0], "desc", header[2]];
-        }
+
+        console.log(`stock is: ${this.stockShown[0]}, is showing is: ${this.stockShown[1]}`);
     }
 
-
-    ngOnChanges(changes: SimpleChanges): void {
-        /*
-        for(var i = 0; i<this.companies.length; i++){
-            console.log(this.companies[i].stockPriceNew);
-        }
-        */
-        
+    selectStock():void {
     }
-
-    performFilter(filterBy: string) :ICompany[]{
-        filterBy = filterBy.toLocaleLowerCase();
-        return this.companies.filter((company:ICompany) =>
-                                    company.name.toLocaleLowerCase().indexOf(filterBy) !== -1);
-      }
-
 }

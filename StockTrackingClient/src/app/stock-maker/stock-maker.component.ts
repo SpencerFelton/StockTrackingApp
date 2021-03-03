@@ -89,14 +89,15 @@ export class StockMaker implements OnChanges, OnInit{
         this.dialog.open(AddStockPriceComponent, dialogConfig);
     }
 
-    openUpdateStockNameDialog(stock_id:number, stockName:string) {
+    openUpdateStockNameDialog(stock_id:number, stockName:string, abbr:string) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         
         dialogConfig.data = {
             id:stock_id,
-            currentStockName:stockName
+            currentStockName:stockName,
+            abbreviation:abbr
         };
 
         this.dialog.open(UpdateStockNameComponent, dialogConfig);

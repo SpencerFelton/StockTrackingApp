@@ -12,14 +12,14 @@ import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from
 export class UpdateStockNameComponent implements OnInit{
     data:any;
     errorMessage:string;
-    newStockName:number;
+    newStockName:string;
     UpdateStockNameForm: FormGroup;
     newStockNameMessage:string;
 
 
     private validationMessageNewStockName = {
         required: "Please enter a stock name.",
-        min: "The stock name must be more than3 characters long"
+        minLength: "The stock name must be more than 3 characters long"
       }
 
     constructor(private companyService: CompanyService, private formbuilder: FormBuilder,
@@ -35,10 +35,9 @@ export class UpdateStockNameComponent implements OnInit{
     generateForm(): void {
           this.UpdateStockNameForm = this.formbuilder.group({
             currentStockName: { value: this.data.currentStockName, disabled: true },
-            newStockName: ['', { validators: [Validators.required, Validators.min(3)]}],
+            newStockName: ['', { validators: [Validators.required, Validators.minLength(4)]}],
           });
-    
-    
+
         const stockPriceControl = this.UpdateStockNameForm.get("newStockName");
         stockPriceControl.valueChanges.subscribe(
           value => {
@@ -58,22 +57,20 @@ export class UpdateStockNameComponent implements OnInit{
             if ((c.touched || c.dirty) && c.errors) {
               this.newStockNameMessage = Object.keys(c.errors).map(
                 key => this.validationMessageNewStockName[key]).join(' ');
+                console.log("We are here!");
+                console.log(this.newStockNameMessage);
             }
         }
 
 
     UpdateStockName():void{
-        this.companyService.updateStockName();
-        /*
-        .subscribe({
+        this.companyService.updateStockName(this.data.id, this.newStockName, this.data.abbreviation).subscribe({
                 next: subscribedCompanies =>{
                     console.log("updated stock name!")
                 },
                 error: err => this.errorMessage = err 
             });
-
-            */
-            
+     
         this.close();
     }
 

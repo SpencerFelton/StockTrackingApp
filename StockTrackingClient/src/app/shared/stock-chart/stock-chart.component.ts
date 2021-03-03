@@ -158,11 +158,6 @@ export class StockChartComponent implements OnChanges, OnInit{
                   time:
                   {
                   }
-                }],
-                yAxes:[{
-                  ticks: {
-                    min:0
-                  },
                 }]
               }
             },

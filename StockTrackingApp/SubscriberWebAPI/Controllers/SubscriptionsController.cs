@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -17,7 +18,6 @@ namespace SubscriberWebAPI.Controllers
     public class SubscriptionsController : ApiController
     {
         private ClientStockTrackerEntities db = new ClientStockTrackerEntities();
-        private String UserIDFieldName = "sub";
 
         // GET: api/Subscriptions
         public IQueryable<Subscription> GetSubscriptions()
@@ -30,7 +30,7 @@ namespace SubscriberWebAPI.Controllers
         [ResponseType(typeof(Subscription))]
         public async Task<IHttpActionResult> GetUserSubscriptionByStockID(int stock_id)
         {
-            string user_id = getUserIDFromHeader(this.Request.Headers);
+            string user_id = getUserIDFromAccessToken(this.Request.Headers);
 
             Subscription subscription = await db.Subscriptions.Where(e => e.stock_id == stock_id && e.user_id == user_id).FirstOrDefaultAsync();
 
@@ -47,7 +47,7 @@ namespace SubscriberWebAPI.Controllers
         [ResponseType(typeof(Subscription))]
         public async Task<IHttpActionResult> GetAllUserSubscriptions()
         {
-            string user_id = getUserIDFromHeader(this.Request.Headers);
+            string user_id = getUserIDFromAccessToken(this.Request.Headers);
 
             List<Subscription> subscriptions = await db.Subscriptions.Where(e => e.user_id == user_id).ToListAsync();
 
@@ -64,11 +64,16 @@ namespace SubscriberWebAPI.Controllers
         [ResponseType(typeof(Subscription))]
         public async Task<IHttpActionResult> PostSubscription(int stock_id)
         {
-            string user_id = getUserIDFromHeader(this.Request.Headers);
+            string user_id = getUserIDFromAccessToken(Request.Headers);
 
             if (user_id == "")
             {
-                return Content(HttpStatusCode.BadRequest, "No user ID found in request header");
+                return Content(HttpStatusCode.BadRequest, "No Authorization in request header, required to create subscription");
+            }
+
+            if (SubscriptionExists(user_id, stock_id))
+            {
+                return Content(HttpStatusCode.BadRequest, "Subscription already exists for this user and stock");
             }
 
             Subscription sub = new Subscription { stock_id = stock_id, user_id = user_id };
@@ -103,7 +108,7 @@ namespace SubscriberWebAPI.Controllers
                 }
             }
 
-            return Ok();
+            return Ok(sub);
         }
 
         // DELETE: api/Subscriptions/5
@@ -120,26 +125,6 @@ namespace SubscriberWebAPI.Controllers
             await db.SaveChangesAsync();
 
             return Ok(subscription);
-        }
-
-        public bool UserIDHeaderExists(HttpRequestHeaders headers)
-        {
-            if (headers.Contains(UserIDFieldName))
-            {
-                return true;
-            }
-            else return false;
-        }
-
-        public string getUserIDFromHeader(HttpRequestHeaders headers)
-        {
-            string user_id = string.Empty;
-
-            if (headers.Contains(UserIDFieldName))
-            {
-                user_id = headers.GetValues(UserIDFieldName).First();
-            }
-            return user_id;
         }
 
         protected override void Dispose(bool disposing)
@@ -159,6 +144,24 @@ namespace SubscriberWebAPI.Controllers
         private bool StockExists(int stock_id)
         {
             return db.Stocks.Count(e => e.id == stock_id) > 0;
+        }
+
+        private string getUserIDFromAccessToken(HttpRequestHeaders headers)
+        {
+            if (headers.Contains("Authorization"))
+            {
+                // Take headers, read authorization field, remove "Bearer " prefix
+                var authorizationField = headers.GetValues("Authorization").First();
+                var bearerToken = authorizationField.Replace("Bearer ", string.Empty);
+
+                // Read token using handler, read "sub" claim, return user_id
+                var tokens = new JwtSecurityTokenHandler().ReadToken(bearerToken) as JwtSecurityToken;
+
+                string user_id = tokens.Claims.First(e => e.Type == "sub").Value;
+                Debug.WriteLine(user_id);
+                return user_id;
+            }
+            else return "";
         }
     }
 }

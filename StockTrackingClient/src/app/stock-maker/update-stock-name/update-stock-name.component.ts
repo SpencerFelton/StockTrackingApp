@@ -15,11 +15,12 @@ export class UpdateStockNameComponent implements OnInit{
     newStockName:string;
     UpdateStockNameForm: FormGroup;
     newStockNameMessage:string;
+    update= false;
 
 
     private validationMessageNewStockName = {
         required: "Please enter a stock name.",
-        minLength: "The stock name must be more than 3 characters long"
+        minlength: "The stock name must be more than 3 characters long"
       }
 
     constructor(private companyService: CompanyService, private formbuilder: FormBuilder,
@@ -67,14 +68,19 @@ export class UpdateStockNameComponent implements OnInit{
         this.companyService.updateStockName(this.data.id, this.newStockName, this.data.abbreviation).subscribe({
                 next: subscribedCompanies =>{
                     console.log("updated stock name!")
+                    this.update = true;
+                    this.close();
                 },
-                error: err => this.errorMessage = err 
+                error: err =>{
+                  this.errorMessage = err;
+                  this.close();
+                } 
             });
      
-        this.close();
+        
     }
 
     close(){
-        this.dialogRef.close();
+        this.dialogRef.close({id:this.data.id, name:this.newStockName, update:this.update});
     }
 }

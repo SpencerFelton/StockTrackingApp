@@ -17,16 +17,17 @@ export class CreateNewStockComponent implements OnInit{
     CreateNewStockForm: FormGroup;
     newStockNameMessage:string;
     newAbbrMessage:string;
+    create = false;
 
 
     private validationMessageNewStockName = {
         required: "Please enter a stock name.",
-        minLength: "The stock name must be more than 2 characters long"
+        minlength: "The stock name must be more than 2 characters long"
     }
     
     private validationMessageNewAbbr = {
         required: "Please enter an abbreviation",
-        maxLength: "The stock name must be less than 6 characters long"
+        maxlength: "The stock name must be less than 6 characters long"
     }
 
 
@@ -98,17 +99,21 @@ export class CreateNewStockComponent implements OnInit{
 
 
     createNewStock():void{
+      this.data
         this.companyService.createNewStock(this.newStockName, this.newStockAbbr).subscribe({
                 next: subscribedCompanies =>{
-                    console.log("updated stock name!")
+                    console.log("updated stock name!");
+                    this.create = true;
+                    this.close();
                 },
-                error: err => this.errorMessage = err 
+                error: err => {this.errorMessage = err;
+                              this.close();}
             });
      
         this.close();
     }
 
     close(){
-        this.dialogRef.close();
+        this.dialogRef.close({name:this.newStockName,abbr:this.newStockAbbr,create:this.create});
     }
 }

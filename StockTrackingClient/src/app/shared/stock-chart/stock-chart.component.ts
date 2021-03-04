@@ -23,6 +23,7 @@ import { CompanyService } from '../company-service/company.service';
 export class StockChartComponent implements OnChanges, OnInit{
     @Input() stockId:number; //<--Change to abbr once abbr implementation is complete
     @Input() type:string;
+    @Input() update = false;
 
     @ViewChild('chartSlider') chartSlider:ElementRef;
     
@@ -139,8 +140,8 @@ export class StockChartComponent implements OnChanges, OnInit{
     ngOnChanges(changes: SimpleChanges): void {
         this.getCompanyHistory(this.stockId);
         console.log()
-        
-        
+        this.update = false;
+
     }
 
     generateChart():void{

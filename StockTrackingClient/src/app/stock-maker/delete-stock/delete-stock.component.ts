@@ -11,6 +11,7 @@ import {CompanyService} from 'src/app/shared/company-service/company.service';
 export class DeleteStockComponent implements OnInit{
     data:any;
     errorMessage:string;
+    delete = false;
 
 
 
@@ -27,15 +28,20 @@ export class DeleteStockComponent implements OnInit{
     deleteStock():void{
         this.companyService.deleteCompany(this.data.id).subscribe({
                 next: subscribedCompanies =>{
-                    console.log("Deleted stock!")
+                    console.log("Deleted stock!");
+                    this.delete = true;
+                    this.close();
                 },
-                error: err => this.errorMessage = err 
+                error: err => {
+                    this.errorMessage = err;
+                    this.close();
+                } 
             });
-     
-        this.close();
+        
+        
     }
 
     close(){
-        this.dialogRef.close();
+        this.dialogRef.close({id:this.data.id,delete:this.delete});
     }
 }

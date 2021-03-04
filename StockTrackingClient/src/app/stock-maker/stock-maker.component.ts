@@ -11,6 +11,7 @@ import {AddStockPriceComponent} from "./add-stock-price/add-stock-price.componen
 import {UpdateStockNameComponent} from './update-stock-name/update-stock-name.component';
 import {DeleteStockComponent} from './delete-stock/delete-stock.component';
 import {CreateNewStockComponent} from './create-new-stock/create-new-stock.component';
+import { max } from 'rxjs/operators';
 
 
 
@@ -33,8 +34,12 @@ export interface stockData {
                 animate(100)
             ]),
 
+        ]),
+        trigger('expandingRetracting', [
+            
         ])
     ]
+
 })
 
 export class StockMaker implements OnChanges, OnInit{
@@ -45,6 +50,8 @@ export class StockMaker implements OnChanges, OnInit{
     type = "provider";
     companyData:stockData[];
     companyInfo:stockData;
+    filterInput='';
+    updateGraph = false;
 
     displayedColumns:string[] = ['name', 'abbr', 'stockPrice'];
     dataSource: MatTableDataSource<stockData>;
@@ -80,7 +87,11 @@ export class StockMaker implements OnChanges, OnInit{
         }
       }
 
-      openAddStockDialog(stock_id:number, stockprice:string) {
+      
+
+
+
+      openAddStockPriceDialog(stock_id:number, stockprice:string) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
@@ -90,8 +101,15 @@ export class StockMaker implements OnChanges, OnInit{
             currentStockPrice:stockprice
         };
 
-        this.dialog.open(AddStockPriceComponent, dialogConfig);
+        const dialogRef = this.dialog.open(AddStockPriceComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+            this.addStockPrice(result);
+          });
+
     }
+
+    
 
     openUpdateStockNameDialog(stock_id:number, stockName:string, abbr:string) {
         const dialogConfig = new MatDialogConfig();
@@ -101,10 +119,15 @@ export class StockMaker implements OnChanges, OnInit{
         dialogConfig.data = {
             id:stock_id,
             currentStockName:stockName,
-            abbreviation:abbr
+            abbreviation:abbr,
         };
 
-        this.dialog.open(UpdateStockNameComponent, dialogConfig);
+        const dialogRef = this.dialog.open(UpdateStockNameComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+            this.updateStockName(result);
+          });
     }
 
     openDeleteStockDialog(stock_id:number, stockName:string, abbr:string) {
@@ -117,15 +140,104 @@ export class StockMaker implements OnChanges, OnInit{
             name:stockName,
             abbr:abbr
         };
+        const dialogRef = this.dialog.open(DeleteStockComponent, dialogConfig);
 
-        this.dialog.open(DeleteStockComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+            this.deleteStock(result);
+          });
     }
 
     openCreateStockDialog() {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-        this.dialog.open(CreateNewStockComponent, dialogConfig);
+        dialogConfig.data = {
+            name:'',
+            abbr:''
+        };
+
+        const dialogRef = this.dialog.open(CreateNewStockComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+            this.addNewStock(result);
+          });
+    }
+
+    addStockPrice(data:any){
+        if(data.addPrice){
+            var findIndex = this.companyData.findIndex(x=> x.id == data.id);
+            this.companyData[findIndex].stockPrice = data.value;
+            this.getCompanyFromCompanyData(data.id);
+            this.refreshPage(this.companyData);
+            this.stockShown=[data.id,true];
+        }
+
+    }
+
+    addNewStock(company:any):void{
+        if(company.create){
+         console.log(`The name was: ${company.name}`);
+        console.log(`abbreviation is: ${company.abbr}`);
+        var highestID = Math.max(...this.companyData.map(company => company.id));
+        var newID = highestID+1;
+        //Find ID
+        var stockRow:stockData = {
+            "id":newID,
+            "name": company.name,
+            "abbr":company.abbr,
+            "stockPrice":"N/A"
+        };
+        //console.log(stockRow);
+        this.companyData.push(stockRow);
+        this.getCompanyFromCompanyData(newID);
+        this.refreshPage(this.companyData);
+        this.stockShown=[stockRow.id,true];
+        this.applyFilterText(company.name);
+    }   
+        }
+        
+
+    deleteStock(data:any){
+        if(data.delete){
+            this.companyData = this.companyData.filter(function(value, index, arr){
+                return value.id !=data.id;
+            });
+            this.refreshPage(this.companyData); 
+            this.stockShown[1] = false;
+
+        }
+       
+    }
+
+    updateStockName(data:any){
+        if(data.update){
+            var findIndex = this.companyData.findIndex(x=> x.id == data.id);
+            this.companyData[findIndex].name = data.name;
+            this.getCompanyFromCompanyData(data.id);
+            this.refreshPage(this.companyData);
+            this.stockShown=[data.id,true];
+        }
+    }
+
+    applyFilterText(name:string) {
+        this.dataSource.filter = name.trim().toLowerCase();
+    
+        if (this.dataSource.paginator) {
+          this.dataSource.paginator.firstPage();
+        }
+
+        this.filterInput=name;
+      }
+
+
+    refreshPage(company:any){
+        this.dataSource = new MatTableDataSource (this.companyData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.updateGraph = true;
     }
     
     
@@ -138,10 +250,10 @@ export class StockMaker implements OnChanges, OnInit{
         this.companyService.getCompanies().subscribe({
             next: companies =>{
                 this.companyData = this.companyFormatter(companies);
-                this.dataSource = new MatTableDataSource (this.companyData);
-                this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
+                this.refreshPage(this.companyData);
                 console.log("Obtained data!");
+                //var highestID = Math.max(...this.companyData.map(company => company.id));
+               //console.log(`Highest ID:${highestID}`);
             },
             error: err => this.errorMessage = err     
         });

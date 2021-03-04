@@ -11,12 +11,12 @@
         {{companyInfo.abbr}}
     </mat-card-subtitle>
     <mat-card-content>
-    <app-stock-chart [stockId] = 'stockShown[0]' [type] = "type"></app-stock-chart>
+    <app-stock-chart [stockId] = 'stockShown[0]' [type] = "type" [update] = "updateGraph"></app-stock-chart>
     <hr> 
             <h1> Actions </h1>
             <div class = "buttons"> 
                <button class="name" mat-stroked-button (click) = "openUpdateStockNameDialog(companyInfo.id,companyInfo.name,companyInfo.abbr)">Update Stock Name</button> 
-                <button class="price" mat-stroked-button (click) = "openAddStockDialog(companyInfo.id,companyInfo.stockPrice)">Add New Stock Price</button> 
+                <button class="price" mat-stroked-button (click) = "openAddStockPriceDialog(companyInfo.id,companyInfo.stockPrice)">Add New Stock Price</button> 
                 <button class="delete" mat-stroked-button (click)="openDeleteStockDialog(companyInfo.id,companyInfo.name,companyInfo.abbr)">Delete This Stock</button>  
             </div>
     </mat-card-content>
@@ -31,7 +31,7 @@
         <!-- Filtering element-->
         <mat-form-field>
             <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Generic Co." #input>
+            <input matInput (keyup)="applyFilter($event)"  [value]="filterInput" placeholder="Generic Co." #input>
         </mat-form-field>     
 
         <div class="mat-elevation-z2">

@@ -15,6 +15,7 @@ export class AddStockPriceComponent implements OnInit{
     newPrice:number;
     AddStockPriceForm: FormGroup;
     newPriceMessage:string;
+    addPrice = false;
 
 
     private validationMessagenewPrice = {
@@ -67,14 +68,18 @@ export class AddStockPriceComponent implements OnInit{
         this.companyService.addStockPrice(this.data.id, this.newPrice).subscribe({
                 next: subscribedCompanies =>{
                     console.log("Added stock price!")
+                    this.addPrice = true;
+                    this.close();
                 },
-                error: err => this.errorMessage = err 
+                error: err => {
+                  this.errorMessage = err;
+                  this.close();} 
             });
             
         this.close();
     }
 
     close(){
-        this.dialogRef.close();
+        this.dialogRef.close({id:this.data.id,value:this.newPrice, addPrice:this.addPrice});
     }
 }

@@ -71,22 +71,6 @@ namespace ProviderWebApi.Controllers
         [ResponseType(typeof(PriceHistory))]
         public async Task<IHttpActionResult> GetAllStocksWithLatestPrice()
         {
-            /*
-            List<Stock> stocks = await db.Stocks.ToListAsync();
-            List<StockWithPrice> transits = new List<StockWithPrice>();
-
-            foreach (Stock s in stocks)
-            {
-                PriceHistory latest = await db.PriceHistories.Where(e => e.stock_id == s.id).OrderByDescending(e => e.time).FirstOrDefaultAsync();
-                StockWithPrice transit = new StockWithPrice(s, latest);
-                transits.Add(transit);
-            }
-
-            if (transits == null)
-                return NotFound();
-
-            return Ok(transits);
-            */
             List<Stock> stocks = await db.Stocks.ToListAsync();
             List<StockWithPrice> transits = new List<StockWithPrice>();
 

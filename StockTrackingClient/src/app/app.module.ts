@@ -16,7 +16,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSelectModule} from '@angular/material/select';
-
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 //import {CompanyData} from './shared/company-data';
@@ -32,14 +35,16 @@ import {StockModify} from './stock-maker/stock-modify.component';
 import {WelcomeComponent} from './home/welcome.component';
 import {StockViewer} from './stock-viewer/stock-viewer.component';
 import {subscriptionView} from './subscriptionView/subscriptionView.component';
-import {LoginComponent} from './Login/Login.component';
+//import {LoginComponent} from './Login/Login.component';
 import {TestCallsComponent} from './shared/TestShit/test-calls.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
-import {RegisterComponent} from './Register/Register.component';
+//import {RegisterComponent} from './Register/Register.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import {StockChartComponent} from './shared/stock-chart/stock-chart.component';
+
+
 
 // Import the Auth0 module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
@@ -63,8 +68,8 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     subscriptionView,
     TestCallsComponent,
     SortDirective,
-    LoginComponent,
-    RegisterComponent,
+    //LoginComponent,
+    //RegisterComponent,
     AuthButtonComponent,
     AccountButtonComponent,
     AccountViewComponent,
@@ -84,8 +89,8 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
       { path: 'stockmaker/editstock/:id', component: StockModify},
       { path: 'welcome', component:WelcomeComponent},
       { path: 'viewstock', component:StockViewer}, 
-      { path: 'login', component:LoginComponent},
-      { path: 'register', component:RegisterComponent},
+      //{ path: 'login', component:LoginComponent},
+      //{ path: 'register', component:RegisterComponent},
       {path: 'account', component: AccountViewComponent},
       { path: 'subscriptions', component:subscriptionView},
       {path: 'testing', component:TestCallsComponent},
@@ -95,7 +100,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor:{
-          allowedList: [`${env.dev.serverUrlProvider}/api/stocks`, `${env.dev.serverUrlClient}/api/stocks`],
+          allowedList: [`${env.dev.serverUrlProvider}/api/stocks`, `${env.dev.serverUrlClient}/api/stocks`, `${env.dev.serverUrlProvider}/api/prices/latestinfo`, `${env.dev.serverUrlClient}/api/prices/latestinfo`],
       }
     }),
     MatDialogModule,
@@ -113,7 +118,11 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     MatToolbarModule,
     MatSidenavModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatSliderModule
   ],
   providers: [
     {

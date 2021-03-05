@@ -114,6 +114,7 @@ export class CreateNewStockComponent implements OnInit{
     }
 
     close(){
+        console.log({name:this.newStockName,abbr:this.newStockAbbr,create:this.create});
         this.dialogRef.close({name:this.newStockName,abbr:this.newStockAbbr,create:this.create});
     }
 }

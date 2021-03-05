@@ -23,7 +23,7 @@ h1{
     margin:10px;
 }
 
-.buttons{
+.slider{
     display: flex;
     justify-content: space-between;
 }
@@ -31,4 +31,8 @@ h1{
 .mat-slider{
     margin:auto;
     width:90%;
+}
+
+.mat-form-field{
+    
 }

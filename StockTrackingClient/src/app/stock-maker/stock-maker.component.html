@@ -3,8 +3,25 @@
 </head>
 
 <div *ngIf='stockShown[1]'>
-    <app-stock-chart [stockId] = 'stockShown[0]' [type] = "type"></app-stock-chart>
-  </div>
+    <mat-card>
+    <mat-card-title>
+    {{companyInfo.name}}
+    </mat-card-title>
+    <mat-card-subtitle>
+        {{companyInfo.abbr}}
+    </mat-card-subtitle>
+    <mat-card-content>
+    <app-stock-chart [stockId] = 'stockShown[0]' [type] = "type" [update] = "updateGraph"></app-stock-chart>
+    <hr> 
+            <h1> Actions </h1>
+            <div class = "buttons"> 
+               <button class="name" mat-stroked-button (click) = "openUpdateStockNameDialog(companyInfo.id,companyInfo.name,companyInfo.abbr)">Update Stock Name</button> 
+                <button class="price" mat-stroked-button (click) = "openAddStockPriceDialog(companyInfo.id,companyInfo.stockPrice)">Add New Stock Price</button> 
+                <button class="delete" mat-stroked-button (click)="openDeleteStockDialog(companyInfo.id,companyInfo.name,companyInfo.abbr)">Delete This Stock</button>  
+            </div>
+    </mat-card-content>
+    </mat-card>
+</div>
 
 <mat-card>
     <mat-card-title>
@@ -14,7 +31,7 @@
         <!-- Filtering element-->
         <mat-form-field>
             <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Generic Co." #input>
+            <input matInput (keyup)="applyFilter($event)"  [value]="filterInput" placeholder="Generic Co." #input>
         </mat-form-field>     
 
         <div class="mat-elevation-z2">
@@ -31,7 +48,7 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticker Symbol  </th>
                     <td mat-cell *matCellDef="let row"> {{row.abbr}} </td>
                     <td mat-footer-cell *matFooterCellDef>
-                        <button mat-stroked-button [routerLink] = "['/stockmaker/editstock/',0]">New Stock</button> 
+                        <button mat-stroked-button (click)="openCreateStockDialog()">New Stock</button> 
                     </td>
                 </ng-container>
 
@@ -51,7 +68,8 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row [@moveUp]="(stockShown[0] === row.id && stockShown[1] === true)? 'active':'*' " *matRowDef="let row; columns: displayedColumns;"
                     class="example-element-row"
-                    (click)="showHistory(row.id)"></tr>
+                    (click)="showHistory(row.id)"
+                    (click)="getCompanyFromCompanyData(row.id)"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr>
 
                 <!-- Row shown when there is no matching data. -->

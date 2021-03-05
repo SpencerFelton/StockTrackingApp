@@ -73,6 +73,18 @@ export class CompanyService{
         }
     }
 
+    getCompanyHistory(id:number):Observable<any>{
+        if(id != 0){
+            const url = `${env.dev.serverUrlProvider}/api/Prices/${id}`;
+            return this.http.get<any>(url)
+            .pipe(
+                tap(data => console.log('priceHistory: ' + JSON.stringify(data))),
+                catchError(this.handleError)
+            );
+        }
+    }
+
+
     //Modify this for the web server
     //modify an existing company
     modifyCompany(company:ICompany): Observable<any>{
@@ -114,7 +126,7 @@ export class CompanyService{
     }
     */
     //this adds a new company stock without any stock price associated to it
-    addCompanyNoPrice(name:string, abbr:string){
+    createNewStock(name:string, abbr:string):Observable<any>{
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         var companyObj = { "name": name,
                             "abbr": abbr
@@ -128,16 +140,36 @@ export class CompanyService{
     }
 
     //this adds a stock price to an already existing stock
-    addStockPrice(stock_id:number, price:number){
+    addStockPrice(stock_id:number, price:number):Observable<any>{
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
+        
         var priceObj = {
-            "id": stock_id,
+            "stock_id": stock_id,
+            "time": new Date(),
             "value": price
         };
         return this.http.post<any>(`${env.dev.serverUrlProvider}/api/prices/`, priceObj,{headers:headers})
         .pipe(
             tap(() => console.log('added stock price!')),
             map(()=> priceObj),
+            catchError(this.handleError)
+        );
+    }
+    //TODO:IMPLEMENT THIS ONCE THE BACKEND HAS IT IMPLEMENTED
+    updateStockName(id:number,name:string, abbr:string ):Observable<any>{
+        const headers = new HttpHeaders({'Content-Type': 'application/json'});
+        var stocksObj = {
+            "id":id,
+            "name":name,
+            "abbr":abbr
+        };
+
+
+        //this.companyServiceClient.deleteCompanyClient(id).subscribe();
+        return this.http.put<any>(`${env.dev.serverUrlProvider}/api/stocks/${id}`, stocksObj,{headers:headers})
+        .pipe(
+            tap(() => console.log('added stock price!')),
+            map(()=> stocksObj),
             catchError(this.handleError)
         );
     }

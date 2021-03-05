@@ -73,6 +73,11 @@ export class CompanyService{
         }
     }
 
+    //TODO: Implement this
+    getCompaniesById(idArray:number[]){
+        console.log("This function is not yet implemented yet!");
+    }
+
     getCompanyHistory(id:number):Observable<any>{
         if(id != 0){
             const url = `${env.dev.serverUrlProvider}/api/Prices/${id}`;
@@ -99,33 +104,7 @@ export class CompanyService{
             catchError(this.handleError)
         );
     }
-    //addCompany now works.
-    /*
-    addCompany(company:any): Observable<any>{
-        const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        //REMOVE THIS DEPENDING ON IF YOU ARE SENDING TO THE BACKEND OR NOT
-        this.id +=1;
-        //DELETE THE LINE BELOW IF YOU ARE SENDING TO THE BACKEND
-        company.id = this.id;
-        //change for backend
-        company.dateTime = new Date();
-        var companySend = ObjectConverter.ConvertProvider(company, "id"); 
-        console.log("I am here!");
-        //CHANGE THIS WHEN YOU ARE IMPLEMENTING THE BACKEND, THIS JUST CONNECTS THE TWO DATABASES TOGETHER.
-        //this.companyServiceClient.addCompanyClient(companySend)
-        //.subscribe();
-        console.log(company);
 
-        console.log("I am here too!");
-        return this.http.post<ICompany>(this.trueUrl, companySend, {headers:headers})
-        .pipe(
-            tap(() => console.log('added company: ' + company.id)),
-            map(()=> company),
-            catchError(this.handleError)
-        );
-    }
-    */
-    //this adds a new company stock without any stock price associated to it
     createNewStock(name:string, abbr:string):Observable<any>{
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         var companyObj = { "name": name,

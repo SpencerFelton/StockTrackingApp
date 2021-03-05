@@ -88,7 +88,7 @@ export class CompanyServiceClient{
     }
     
     //may not be how to actually do the call for subscribed companies
-    getSubscribedCompanies():Observable<any>{
+    getSubscribedIds():Observable<any>{
         const url = `${env.dev.serverUrlClient}/api/Subscriptions/ViewAll`;
         return this.http.get<any>(url)
         .pipe(
@@ -117,6 +117,12 @@ export class CompanyServiceClient{
             catchError(this.handleError)
         );
     }
+
+        //TODO: Implement this
+    getCompaniesById(idArray:number[]){
+        console.log("This function is not yet implemented yet!");
+    }
+    
 
 
 

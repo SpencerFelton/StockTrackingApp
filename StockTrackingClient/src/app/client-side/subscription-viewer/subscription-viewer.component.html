@@ -1,0 +1,163 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<div *ngIf='stockShown[1]'>
+  <mat-card>
+  <mat-card-title>
+  {{companyInfo.name}}
+  </mat-card-title>
+  <mat-card-subtitle>
+      {{companyInfo.abbr}}
+  </mat-card-subtitle>
+  <mat-card-content>
+  <app-stock-chart [stockId] = 'stockShown[0]'  [type] = "type"></app-stock-chart>
+  <hr> 
+          <h1> Actions </h1>
+          <div class = "buttons"> 
+             <button class="subUnsub" mat-stroked-button
+             (click)="openSubscribedDialog(companyInfo.id)">
+               {{isSubscribed(companyInfo.id)? 'Unsubscribe' : 'Subscribe'}}</button> 
+          </div>
+  </mat-card-content>
+  </mat-card>
+</div>
+
+
+<mat-card>
+  <mat-card-title>
+      {{pageTitle}}
+  </mat-card-title>
+  <mat-card-content>
+      <!-- Filtering element-->
+      <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Generic Co." #input>
+      </mat-form-field>     
+
+      <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="dataSource" matSort>
+          
+              <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                  <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="abbr">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticker Symbol  </th>
+                  <td mat-cell *matCellDef="let row"> {{row.abbr}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="stockPrice">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Price  </th>
+                      <td mat-cell *matCellDef="let row"> 
+                          <div *ngIf="row.stockPrice != 'N/A'">
+                              ${{row.stockPrice}}
+                          </div> 
+                          <div *ngIf="row.stockPrice === 'N/A'">
+                              {{row.stockPrice}}
+                          </div> 
+                      </td>
+              </ng-container>
+            
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row [@moveUp]="(stockShown[0] === row.id && stockShown[1] === true)? 'active':'*' " *matRowDef="let row; columns: displayedColumns;"
+                  class="example-element-row"
+                  (click)="showHistory(row.id)"
+                  (click)="getCompanyFromCompanyData(row.id)"
+                  ></tr>
+
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+              
+
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+      <!--
+        <div class = "buttons"> 
+        <button  mat-stroked-button
+        (click)="subscribeToStock(1)">Subscribe</button> 
+        </div>
+      -->
+      
+
+  </mat-card-content>
+</mat-card>
+
+<!--
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<mat-card >
+  <mat-card-title>
+  {{pageTitle}}
+  </mat-card-title>
+  <mat-card-content>
+  <div class='row'>
+          <div class='col-md-2'>Filter by:</div>
+          <div class='col-md-4'>
+            <input type='text' [(ngModel)]='listFilter'/>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-6'>
+            <h4>Filtered by: {{listFilter}}</h4>
+          </div>
+        </div>
+        <div class='table-responsive'>
+            <table class='table table-striped border mt-1' id='table1' *ngIf='filteredCompanies && filteredCompanies.length'>
+              <thead>
+                <tr>
+                  <th>
+                    <table>
+                      <tr>
+                        <td>Subscribe to Stock</td>
+                        <td>
+                          <i></i>
+                        </td>
+                      </tr>
+                    </table>
+                  </th>
+                  <th class='headerClass' *ngFor="let header of tableHeaders" scope="col" [appSort] = "filteredCompanies" attr.data-order="{{header[1]}}" attr.data-name="{{header[2]}}" (click)="sortColumn(header)">
+                    <table>
+                      <tr>
+                        <td>{{header[0]}}</td>
+                        <td>
+                          <i></i>
+                          <i class="fa fa-sort" *ngIf="sortedColumn !== header[0] && header[1] !== '0'"></i>
+                          <i class="fa fa-sort-up" *ngIf="header[1] === 'asc' && sortedColumn === header[0]"></i>
+                          <i class="fa fa-sort-down" *ngIf="header[1] === 'desc' && sortedColumn === header[0]"></i>
+                        </td>
+                      </tr>
+
+                    </table>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor= 'let company of filteredCompanies' (click)='showHistory(company.stock_id)'
+                    [ngStyle]="{'background-color': stockShown[0] == company.stock_id && stockShown[1]?  'red': 'blue'}" >
+                    <td>
+                    <button class='btn btn-primary' (click)='subUnsub(company)'>
+                      {{company.subscribed ? 'Unsubscribe' : 'Subscribe'}}
+                    </button>
+                  </td>
+                  <td>{{company.name}}</td>
+                  <td>{{company.abbreviation}}</td>
+                  <td>{{company.priceHistory.value | currency:'USD':'symbol':'1.2-2' }}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+  </mat-card-content>
+
+</mat-card>
+        
+
+
+
+-->

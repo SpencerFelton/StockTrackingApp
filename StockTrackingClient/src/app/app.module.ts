@@ -29,11 +29,11 @@ import {SortDirective} from './directive/sort.directive'
 //import {CompanyDataClient} from './shared/company-data-client-DEPRICATED';
 //import { AppTableComponent } from './app-table/app-table.component';
 import { AppComponent } from './app.component';
-import {StockMaker} from './stock-maker/stock-maker.component';
+import {StockMaker} from './provider-side/stock-maker.component';
 import {PercentChangeComponent} from './shared/percent-change/percent-change.component';
 import {WelcomeComponent} from './home/welcome.component';
-import {StockViewer} from './stock-viewer/stock-viewer.component';
-import {subscriptionViewer} from './subscription-viewer/subscription-viewer.component';
+import {StockViewer} from './client-side/stock-viewer/stock-viewer.component';
+import {SubscriptionViewer} from './client-side/subscription-viewer/subscription-viewer.component';
 //import {LoginComponent} from './Login/Login.component';
 import {TestCallsComponent} from './shared/TestShit/test-calls.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -42,11 +42,11 @@ import { ChartsModule } from 'ng2-charts';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import {StockChartComponent} from './shared/stock-chart/stock-chart.component';
-import {SubscribeUnsubscribeComponent} from './stock-viewer/subscribe-unsubscribe/subscribe-unsubscribe.component';
-import {AddStockPriceComponent} from './stock-maker/add-stock-price/add-stock-price.component';
-import {UpdateStockNameComponent} from './stock-maker/update-stock-name/update-stock-name.component';
-import {DeleteStockComponent} from './stock-maker/delete-stock/delete-stock.component';
-import {CreateNewStockComponent} from './stock-maker/create-new-stock/create-new-stock.component';
+import {SubscribeUnsubscribeComponent} from './client-side/dialog-boxes/subscribe-unsubscribe/subscribe-unsubscribe.component';
+import {AddStockPriceComponent} from './provider-side/add-stock-price/add-stock-price.component';
+import {UpdateStockNameComponent} from './provider-side/update-stock-name/update-stock-name.component';
+import {DeleteStockComponent} from './provider-side/delete-stock/delete-stock.component';
+import {CreateNewStockComponent} from './provider-side/create-new-stock/create-new-stock.component';
 // Import the Auth0 module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
@@ -65,7 +65,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     PercentChangeComponent,
     WelcomeComponent,
     StockViewer,
-    subscriptionViewer,
+    SubscriptionViewer,
     TestCallsComponent,
     SortDirective,
     //LoginComponent,
@@ -96,7 +96,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
       //{ path: 'login', component:LoginComponent},
       //{ path: 'register', component:RegisterComponent},
       {path: 'account', component: AccountViewComponent},
-      { path: 'subscriptions', component:subscriptionViewer},
+      { path: 'subscriptions', component:SubscriptionViewer},
       {path: 'testing', component:TestCallsComponent},
       { path: '',redirectTo: 'welcome', pathMatch: 'full'},
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'}    

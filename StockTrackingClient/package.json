@@ -27,6 +27,7 @@
     "bootstrap-icons": "^1.3.0",
     "bootstrap-material-design": "^4.1.1",
     "chart.js": "^2.9.4",
+    "chartjs-chart-financial": "file:node_modules/chartjs-chart-financial-master",
     "chartjs-plugin-annotation": "^0.5.7",
     "chartjs-plugin-crosshair": "^1.1.6",
     "chartjs-plugin-empty-overlay": "^1.0.2",

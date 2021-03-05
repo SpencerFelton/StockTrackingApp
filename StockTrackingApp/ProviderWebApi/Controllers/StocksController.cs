@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ProviderWebApi.Models;
-using System.Web.Http.Cors;
 
 namespace ProviderWebApi.Controllers
 {
@@ -86,6 +85,7 @@ namespace ProviderWebApi.Controllers
                 }
             }
 
+            RabbitMQHandler.createModifyStockRMQMessage(stock);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -101,6 +101,7 @@ namespace ProviderWebApi.Controllers
             db.Stocks.Add(stock);
             await db.SaveChangesAsync();
 
+            RabbitMQHandler.createAddNewStockRMQMessage(stock);
             return CreatedAtRoute("DefaultApi", new { id = stock.id }, stock);
         }
 
@@ -118,6 +119,7 @@ namespace ProviderWebApi.Controllers
             db.PriceHistories.RemoveRange(db.PriceHistories.Where(e => e.stock_id == stock.id));
             await db.SaveChangesAsync();
 
+            RabbitMQHandler.createDeleteStockRMQMessage(stock);
             return Ok(stock);
         }
 

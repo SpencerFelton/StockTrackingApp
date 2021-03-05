@@ -115,6 +115,7 @@ namespace ProviderWebApi.Controllers
             db.PriceHistories.Add(priceHistory);
             await db.SaveChangesAsync();
 
+            RabbitMQHandler.createUpdateStockPriceRMQMessage(priceHistory);
             return Ok(priceHistory);
         }
 

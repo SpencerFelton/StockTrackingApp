@@ -5,6 +5,7 @@ using Owin;
 using System.Configuration;
 using ProviderWebApi.Support;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNet.SignalR;
 
 [assembly: OwinStartup(typeof(ProviderWebApi.Startup))]
 
@@ -33,6 +34,30 @@ namespace ProviderWebApi
 
             // Configure Web API
             WebApiConfig.Configure(app);
+            //Configure SignalR. by default, the url 
+            //app.MapSignalR("/signalr", new HubConfiguration());
+
+            // Branch the pipeline here for requests that start with "/signalr"
+            app.Map("/signalr", map =>
+            {
+                // Setup the CORS middleware to run before SignalR.
+                // By default this will allow all origins. You can 
+                // configure the set of origins and/or http verbs by
+                // providing a cors options with a different policy.
+                map.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+                var hubConfiguration = new HubConfiguration
+                {
+                    EnableDetailedErrors = true
+                    // You can enable JSONP by uncommenting line below.
+                    // JSONP requests are insecure but some older browsers (and some
+                    // versions of IE) require JSONP to work cross domain
+                    // EnableJSONP = true
+                };
+                // Run the SignalR pipeline. We're not using MapSignalR
+                // since this branch already runs under the "/signalr"
+                // path.
+                map.RunSignalR(hubConfiguration);
+            });
         }
     }
 }

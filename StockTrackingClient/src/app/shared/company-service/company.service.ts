@@ -47,24 +47,24 @@ export class CompanyService{
     getCompanies():Observable<any>{
         //const headers = new HttpHeaders({'Content-Type': 'application/json'});
         //return this.http.get<any>(`${this.trueUrl}`,{observe: 'body', responseType: 'json'})
-        return this.http.get<any>(`${env.dev.serverUrlProvider}/api/stocks`,{observe: 'body', responseType: 'json'})
+        return this.http.get<any>(`${env.dev.serverUrlProvider}/api/prices/latestinfo`,{observe: 'body', responseType: 'json'})
         .pipe(
             //retry(3), //retry failed request up to three times
             tap(data => console.log('getCompanies: ' + JSON.stringify(data))),
-            map(companies => ObjectConverter.ConvertArrayProvider(companies,"id") /*console.log(companies)*/),
+            /*map(companies => ObjectConverter.ConvertArrayProvider(companies,"id") console.log(companies)),*/
             catchError(this.handleError)
         ); 
     }
 
     //Modify this for the web server.Currently works but it does throw a typeerror eventhough it doesn't
     //impact how the code functions.
-    getCompany(ids:number):Observable<ICompany>{
+    getCompany(id:number):Observable<any>{
         //const headers = new HttpHeaders({'Content-Type': 'application/json'});
         console.log("using getcompany function");
-        console.log(`id equals ${ids}`);
-        if(ids != 0){
-            const url = `${this.trueUrl}/${ids}/`;
-            return this.http.get<ICompany>(url)
+        console.log(`id equals ${id}`);
+        if(id != 0){
+            const url = `${env.dev.serverUrlProvider}/api/prices/${id}/latestinfo`;
+            return this.http.get<any>(url)
             .pipe(
                 tap(data => console.log('getCompany: ' + JSON.stringify(data))),
                 map(company => ObjectConverter.ConvertProvider(company,"id")),
@@ -88,6 +88,7 @@ export class CompanyService{
         );
     }
     //addCompany now works.
+    /*
     addCompany(company:any): Observable<any>{
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         //REMOVE THIS DEPENDING ON IF YOU ARE SENDING TO THE BACKEND OR NOT
@@ -111,7 +112,35 @@ export class CompanyService{
             catchError(this.handleError)
         );
     }
+    */
+    //this adds a new company stock without any stock price associated to it
+    addCompanyNoPrice(name:string, abbr:string){
+        const headers = new HttpHeaders({'Content-Type': 'application/json'});
+        var companyObj = { "name": name,
+                            "abbr": abbr
+                        };
+        return this.http.post<ICompany>(`${env.dev.serverUrlProvider}/api/stocks/`, companyObj,{headers:headers})
+        .pipe(
+            tap(() => console.log('added company!')),
+            map(()=> companyObj),
+            catchError(this.handleError)
+        );
+    }
 
+    //this adds a stock price to an already existing stock
+    addStockPrice(stock_id:number, price:number){
+        const headers = new HttpHeaders({'Content-Type': 'application/json'});
+        var priceObj = {
+            "id": stock_id,
+            "value": price
+        };
+        return this.http.post<any>(`${env.dev.serverUrlProvider}/api/prices/`, priceObj,{headers:headers})
+        .pipe(
+            tap(() => console.log('added stock price!')),
+            map(()=> priceObj),
+            catchError(this.handleError)
+        );
+    }
     
 
     deleteCompany(id: number):Observable<{}>{
@@ -129,6 +158,15 @@ export class CompanyService{
             abbreviation: null,
             price: null,
             dateTime: null,
+        }
+    }
+
+    initialisePrice():any{
+        return {
+            id:0,
+            stock_id:null,
+            time:null,
+            value:null
         }
     }
 

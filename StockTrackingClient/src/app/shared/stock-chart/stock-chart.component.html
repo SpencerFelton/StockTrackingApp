@@ -14,7 +14,7 @@
               </mat-form-field>
               <mat-form-field appearance="outline">
                 <mat-label>Scale Type</mat-label>
-                <mat-select [(value)]="selected" (selectionChange)="sliderConfigure($event)">
+                <mat-select [(value)]="yaxisType" (selectionChange)="yaxisConfigure($event)">
                   <mat-option value="1">Linear</mat-option>
                   <mat-option value="2">Logarithmic</mat-option>
                 </mat-select>

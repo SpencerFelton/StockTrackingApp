@@ -5,15 +5,11 @@ import {NotifierService} from '../shared/Notifications/notifier.service';
 
 
 @Component({
-    selector: 'pm-subscriptionView',
-    templateUrl: './subscriptionView.component.html',
-    styleUrls: ['./subscriptionView.component.css']
+    selector: 'pm-subscriptionviewer',
+    templateUrl: './subscription-viewer.component.html',
+    styleUrls: ['./subscription-viewer.component.css']
 })
-export class subscriptionView implements OnInit {
-    
-
-
-
+export class subscriptionViewer implements OnInit {
     pageTitle: string = 'Subscription List';
     errorMessage:string;
     sortedColumn: string;

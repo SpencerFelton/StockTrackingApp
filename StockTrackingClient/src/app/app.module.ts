@@ -33,7 +33,7 @@ import {StockMaker} from './stock-maker/stock-maker.component';
 import {PercentChangeComponent} from './shared/percent-change/percent-change.component';
 import {WelcomeComponent} from './home/welcome.component';
 import {StockViewer} from './stock-viewer/stock-viewer.component';
-import {subscriptionView} from './subscriptionView/subscriptionView.component';
+import {subscriptionViewer} from './subscription-viewer/subscription-viewer.component';
 //import {LoginComponent} from './Login/Login.component';
 import {TestCallsComponent} from './shared/TestShit/test-calls.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -65,7 +65,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     PercentChangeComponent,
     WelcomeComponent,
     StockViewer,
-    subscriptionView,
+    subscriptionViewer,
     TestCallsComponent,
     SortDirective,
     //LoginComponent,
@@ -96,7 +96,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
       //{ path: 'login', component:LoginComponent},
       //{ path: 'register', component:RegisterComponent},
       {path: 'account', component: AccountViewComponent},
-      { path: 'subscriptions', component:subscriptionView},
+      { path: 'subscriptions', component:subscriptionViewer},
       {path: 'testing', component:TestCallsComponent},
       { path: '',redirectTo: 'welcome', pathMatch: 'full'},
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'}    

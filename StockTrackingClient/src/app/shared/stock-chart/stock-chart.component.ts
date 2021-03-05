@@ -44,6 +44,7 @@ export class StockChartComponent implements OnChanges, OnInit{
     oneDayOff = new Date();
     value = 0;
     selected = "1";
+    yaxisType="1";
   
 
 
@@ -148,7 +149,9 @@ export class StockChartComponent implements OnChanges, OnInit{
           this.chart = new Chart("linechart", {
             type: 'line',
             
+            
             options: {
+              
               responsive: true,
               maintainAspectRatio: false,
               scales: {
@@ -165,6 +168,7 @@ export class StockChartComponent implements OnChanges, OnInit{
             data: {  
               datasets: [{
                 label: 'Demo',
+                lineTension: 0,
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
@@ -241,6 +245,20 @@ export class StockChartComponent implements OnChanges, OnInit{
             }
           this.chart.update();
         }
+      }
+
+      yaxisConfigure(event:any){
+        console.log(this.chart);
+        if(event.value == 1){
+          this.chart.options.scales.yAxes[0]= {
+            type: 'linear'
+          }
+        }else{
+          this.chart.options.scales.yAxes[0]= {
+            type: 'logarithmic'
+          }
+        }
+        this.chart.update();
       }
 
       

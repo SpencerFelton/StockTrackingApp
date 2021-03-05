@@ -43,7 +43,7 @@ export class CompanyServiceClient{
 
 
     //Modify this for the web server
-    getCompaniesClient():Observable<ICompanyView[]>{
+    getCompaniesClient():Observable<any[]>{
         console.log("Getting companies as the client...");
         /*
         return this.http.get<ICompanyView[]>(`${env.dev.serverUrl}/api/stocks`)
@@ -54,9 +54,9 @@ export class CompanyServiceClient{
         */
         
        
-       return this.http.get<ICompanyView[]>(`${env.dev.serverUrlClient}/api/stocks`)
+       return this.http.get<any[]>(`${env.dev.serverUrlClient}/api/prices/latestinfo`)
         .pipe(
-            tap(data => console.log('getCompanies: ' + JSON.stringify(data))),
+            tap(data => console.log('getCompanies(1): ' + JSON.stringify(data))),
             catchError(this.handleError)
         ); 
 
@@ -66,19 +66,18 @@ export class CompanyServiceClient{
     //Modify this for the web server
     getCompanyClient(id:number):Observable<ICompanyView>{
         if(id != 0){
-            const url = `${this.clienturl2}/${id}`;
+            const url = `${env.dev.serverUrlClient}/api/prices/${id}/latestinfo`;
             return this.http.get<ICompanyView>(url)
             .pipe(
-                tap(data => console.log('getCompany: ' + JSON.stringify(data))),
+                tap(data => console.log('getCompany(2): ' + JSON.stringify(data))),
                 catchError(this.handleError)
             );
         }
-
     }
 
     getCompanyClientHistory(id:number):Observable<any>{
         if(id != 0){
-            const url = `${this.pricehistoryUrl}/${id}`;
+            const url = `${env.dev.serverUrlClient}/api/Prices/${id}`;
             return this.http.get<any>(url)
             .pipe(
                 tap(data => console.log('priceHistory: ' + JSON.stringify(data))),
@@ -89,52 +88,13 @@ export class CompanyServiceClient{
     
     //may not be how to actually do the call for subscribed companies
     getSubscribedCompanies():Observable<ICompanyView[]>{
-        const url = `${this.clienturl2}?subscribed=true`;
+        const url = `${env.dev.serverUrlClient}/api/Subscriptions`;
         return this.http.get<ICompanyView[]>(url)
         .pipe(
             tap(data => console.log('getCompany: ' + JSON.stringify(data))),
             catchError(this.handleError)
         );
     }
-
-
-
-    //THE FOLLOWING ARE THE CLIENT SPECIFIC. THESE ARE NOT DIRECTLY CALLED IN THE PROGRAM AND DONT HAVE A USE OUTSIDE OF DEMONSTRATION PURPOSES.
-    //DONT TOUCH------------------------------------------------------------------------------------------------------------------------------------
-    /*
-    addCompanyClient(companyClient:any): Observable<any>{
-        const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        companyClient.subscribed = false;
-        companyClient.stocksPurchased = 0;
-        console.log("I am here as well!");
-        return this.http.post<any>(this.clienturl2, companyClient, {headers:headers})
-        .pipe(
-            tap(() => console.log('added company(CLIENT SIDE): ' + companyClient.id)),
-            map(()=> companyClient),
-            catchError(this.handleError)
-        );
-    }    
-    
-    modifyStockClient(company:any): Observable<any>{
-        const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        const url = `${this.clienturl2}/${company.id}`;
-        return this.http.put<any>(url, company, {headers: headers})
-        .pipe(
-            tap(() => console.log('modifyCompany: ' + company.id)),
-            map(()=> company),
-            catchError(this.handleError)
-        );
-    }
-    
-    deleteCompanyClient(id: number):Observable<{}>{
-        const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        const url = `${this.clienturl2}/${id}`;
-        return this.http.delete<any>(url,{headers: headers});
-    }
-    */
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 
     private handleError(err: HttpErrorResponse){

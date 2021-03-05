@@ -20,14 +20,26 @@ import { CompanyServiceClient } from '../company-service-client/company-service-
 
 export class StockChartComponent implements OnChanges, OnInit{
     @Input() stockId:number; //<--Change to abbr once abbr implementation is complete
+    @Input() type:string;
+    
     chart:any;
-    stockInformation:ICompanyView; //<-stock info
+    stockInformation:any; //<-stock info
     stockHistory:any[]; //<-- stock history (is any)
     data:any[] = [];
     errorMessage:string;
     name:string = '';
     abbreviation:string = '';
     lineLabel:any;
+
+
+    formatLabel(value: number) {
+      if (value >= 1000) {
+        return Math.round(value / 1000) + 'k';
+      }
+      return value;
+    }
+
+    
 
     constructor(private companyServiceClient:CompanyServiceClient){
     }
@@ -38,6 +50,7 @@ export class StockChartComponent implements OnChanges, OnInit{
             .subscribe({
             next: (company: any) => {
                 this.stockInformation = company;
+                console.log("(1)asdas");
                 this.name = this.stockInformation.name;
                 this.abbreviation = this.stockInformation.abbreviation;
                 console.log("PLEASE ACKNOWLEDGE ME!");},
@@ -67,7 +80,7 @@ export class StockChartComponent implements OnChanges, OnInit{
     dataGenerator(companyHistory:any[]):any{
         let dataGenerated:any[] = [];
         companyHistory.forEach(element => {
-            dataGenerated.push({t:element.dateTime+'Z',y:element.price});
+            dataGenerated.push({t:element.time+'Z',y:element.value});
         });      
         return dataGenerated;
     }
@@ -80,7 +93,7 @@ export class StockChartComponent implements OnChanges, OnInit{
 
 
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
+        console.log("hello");
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -93,9 +106,19 @@ export class StockChartComponent implements OnChanges, OnInit{
           this.chart = new Chart("linechart", {
             type: 'line',
             options: {
+              responsive: true,
+              maintainAspectRatio: false,
               scales: {
                 xAxes: [{
                   type: 'time',
+                  ticks: {
+                    //min: new Date(2000,1,1,0,0,0,0),
+                    //max: new Date(2018,1,1,0,0,0,0)
+                  },
+                  time:
+                  {
+                    //THIS IS WHAT I WANT TO CHANGE WITH THE FUNCTION
+                  }
                 }]
               }
             },

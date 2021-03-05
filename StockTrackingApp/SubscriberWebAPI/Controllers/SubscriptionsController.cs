@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -64,25 +65,30 @@ namespace SubscriberWebAPI.Controllers
         [ResponseType(typeof(Subscription))]
         public async Task<IHttpActionResult> PostSubscription(int stock_id)
         {
+            Debug.WriteLine(stock_id);
             string user_id = getUserIDFromAccessToken(Request.Headers);
-
+            Debug.WriteLine("Posting Subscription");
+            
+            Debug.WriteLine($"user id null: {user_id == ""}");
             if (user_id == "")
             {
+                
                 return Content(HttpStatusCode.BadRequest, "No Authorization in request header, required to create subscription");
             }
-
+            Debug.WriteLine($"subscription exists: {SubscriptionExists(user_id, stock_id)}");
             if (SubscriptionExists(user_id, stock_id))
             {
                 return Content(HttpStatusCode.BadRequest, "Subscription already exists for this user and stock");
             }
 
             Subscription sub = new Subscription { stock_id = stock_id, user_id = user_id };
-
+            Debug.WriteLine($"subscription made: {sub}");
+            Debug.WriteLine($"is modelstate valid: {ModelState.IsValid}");
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            Debug.WriteLine($"does the stock exist: {StockExists(stock_id)}");
             if (StockExists(stock_id))
             {
                 db.Subscriptions.Add(sub);
@@ -95,17 +101,35 @@ namespace SubscriberWebAPI.Controllers
             try
             {
                 await db.SaveChangesAsync();
+                Debug.WriteLine("yo!");
             }
+
             catch (DbUpdateException)
             {
                 if (SubscriptionExists(user_id, stock_id))
                 {
+                    Debug.WriteLine("Hello I am");
                     return Conflict();
                 }
                 else
                 {
+                    Debug.WriteLine("Here!");
                     throw;
                 }
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
             }
 
             return Ok(sub);

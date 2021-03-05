@@ -9,6 +9,7 @@
         <EntityTypeShape EntityType="ClientStockTrackerModel.Stock" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="ClientStockTrackerModel.Subscription" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <AssociationConnector Association="ClientStockTrackerModel.FK__PriceHist__value__2B3F6F97" ManuallyRouted="false" />
+        <AssociationConnector Association="ClientStockTrackerModel.FK__Subscript__stock__239E4DCF" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

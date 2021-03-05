@@ -109,6 +109,7 @@ export class CompanyServiceClient{
     }
 
     unsubscribeToStock(stock_id:number){
+        console.log("I am HEEERE!");
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this.http.delete<any>(`${env.dev.serverUrlClient}/api/subscriptions/${stock_id}`,{headers:headers})
         .pipe(

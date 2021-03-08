@@ -47,6 +47,8 @@ import {AddStockPriceComponent} from './provider-side/add-stock-price/add-stock-
 import {UpdateStockNameComponent} from './provider-side/update-stock-name/update-stock-name.component';
 import {DeleteStockComponent} from './provider-side/delete-stock/delete-stock.component';
 import {CreateNewStockComponent} from './provider-side/create-new-stock/create-new-stock.component';
+import {RulerGeneratorComponent} from './shared/ruler-generator/ruler-generator.component';
+
 // Import the Auth0 module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
@@ -78,7 +80,8 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     AddStockPriceComponent,
     UpdateStockNameComponent,
     DeleteStockComponent,
-    CreateNewStockComponent
+    CreateNewStockComponent,
+    RulerGeneratorComponent
   ],
   imports: [
     BrowserModule,

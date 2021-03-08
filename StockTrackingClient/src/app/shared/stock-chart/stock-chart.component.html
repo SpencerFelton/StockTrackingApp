@@ -3,7 +3,7 @@
             <canvas id="linechart"></canvas>
         </div>        
         
-        <div> 
+        <div class="container"> 
             <mat-form-field appearance="outline">
                 <mat-label>Slider Tick Options</mat-label>
                 <mat-select [(value)]="selected" (selectionChange)="sliderConfigure($event)">
@@ -28,14 +28,23 @@
               </mat-form-field>
 
         </div>
-
-        <div class="slider">
-            <mat-slider #chartSlider
-                thumbLabel
+        <div>
+          <hr> 
+          
+            <div>
+              <div>
+                <mat-slider #chartSlider
                 [displayWith]="formatLabel"
                 [tickInterval]="step"
                 [min]="min"
                 [max]="max"
                 [(value)] = "value"
                 (input) = "onInputChange($event)"></mat-slider>
+                {{graphRangeApprox}} | {{graphRangeAcc}}          
+              </div>
             </div>
+
+                
+                
+        </div>    
+        

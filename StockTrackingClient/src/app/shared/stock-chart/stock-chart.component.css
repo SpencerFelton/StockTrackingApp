@@ -30,9 +30,20 @@ h1{
 
 .mat-slider{
     margin:auto;
-    width:90%;
+    width:85%;
 }
 
 .mat-form-field{
+    width:30%;
     
+}
+
+.container{
+    display:flex;
+    justify-content:space-between;
+}
+
+.sliderElements{
+    display: flex;
+    justify-content: center;
 }

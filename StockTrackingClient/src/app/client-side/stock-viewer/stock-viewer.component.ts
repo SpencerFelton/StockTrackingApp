@@ -28,7 +28,8 @@ export interface stockData {
                 animate(100)
             ]),
 
-        ])
+        ]),
+        //trigger('')
     ]
 })
 export class StockViewer implements OnInit {

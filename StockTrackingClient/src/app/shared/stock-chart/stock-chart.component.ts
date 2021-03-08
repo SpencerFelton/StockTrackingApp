@@ -12,6 +12,7 @@ import {ICompanyView} from '../company-models/companyView';
 import { CompanyServiceClient } from '../company-service-client/company-service-client';
 import { fromEvent } from 'rxjs';
 import { CompanyService } from '../company-service/company.service';
+//import './my-path/chartjs-chart-financial';
 
 
 @Component({
@@ -45,11 +46,13 @@ export class StockChartComponent implements OnChanges, OnInit{
     value = 0;
     selected = "1";
     yaxisType="1";
+    increments:number;
+    graphRangeApprox:string;
+    graphRangeAcc:string;
   
 
 
     formatLabel(value: number) {
-      //console.log(value);
       if (value >= 1000) {
         return Math.round(value / 1000) + 'k';
       }
@@ -63,7 +66,60 @@ export class StockChartComponent implements OnChanges, OnInit{
     }
 
 
-     getCompany(id:number){        
+    alternateFormatter(value:number){
+      var output = "";
+      var minutes = 1000 * 60;
+      var minutesInDay = 1436;
+      var avWeeksInMonth= 4.34812143;
+
+      
+      console.log(`Chart date: ${new Date(this.chartLatestDate.t).getTime()}`);
+      var timeElapsed = (new Date(this.chartLatestDate.t).getTime() - new Date(this.oneDayOff).getTime()) + value*this.increments;
+      var timeElapasedMinutes = timeElapsed/minutes;
+
+      if(timeElapasedMinutes >=minutesInDay && timeElapasedMinutes < (minutesInDay*7)){
+        output = `${(timeElapasedMinutes/minutesInDay).toFixed(2)}d`;
+      }else if(timeElapasedMinutes >=(minutesInDay*7) && timeElapasedMinutes < (minutesInDay*7)*avWeeksInMonth){
+        output = `${(timeElapasedMinutes/(minutesInDay*7)).toFixed(2)}w`;
+      }else if(timeElapasedMinutes >=minutesInDay*7*avWeeksInMonth && timeElapasedMinutes < minutesInDay*7*avWeeksInMonth*12){
+        output = `${(timeElapasedMinutes/(minutesInDay*7*avWeeksInMonth)).toFixed(2)}m`;
+      }else{
+        output = `${(timeElapasedMinutes/(minutesInDay*7*avWeeksInMonth*12)).toFixed(2)}y`;
+      }
+      return output;
+    }
+
+    alFormatter(value:number){
+      var output = "";
+      var minutes = 1000 * 60;
+      var minutesInDay = 1436;
+      var avWeeksInMonth= 4.34812143;
+
+
+      console.log(`Chart date: ${new Date(this.chartLatestDate.t).getTime()}`);
+      var timeElapsed = (new Date(this.chartLatestDate.t).getTime() - new Date(this.oneDayOff).getTime()) + value*this.increments;
+      var timeElapasedMinutes = timeElapsed/minutes;
+
+      if(timeElapasedMinutes >=minutesInDay && timeElapasedMinutes < (minutesInDay*7)){
+        output = `>${Math.trunc(timeElapasedMinutes/minutesInDay)}d`;
+      }else if(timeElapasedMinutes >=(minutesInDay*7) && timeElapasedMinutes < (minutesInDay*7)*avWeeksInMonth){
+        output = `>${ Math.trunc(timeElapasedMinutes/(minutesInDay*7))}w`;
+      }else if(timeElapasedMinutes >=minutesInDay*7*avWeeksInMonth && timeElapasedMinutes < minutesInDay*7*avWeeksInMonth*12){
+        output = `>${ Math.trunc(timeElapasedMinutes/(minutesInDay*7*avWeeksInMonth))}m`;
+      }else{
+        output = `>${ Math.trunc(timeElapasedMinutes/(minutesInDay*7*avWeeksInMonth*12))}y`;
+      }
+
+      if(value == 0){
+        output = "1d";
+      }else if (value == this.max){
+        output = "All";
+      }
+      return output;
+    }
+
+
+    getCompany(id:number){        
        if(this.type == "client"){
             this.companyServiceClient.getCompanyClient(id).subscribe({
             next: (company: any) => {
@@ -141,6 +197,8 @@ export class StockChartComponent implements OnChanges, OnInit{
     ngOnChanges(changes: SimpleChanges): void {
         this.getCompanyHistory(this.stockId);
         console.log()
+        this.graphRangeApprox=this.alFormatter(this.value);
+        this.graphRangeAcc = this.alternateFormatter(this.value);
         this.update = false;
 
     }
@@ -148,10 +206,7 @@ export class StockChartComponent implements OnChanges, OnInit{
     generateChart():void{
           this.chart = new Chart("linechart", {
             type: 'line',
-            
-            
             options: {
-              
               responsive: true,
               maintainAspectRatio: false,
               scales: {
@@ -233,15 +288,16 @@ export class StockChartComponent implements OnChanges, OnInit{
       onInputChange(event: any) {
         this.value = event.value; 
         this.updateChartAxis(this.value);
+        this.graphRangeApprox=this.alFormatter(this.value);
+        this.graphRangeAcc = this.alternateFormatter(this.value);
       }
 
       updateChartAxis(value:number){
-        
-          var increments = ( this.oneDayOff.getTime() - new Date(this.chartEarliestDate.t).getTime())/(this.max - this.min);
+        this.increments = ( this.oneDayOff.getTime() - new Date(this.chartEarliestDate.t).getTime())/(this.max - this.min);
         if(this.chart){
-          this.chart.options.scales.xAxes[0].ticks.min = this.oneDayOff.getTime() - value*increments;
+          this.chart.options.scales.xAxes[0].ticks.min = this.oneDayOff.getTime() - value*this.increments;
             if(this.data.length <=1){
-              this.chart.options.scales.xAxes[0].ticks.max = new Date(this.chartLatestDate.t).getTime() - value*increments;
+              this.chart.options.scales.xAxes[0].ticks.max = new Date(this.chartLatestDate.t).getTime() - value*this.increments;
             }
           this.chart.update();
         }

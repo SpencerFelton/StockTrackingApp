@@ -17,10 +17,24 @@ namespace ProviderWebApi.Controllers
     {
         private StockModel db = new StockModel();
 
+        List<Stock> stocks = new List<Stock>();
+
+        public StocksController() { }
+
+        public StocksController(List<Stock> Stocks)
+        {
+            this.stocks = stocks;
+        }
+
         // GET: api/Stocks
-        public IQueryable<Stock> GetStocks()
+        public IQueryable<Stock> GetAllStocks()
         {
             return db.Stocks;
+        }
+
+        public async Task<IEnumerable<Stock>> GetAllStocksAsync()
+        {
+            return await Task.FromResult(GetAllStocks());
         }
 
         // GET: api/Stocks/5

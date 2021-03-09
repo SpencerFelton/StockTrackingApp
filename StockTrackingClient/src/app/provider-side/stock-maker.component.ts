@@ -35,8 +35,12 @@ export interface stockData {
             ]),
 
         ]),
-        trigger('expandingRetracting', [
-            
+        trigger('slideUpDown',[
+            state('void', style({opacity: 0 })),
+            state('*', style({opacity: 100})),
+            transition('void <=> *',[
+                animate(150)
+            ])
         ])
     ]
 

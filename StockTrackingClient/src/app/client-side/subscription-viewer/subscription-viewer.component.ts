@@ -28,6 +28,13 @@ export interface stockData {
                 animate(100)
             ]),
 
+        ]),
+        trigger('slideUpDown',[
+            state('void', style({opacity: 0 })),
+            state('*', style({opacity: 100})),
+            transition('void <=> *',[
+                animate(150)
+            ])
         ])
     ]
 })

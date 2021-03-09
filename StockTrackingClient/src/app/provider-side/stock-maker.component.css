@@ -8,3 +8,14 @@ thead {
 table {
     width: 100%;
   }
+
+  .buttons{
+    text-align: center;
+  }
+
+  #actions{
+    text-align: center
+  }
+  button{
+      margin:10px;
+  }

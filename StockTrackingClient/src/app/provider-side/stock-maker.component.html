@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<div *ngIf='stockShown[1]'>
+<div *ngIf='stockShown[1]' [@slideUpDown]>
     <mat-card>
     <mat-card-title>
     {{companyInfo.name}}
@@ -13,7 +13,7 @@
     <mat-card-content>
     <app-stock-chart [stockId] = 'stockShown[0]' [type] = "type" [update] = "updateGraph"></app-stock-chart>
     <hr> 
-            <h1> Actions </h1>
+            <h1 id = 'actions'> Actions </h1>
             <div class = "buttons"> 
                <button class="name" mat-stroked-button (click) = "openUpdateStockNameDialog(companyInfo.id,companyInfo.name,companyInfo.abbr)">Update Stock Name</button> 
                 <button class="price" mat-stroked-button (click) = "openAddStockPriceDialog(companyInfo.id,companyInfo.stockPrice)">Add New Stock Price</button> 

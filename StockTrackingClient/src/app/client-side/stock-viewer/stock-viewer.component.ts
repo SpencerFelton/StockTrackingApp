@@ -29,9 +29,17 @@ export interface stockData {
             ]),
 
         ]),
-        //trigger('')
+        trigger('slideUpDown',[
+            state('void', style({opacity: 0 })),
+            state('*', style({opacity: 100})),
+            transition('void <=> *',[
+                animate(150)
+            ])
+        ])
     ]
 })
+
+
 export class StockViewer implements OnInit {
 
     pageTitle="Stock List";

@@ -156,7 +156,7 @@ export class CompanyService{
 
     deleteCompany(id: number):Observable<{}>{
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        const url = `${this.trueUrl}/${id}`;
+        const url = `${env.dev.serverUrlProvider}/api/stocks/${id}`;
         //this.companyServiceClient.deleteCompanyClient(id).subscribe();
         return this.http.delete<ICompany>(url,{headers: headers});
     }

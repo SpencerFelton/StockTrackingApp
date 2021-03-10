@@ -58,6 +58,7 @@ export class StockChartComponent implements OnChanges, OnInit{
       }
       return value;
     }
+    
 
     
 

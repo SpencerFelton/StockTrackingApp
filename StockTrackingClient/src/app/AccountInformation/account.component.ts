@@ -1,6 +1,20 @@
 import { Component,  OnInit } from "@angular/core";
 import {AuthService} from '@auth0/auth0-angular';
 
+export interface AccountInformation{
+    AccountParameter: string;
+    AssociatedData: string;
+}
+
+
+const ACCOUNT_DATA: AccountInformation[] = [
+    {AccountParameter:"Account Type", AssociatedData: "Admin"},
+    {AccountParameter:"Username", AssociatedData: "Users Username"},
+    {AccountParameter:"Password", AssociatedData: "*****"},
+    {AccountParameter:"First Name", AssociatedData: "John"},
+    {AccountParameter:"Last Name", AssociatedData: "Doe"},
+    {AccountParameter:"Email Address", AssociatedData: "JD@Gmail.com"},
+];
 
 @Component({
     selector: 'pm-account',
@@ -15,6 +29,8 @@ export class AccountViewComponent{
     email:string;
     accountType:string;
     data:any;
+    displayedColumns: string[] = ['parameter', 'userData'];
+    dataSource = ACCOUNT_DATA;
 
     constructor(public auth: AuthService){
         /*

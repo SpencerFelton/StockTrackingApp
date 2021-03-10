@@ -97,7 +97,7 @@ export class CompanyServiceClient{
         );
     }
 
-    subscribeToStock(stock_id:number){
+    subscribeToStock(stock_id:number):Observable<any>{
         console.log("50");
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this.http.post<any>(`${env.dev.serverUrlClient}/api/subscriptions/${stock_id}`,{headers:headers})
@@ -108,8 +108,9 @@ export class CompanyServiceClient{
 
     }
 
-    unsubscribeToStock(stock_id:number){
+    unsubscribeToStock(stock_id:number):Observable<any>{
         console.log("I am HEEERE!");
+        console.log(stock_id);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this.http.delete<any>(`${env.dev.serverUrlClient}/api/subscriptions/${stock_id}`,{headers:headers})
         .pipe(

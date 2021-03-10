@@ -48,7 +48,7 @@ export class StockViewer implements OnInit {
     type = "client";    
     companyInfo:stockData;
     companyData:stockData[];
-    subscribedCompanyData:stockData[];
+    subscribedCompanyData:any[];
 
     displayedColumns:string[] = ['name', 'abbr', 'stockPrice'];
     dataSource: MatTableDataSource<stockData>;
@@ -95,9 +95,7 @@ export class StockViewer implements OnInit {
         this.companyService.getCompaniesClient().subscribe({
             next: companies =>{
                 this.companyData = this.companyFormatter(companies);
-                this.dataSource = new MatTableDataSource (this.companyData);
-                this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
+                this.generateTable(this.companyData);
                 console.log("Obtained data!");
             },
             error: err => this.errorMessage = err     
@@ -107,19 +105,19 @@ export class StockViewer implements OnInit {
     getSubscribedStock():void{
         this.companyService.getSubscribedIds().subscribe({
             next: subscribedCompanies =>{
-                this.subscribedCompanyData = this.companyFormatter(subscribedCompanies);
-                console.log("Got company data!")
+                this.subscribedCompanyData = subscribedCompanies;
+                console.log(`Got company data!fdgfsg ${this.subscribedCompanyData}`);
                 console.log(this.subscribedCompanyData);
             }
-        })
+        });
     }
 
 
     isSubscribed(stock_id):boolean{
         //console.log("I am here!!!!!");
         //console.log(this.subscribedCompanyData);
-        //console.log(this.subscribedCompanyData.find(company => company.id == stock_id)== undefined);
-        if(this.subscribedCompanyData.find(company => company.id == stock_id) == undefined){
+        //console.log(this.subscribedCompanyData.find(company => company.stock_id == stock_id)== undefined);
+        if(this.subscribedCompanyData.find(company => company.stock_id == stock_id) == undefined){
             //console.log("I Am unsubscribed!");
             return false;
             
@@ -192,8 +190,10 @@ export class StockViewer implements OnInit {
         console.log(`stock is: ${this.stockShown[0]}, is showing is: ${this.stockShown[1]}`);
     }
 
-    subscribeUnsubscribe(){
-        
+    generateTable(companyData:stockData[]){
+        this.dataSource = new MatTableDataSource (companyData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
     }
 
     

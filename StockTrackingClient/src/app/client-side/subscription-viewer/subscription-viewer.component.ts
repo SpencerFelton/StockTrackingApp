@@ -44,9 +44,12 @@ export class SubscriptionViewer implements OnInit {
     stockShown:any[] = [,false];
     type = "client";    
     companyInfo:stockData;
-    //companyData:stockData[];
+    companyData:stockData[];
     subscribedCompanyData:stockData[];
     subscribedCompanyDataRaw:any;
+    idsGenerated:number[];
+    gotSubscribedIds = false;
+    gotCompanyData =false;
 
     displayedColumns:string[] = ['name', 'abbr', 'stockPrice'];
     dataSource: MatTableDataSource<stockData>;
@@ -66,15 +69,10 @@ export class SubscriptionViewer implements OnInit {
 
     //TODO: Implement subscribes tock injectable that does all the calls and stores the subscribedstock
     ngOnInit(): void {
-        //this.getCompanies();
+        this.getCompanies();
         this.getSubscribedIds();
     }
-    /*
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }
-      */
+      
     
       applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
@@ -89,7 +87,14 @@ export class SubscriptionViewer implements OnInit {
         this.companyService.getSubscribedIds().subscribe({
             next: subscribedCompanies =>{
                 this.subscribedCompanyDataRaw = subscribedCompanies;
-                this.getCompaniesByID(this.generateIDArray(this.subscribedCompanyDataRaw));     
+                console.log("I am gettting subsdcribedIDs");
+                console.log(this.subscribedCompanyDataRaw);
+                this.idsGenerated = this.generateIDArray(this.subscribedCompanyDataRaw);
+                this.gotSubscribedIds = true;
+                if(this.gotCompanyData){
+                    this.subscribedCompanyData = this.getCompaniesByID(this.idsGenerated,this.companyData);
+                    this.generateTable(this.subscribedCompanyData);
+                }     
             }
         })
     }
@@ -98,15 +103,43 @@ export class SubscriptionViewer implements OnInit {
     generateIDArray(object:any[]){
         var idArray=[];
         object.forEach(row =>{
-            idArray.join(row.stock_id);
+            idArray.push(row.stock_id);
         })
+        console.log("ID array generated!");
+        console.log(idArray);
         return idArray;
     }
 
-    getCompaniesByID(intArray:number[]){
-        this.companyService.getCompaniesById(intArray);
-        //DO THE REGULAR STUFF YOU NORMALLY DO
+    getCompaniesByID(intArray:number[], AllCompanies:any[]){
+        console.log("Get companies by ID");
+        console.log(intArray);
+        console.log(AllCompanies);
+        var subCompanies=[];
+        intArray.forEach(id => 
+        {
+            subCompanies.push(AllCompanies.find(row => row.id === id));
+        });
+        console.log("subscribed companies!");
+        console.log(subCompanies);
+        return subCompanies;   
     }
+
+    getCompanies(): void{
+        this.companyService.getCompaniesClient().subscribe({
+            next: companies =>{
+                this.companyData = this.companyFormatter(companies);
+                console.log("Hello up there!");
+                this.gotCompanyData = true;
+                if(this.gotSubscribedIds){
+                    this.subscribedCompanyData = this.getCompaniesByID(this.idsGenerated, this.companyData);
+                    this.generateTable(this.subscribedCompanyData);
+                }     
+            },
+            error: err => this.errorMessage = err     
+        });
+    }
+
+
 
     /* 
      this.dataSource = new MatTableDataSource (this.subscribedCompanyData );
@@ -195,9 +228,10 @@ export class SubscriptionViewer implements OnInit {
         console.log(`stock is: ${this.stockShown[0]}, is showing is: ${this.stockShown[1]}`);
     }
 
-    subscribeUnsubscribe(){
-        
+    generateTable(companyData:stockData[]){
+        this.dataSource = new MatTableDataSource (companyData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
     }
-
     
 }

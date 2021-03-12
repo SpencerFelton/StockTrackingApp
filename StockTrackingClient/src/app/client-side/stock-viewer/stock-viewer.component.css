@@ -8,7 +8,7 @@ thead {
 table {
     width: 100%;
   }
-  
+
 .buttons{
     text-align: center;
 }
@@ -18,3 +18,8 @@ text-align: center;
 button{
     margin:10px;
 }
+
+.mat-row:hover {
+    background-color: rgb(204, 204, 204);
+  }
+  

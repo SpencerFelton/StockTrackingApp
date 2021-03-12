@@ -4,4 +4,12 @@
 
 table {
     width: 100%;
-  }
+}
+
+  button{
+    margin:10px;
+}
+
+h3{
+    margin-left: 20px;
+}

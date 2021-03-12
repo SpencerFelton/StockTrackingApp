@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Delete Account</h1>
+
+<div mat-dialog-content>
+    Are you sure you want to perminently get your account? 
+    <br>
+    <b>Warning: This action cannot be undone</b>
+</div>
+<div mat-dialog-actions>
+    <button mat-flat-button 
+    color="primary"
+    (click) = "deleteAccount()">
+    Delete</button>
+  <button mat-button cdkFocusInitial
+  type="button"
+  (click)="close()">Cancel</button>
+</div>

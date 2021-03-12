@@ -9,5 +9,6 @@ export const environment = {
   dev: {
     serverUrlProvider: "https://localhost:44326",
     serverUrlClient:"https://localhost:44353"
+    
   },
 };

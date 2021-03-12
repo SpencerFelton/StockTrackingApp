@@ -48,6 +48,10 @@ import {UpdateStockNameComponent} from './provider-side/update-stock-name/update
 import {DeleteStockComponent} from './provider-side/delete-stock/delete-stock.component';
 import {CreateNewStockComponent} from './provider-side/create-new-stock/create-new-stock.component';
 import {RulerGeneratorComponent} from './shared/ruler-generator/ruler-generator.component';
+import {DeleteAccountComponent} from 'src/app/AccountInformation/delete-account/delete-account.component';
+import {ChangePasswordComponent} from 'src/app/AccountInformation/change-password/change-password.component';
+
+//import {}
 
 // Import the Auth0 module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
@@ -59,6 +63,8 @@ import {AccountViewComponent} from './AccountInformation/account.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+
+//Account Service (REMOVE FOR API)
 
 @NgModule({
   declarations: [
@@ -81,7 +87,9 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     UpdateStockNameComponent,
     DeleteStockComponent,
     CreateNewStockComponent,
-    RulerGeneratorComponent
+    RulerGeneratorComponent,
+    DeleteAccountComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +123,8 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
           `${env.dev.serverUrlClient}/api/Subscriptions/ViewAll`,
           `${env.dev.serverUrlClient}/api/subscriptions/`,
           */
-          `${env.dev.serverUrlProvider}/api/*`
+          `${env.dev.serverUrlProvider}/api/*`,
+          `https://${env.auth.domain}/*`
         ],
       }
     }),

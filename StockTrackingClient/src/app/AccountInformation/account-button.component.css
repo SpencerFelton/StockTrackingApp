@@ -1,7 +1,9 @@
+
+
 .mat-button{
     width:100%
 }
-
+/*
 img {
     border-radius: 50%;
     max-height: 48px;
@@ -17,3 +19,21 @@ img {
     white-space: pre-wrap;
     font-size: small;
 }
+*/
+
+h1,h2,h3,h4,h5,h6{
+    word-wrap: break-word;
+    float:left;
+    width:fit-content;
+    text-align: left;
+}
+
+h1,h3,h6{
+    margin-bottom: 0%;
+}
+
+hr{
+    margin:0%;
+}
+
+

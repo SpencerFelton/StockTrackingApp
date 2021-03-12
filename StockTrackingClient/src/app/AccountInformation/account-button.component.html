@@ -1,8 +1,9 @@
-<div *ngIf="auth.user$ | async as user">
-    <button mat-button [routerLink] = "['/account']">
-        <img src={{user.picture}} alt="Avatar"> 
-        <div class="info">
-            {{user.email}} 
-        </div>
-    </button> 
-</div> 
+<button mat-stroked-button [routerLink] = "['/account']">
+        <h1>{{username | titlecase}}</h1>
+    <br>
+        <h3>{{AccountType | titlecase}}</h3>
+    <br>
+        <hr>
+        <h6>{{firstName | titlecase}} {{lastName | titlecase}}</h6> 
+        <h6>{{email | titlecase}}</h6> 
+</button> 

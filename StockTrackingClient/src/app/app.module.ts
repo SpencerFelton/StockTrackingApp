@@ -20,6 +20,9 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {MatSliderModule} from '@angular/material/slider';
+import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
+import { NgxColorsModule } from 'ngx-colors';
+
 
 
 //import {CompanyData} from './shared/company-data';
@@ -89,7 +92,8 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     CreateNewStockComponent,
     RulerGeneratorComponent,
     DeleteAccountComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -147,7 +151,9 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatSliderModule
+    MatSliderModule,
+    NgxMatColorPickerModule,
+    NgxColorsModule
   ],
   providers: [
     {
@@ -155,6 +161,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
       useClass: AuthHttpInterceptor,
       multi: true,
     },
+    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS },
   ],
   bootstrap: [AppComponent]
 })

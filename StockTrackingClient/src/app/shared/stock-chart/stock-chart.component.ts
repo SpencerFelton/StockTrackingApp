@@ -49,7 +49,8 @@ export class StockChartComponent implements OnChanges, OnInit{
     increments:number;
     graphRangeApprox:string;
     graphRangeAcc:string;
-  
+    colour:string = "#004fba";  
+    hasData:boolean = false;
 
 
     formatLabel(value: number) {
@@ -169,10 +170,12 @@ export class StockChartComponent implements OnChanges, OnInit{
               this.lineLabel = this.labelGenerator(this.stockHistory);
               this.earliestAndLatestDates(this.data);
               this.updateChartDataFromStart(this.chart, this.data, this.lineLabel, this.chartLatestDate.t);
-              },
+
+            },
               error: err => this.errorMessage = err
           })
-       }  
+       } 
+
     }
 
         //data generator takes the raw stock history data and turns it into data that the graph can then plot
@@ -208,6 +211,9 @@ export class StockChartComponent implements OnChanges, OnInit{
           this.chart = new Chart("linechart", {
             type: 'line',
             options: {
+              legend:{
+                display: false
+              },
               responsive: true,
               maintainAspectRatio: false,
               scales: {
@@ -223,24 +229,8 @@ export class StockChartComponent implements OnChanges, OnInit{
             },
             data: {  
               datasets: [{
-                label: 'Demo',
+                //label: 'Demo',
                 lineTension: 0,
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                  'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
-                ],
                 borderWidth: 1
               }]
             }
@@ -268,6 +258,7 @@ export class StockChartComponent implements OnChanges, OnInit{
 
       updateChartDataFromStart(chart, data, labels, max){
         if(data.length != 0){
+        //this.hasData = true;
         chart.data.datasets[0].data = data;
         chart.data.labels[0] = labels;
         chart.options.scales.xAxes[0].ticks.max = max;
@@ -278,7 +269,13 @@ export class StockChartComponent implements OnChanges, OnInit{
         console.log(`Minimum: ${new Date(this.chart.options.scales.xAxes[0].ticks.min) }`);
         chart.update();
         }
+      }
 
+      onColourChange(event:any){
+        console.log("I'm here!");
+        this.colour = event;
+        console.log(event);
+        this.updateChartColour(event);
       }
 
       updateChartData(chart, data,index){
@@ -291,6 +288,19 @@ export class StockChartComponent implements OnChanges, OnInit{
         this.updateChartAxis(this.value);
         this.graphRangeApprox=this.alFormatter(this.value);
         this.graphRangeAcc = this.alternateFormatter(this.value);
+        
+      }
+
+      updateChartColour(colour:string){
+        if(this.chart){
+          console.log("Hellooo!");
+          //console.log(JSON.parse(this.chart));
+          console.log(this.chart.datasets);
+          this.chart.data.datasets[0].borderColor = colour;
+          var backColour = `${colour}1B`;
+          this.chart.data.datasets[0].backgroundColor = backColour;
+          this.chart.update();
+        }
       }
 
       updateChartAxis(value:number){

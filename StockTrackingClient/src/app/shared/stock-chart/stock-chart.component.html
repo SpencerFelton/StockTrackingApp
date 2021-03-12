@@ -1,10 +1,11 @@
 
-        <div class="chart-container">
+        
+          <div class="chart-container">
             <canvas id="linechart"></canvas>
         </div>        
         
         <div class="container"> 
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="standard">
                 <mat-label>Slider Tick Options</mat-label>
                 <mat-select [(value)]="selected" (selectionChange)="sliderConfigure($event)">
                   <mat-option value="1">100 Ticks</mat-option>
@@ -12,21 +13,20 @@
                   <mat-option value="3">300 Ticks</mat-option>
                 </mat-select>
               </mat-form-field>
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="standard">
                 <mat-label>Scale Type</mat-label>
                 <mat-select [(value)]="yaxisType" (selectionChange)="yaxisConfigure($event)">
                   <mat-option value="1">Linear</mat-option>
                   <mat-option value="2">Logarithmic</mat-option>
                 </mat-select>
               </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Scale Type</mat-label>
-                <mat-select [(value)]="selected" (selectionChange)="sliderConfigure($event)">
-                  <mat-option value="1">Linear</mat-option>
-                  <mat-option value="2">Logarithmic</mat-option>
-                </mat-select>
+                <ngx-colors ngx-colors-trigger  (change)="onColourChange($event)" [(ngModel)]="colour"></ngx-colors>
+                <mat-form-field appearance="standard">
+                <mat-label>Graph Colour</mat-label>
+                <input matInput [(ngModel)]="colour">
               </mat-form-field>
-
+             
+              
         </div>
         <div>
           <hr> 
@@ -42,9 +42,7 @@
                 (input) = "onInputChange($event)"></mat-slider>
                 {{graphRangeApprox}} | {{graphRangeAcc}}          
               </div>
-            </div>
-
-                
-                
+            </div>         
         </div>    
+        
         

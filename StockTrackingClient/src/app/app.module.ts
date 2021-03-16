@@ -59,8 +59,9 @@ import {ChangePasswordComponent} from 'src/app/AccountInformation/change-passwor
 // Import the Auth0 module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
-
 import {AuthButtonComponent} from './Login-Auth0/login-auth0.component';
+import {AppRoutingModule} from './app-routing.module';
+
 import {AccountButtonComponent} from './AccountInformation/account-button.component';
 import {AccountViewComponent} from './AccountInformation/account.component';
 
@@ -97,6 +98,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
     ChartsModule,
     ReactiveFormsModule,

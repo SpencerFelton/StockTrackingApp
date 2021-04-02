@@ -9,7 +9,7 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 import {ICompanyView} from '../company-models/companyView';
 
-import { CompanyServiceClient } from '../company-service-client/company-service-client';
+import { CompanyServiceClient } from '../../services/company-service-client';
 import { fromEvent } from 'rxjs';
 import { CompanyService } from '../company-service/company.service';
 //import './my-path/chartjs-chart-financial';

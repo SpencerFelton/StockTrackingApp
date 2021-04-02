@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {ICompanyView} from '../company-models/companyView';
+import {ICompanyView} from '../../shared/company-models/companyView';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError, of } from 'rxjs';
 import {catchError, tap, map} from 'rxjs/operators';
 import {AuthService} from '@auth0/auth0-angular';
 
-import { environment as env } from '../../../environments/environment';
+import { environment as env } from '../../environments/environment';
 
 //NOTE: THIS IS NOT A PERMINANT SOLUTION. THIS IS SOMETHING THAT WILL EXIST IN 
 //THE FUTURE VERSION OF IT. IT WILL BE A PART OF A NEW WEBAPI

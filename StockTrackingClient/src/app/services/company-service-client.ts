@@ -4,7 +4,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError, of } from 'rxjs';
 import {catchError, tap, map} from 'rxjs/operators';
 
-import { environment as env } from '../../../environments/environment';
+import { environment as env } from '../../environments/environment';
 
 
 

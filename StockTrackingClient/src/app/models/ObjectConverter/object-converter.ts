@@ -6,7 +6,7 @@
 
 //import {IObject} from './TestObject';
 import {ICompany} from '../company-models/company';
-import {ICompanyB} from '../company-models/company-backend';
+import {ICompanyB} from '../../models/company-backend';
 
 
 export class ObjectConverter{

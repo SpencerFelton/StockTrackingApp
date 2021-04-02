@@ -1,6 +1,6 @@
 import {Component, Input, Inject, OnInit} from "@angular/core";
 
-import {NotificationType} from "./notificationtype";
+import {NotificationType} from "../../models/notificationtype";
 import {MatCardModule} from '@angular/material/card';
 import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material/snack-bar';
 

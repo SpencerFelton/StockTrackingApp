@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '@auth0/auth0-angular';
 
-import {WelcomeComponent} from './home/welcome.component';
+import {WelcomeComponent} from './pages/unrestricted/home/welcome.component';
 import {StockViewer} from './client-side/stock-viewer/stock-viewer.component';
 import {SubscriptionViewer} from './client-side/subscription-viewer/subscription-viewer.component';
 import {StockMaker} from './provider-side/stock-maker.component';

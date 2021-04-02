@@ -32,9 +32,9 @@ import {SortDirective} from './directive/sort.directive'
 //import {CompanyDataClient} from './shared/company-data-client-DEPRICATED';
 //import { AppTableComponent } from './app-table/app-table.component';
 import { AppComponent } from './app.component';
-import {StockMaker} from './provider-side/stock-maker.component';
-import {PercentChangeComponent} from './shared/percent-change/percent-change.component';
-import {WelcomeComponent} from './home/welcome.component';
+import {StockMaker} from 'src/app/pages/restricted/provider/stock-maker/stock-maker.component';
+import {PercentChangeComponent} from './components/percent-change/percent-change.component';
+import {WelcomeComponent} from './pages/unrestricted/home/welcome.component';
 import {StockViewer} from './client-side/stock-viewer/stock-viewer.component';
 import {SubscriptionViewer} from './client-side/subscription-viewer/subscription-viewer.component';
 //import {LoginComponent} from './Login/Login.component';
@@ -44,13 +44,13 @@ import { ChartsModule } from 'ng2-charts';
 //import {RegisterComponent} from './Register/Register.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatTabsModule} from '@angular/material/tabs';
-import {StockChartComponent} from './shared/stock-chart/stock-chart.component';
+import {StockChartComponent} from './components/stock-chart/stock-chart.component';
 import {SubscribeUnsubscribeComponent} from './client-side/dialog-boxes/subscribe-unsubscribe/subscribe-unsubscribe.component';
 import {AddStockPriceComponent} from './provider-side/add-stock-price/add-stock-price.component';
 import {UpdateStockNameComponent} from './provider-side/update-stock-name/update-stock-name.component';
 import {DeleteStockComponent} from './provider-side/delete-stock/delete-stock.component';
 import {CreateNewStockComponent} from './provider-side/create-new-stock/create-new-stock.component';
-import {RulerGeneratorComponent} from './shared/ruler-generator/ruler-generator.component';
+//import {RulerGeneratorComponent} from 'src/app/components/stock-chart/ruler-generator.component';
 import {DeleteAccountComponent} from 'src/app/AccountInformation/delete-account/delete-account.component';
 import {ChangePasswordComponent} from 'src/app/AccountInformation/change-password/change-password.component';
 
@@ -59,7 +59,7 @@ import {ChangePasswordComponent} from 'src/app/AccountInformation/change-passwor
 // Import the Auth0 module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
-import {AuthButtonComponent} from './Login-Auth0/login-auth0.component';
+import {AuthButtonComponent} from './components/Login-Auth0/login-auth0.component';
 import {AppRoutingModule} from './app-routing.module';
 
 import {AccountButtonComponent} from './AccountInformation/account-button.component';
@@ -91,7 +91,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     UpdateStockNameComponent,
     DeleteStockComponent,
     CreateNewStockComponent,
-    RulerGeneratorComponent,
+    //RulerGeneratorComponent,
     DeleteAccountComponent,
     ChangePasswordComponent,
     

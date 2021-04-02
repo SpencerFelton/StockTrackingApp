@@ -7,6 +7,8 @@
   color: white;
 }
 
+
+
 .spacer{
   flex: 1 1 auto;
 }
@@ -23,4 +25,8 @@ mat-sidenav, mat-sidenav-content {
 mat-sidenav{
   background-color: rgb(233, 233, 233);
   width: 200px;
+}
+
+img{
+  width: 40px;
 }

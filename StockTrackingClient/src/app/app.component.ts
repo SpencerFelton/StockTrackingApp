@@ -11,22 +11,11 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angula
 export class AppComponent {
   title = 'Not Stonk';
 
-  constructor(public dialog:MatDialog){}
-
-  /*
-  dialogRef:MatDialogRef<LoginComponent, any>;
-
-  openLogin():void{
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose=true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '600px';
-
-    this.dialogRef = this.dialog.open(LoginComponent,dialogConfig);
-
-    this.dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed')
-    });
+  constructor(public dialog:MatDialog){
+    this.setupRedirects();
   }
-  */
+
+  setupRedirects(){
+    localStorage.setItem('a9f48d1504bc45c1','/callback');
+  }
 }

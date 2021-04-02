@@ -24,8 +24,8 @@
               "src/assets",
               "src/api"
             ],
-            "styles": [
-              "src/custom-theme.scss",
+            "styles": ["src/custom-theme.scss" 
+              ,
               "src/styles.css"
             ],
             "scripts": []

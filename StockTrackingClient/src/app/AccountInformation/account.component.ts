@@ -46,7 +46,7 @@ export class AccountViewComponent{
                 console.log(next["https://mynamespace/first_name"]);
                 console.log(next["https://mynamespace/last_name"]);
                 console.log(next["https://mynamespace/email"]);
-                //console.log(next["sub"]);
+                console.log(next.sub);
                 this.generateTable(next);
                 //console.log(next.["https://mynamespace/first_name"]);
             }

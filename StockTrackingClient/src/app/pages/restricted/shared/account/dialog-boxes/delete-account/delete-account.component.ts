@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnInit} from "@angular/core";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {AccountService} from 'src/app/shared/Account-service/account-service.component';
+import {AccountService} from '../../../../../../services/account-service.component';
 
 @Component({
     selector: 'pm-deleteaccount',

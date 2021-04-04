@@ -6,10 +6,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '@auth0/auth0-angular';
 
 import {WelcomeComponent} from './pages/unrestricted/home/welcome.component';
-import {StockViewer} from './client-side/stock-viewer/stock-viewer.component';
-import {SubscriptionViewer} from './client-side/subscription-viewer/subscription-viewer.component';
-import {StockMaker} from './provider-side/stock-maker.component';
-import {AccountViewComponent} from './AccountInformation/account.component';
+import {StockViewer} from './pages/restricted/client/stock-viewer/stock-viewer.component';
+import {SubscriptionViewer} from './pages/restricted/client/subscription-viewer/subscription-viewer.component';
+import {StockMaker} from './pages/restricted/provider/stock-maker/stock-maker.component';
+import {AccountViewComponent} from './pages/restricted/shared/account/account-page/account.component';
 
 
 const routes: Routes = [

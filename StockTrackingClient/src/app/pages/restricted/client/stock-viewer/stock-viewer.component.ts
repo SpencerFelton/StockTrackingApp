@@ -1,6 +1,6 @@
 import {Component, OnChanges, OnInit, SimpleChanges, ViewChild, AfterViewInit} from '@angular/core';
-import {CompanyServiceClient} from 'src/app/shared/company-service-client/company-service-client';
-import {NotifierService} from 'src/app/shared/Notifications/notifier.service';
+import {CompanyServiceClient} from '../../../../services/company-service-client';
+import {NotifierService} from '../../../../services/notifier.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';

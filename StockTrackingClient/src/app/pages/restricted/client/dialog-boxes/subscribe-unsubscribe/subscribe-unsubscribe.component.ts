@@ -1,6 +1,6 @@
 import {Component, Inject} from "@angular/core";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {CompanyServiceClient} from 'src/app/shared/company-service-client/company-service-client';
+import {CompanyServiceClient} from '../../../../../services/company-service-client';
 
 @Component({
     selector: 'pm-subscribedialog',

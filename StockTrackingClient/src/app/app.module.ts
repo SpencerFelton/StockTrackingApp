@@ -27,7 +27,7 @@ import { NgxColorsModule } from 'ngx-colors';
 
 //import {CompanyData} from './shared/company-data';
 //import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import {SortDirective} from './directive/sort.directive'
+//import {SortDirective} from './directive/sort.directive'
 //import {subscription} from 
 //import {CompanyDataClient} from './shared/company-data-client-DEPRICATED';
 //import { AppTableComponent } from './app-table/app-table.component';
@@ -35,24 +35,24 @@ import { AppComponent } from './app.component';
 import {StockMaker} from 'src/app/pages/restricted/provider/stock-maker/stock-maker.component';
 import {PercentChangeComponent} from './components/percent-change/percent-change.component';
 import {WelcomeComponent} from './pages/unrestricted/home/welcome.component';
-import {StockViewer} from './client-side/stock-viewer/stock-viewer.component';
-import {SubscriptionViewer} from './client-side/subscription-viewer/subscription-viewer.component';
+import {StockViewer} from './pages/restricted/client/stock-viewer/stock-viewer.component';
+import {SubscriptionViewer} from './pages/restricted/client/subscription-viewer/subscription-viewer.component';
 //import {LoginComponent} from './Login/Login.component';
-import {TestCallsComponent} from './shared/TestShit/test-calls.component';
+//import {TestCallsComponent} from './shared/TestShit/test-calls.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 //import {RegisterComponent} from './Register/Register.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import {StockChartComponent} from './components/stock-chart/stock-chart.component';
-import {SubscribeUnsubscribeComponent} from './client-side/dialog-boxes/subscribe-unsubscribe/subscribe-unsubscribe.component';
-import {AddStockPriceComponent} from './provider-side/add-stock-price/add-stock-price.component';
-import {UpdateStockNameComponent} from './provider-side/update-stock-name/update-stock-name.component';
-import {DeleteStockComponent} from './provider-side/delete-stock/delete-stock.component';
-import {CreateNewStockComponent} from './provider-side/create-new-stock/create-new-stock.component';
+import {SubscribeUnsubscribeComponent} from './pages/restricted/client/dialog-boxes/subscribe-unsubscribe/subscribe-unsubscribe.component';
+import {AddStockPriceComponent} from './pages/restricted/provider/dialog-boxes/add-stock-price/add-stock-price.component';
+import {UpdateStockNameComponent} from './pages/restricted/provider/dialog-boxes/update-stock-name/update-stock-name.component';
+import {DeleteStockComponent} from './pages/restricted/provider/dialog-boxes/delete-stock/delete-stock.component';
+import {CreateNewStockComponent} from './pages/restricted/provider/dialog-boxes/create-new-stock/create-new-stock.component';
 //import {RulerGeneratorComponent} from 'src/app/components/stock-chart/ruler-generator.component';
-import {DeleteAccountComponent} from 'src/app/AccountInformation/delete-account/delete-account.component';
-import {ChangePasswordComponent} from 'src/app/AccountInformation/change-password/change-password.component';
+import {DeleteAccountComponent} from './pages/restricted/shared/account/dialog-boxes/delete-account/delete-account.component';
+import {ChangePasswordComponent} from './pages/restricted/shared/account/dialog-boxes/change-password/change-password.component';
 
 //import {}
 
@@ -62,8 +62,8 @@ import { environment as env } from '../environments/environment';
 import {AuthButtonComponent} from './components/Login-Auth0/login-auth0.component';
 import {AppRoutingModule} from './app-routing.module';
 
-import {AccountButtonComponent} from './AccountInformation/account-button.component';
-import {AccountViewComponent} from './AccountInformation/account.component';
+import {AccountButtonComponent} from './pages/restricted/shared/account/account-page/account-button.component';
+import {AccountViewComponent} from './pages/restricted/shared/account/account-page/account.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
@@ -78,8 +78,8 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     WelcomeComponent,
     StockViewer,
     SubscriptionViewer,
-    TestCallsComponent,
-    SortDirective,
+    //TestCallsComponent,
+    //SortDirective,
     //LoginComponent,
     //RegisterComponent,
     AuthButtonComponent,
@@ -114,7 +114,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
       //{ path: 'register', component:RegisterComponent},
       {path: 'account', component: AccountViewComponent},
       { path: 'subscriptions', component:SubscriptionViewer},
-      {path: 'testing', component:TestCallsComponent},
+      //{path: 'testing', component:TestCallsComponent},
       { path: '',redirectTo: 'welcome', pathMatch: 'full'},
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'}    
     ]),

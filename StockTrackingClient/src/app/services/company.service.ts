@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {ICompany} from '../company-models/company';
+import {ICompany} from '../models/company';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {ObjectConverter} from '../ObjectConverter/object-converter';
+import {ObjectConverter} from '../models/ObjectConverter/object-converter';
 
 import {Observable, throwError, of } from 'rxjs';
 import {catchError, tap, map, retry} from 'rxjs/operators';
-import { CompanyServiceClient } from '../company-service-client/company-service-client';
-import { environment as env } from 'src/environments/environment';
+import { CompanyServiceClient } from './company-service-client';
+import {environment as env} from '../../environments/environment';
 
 
 @Injectable({

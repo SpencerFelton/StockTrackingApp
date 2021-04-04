@@ -5,8 +5,8 @@
 //doesn't support function overloading.
 
 //import {IObject} from './TestObject';
-import {ICompany} from '../company-models/company';
-import {ICompanyB} from '../../models/company-backend';
+import {ICompany} from '../company';
+import {ICompanyB} from '../company-backend';
 
 
 export class ObjectConverter{

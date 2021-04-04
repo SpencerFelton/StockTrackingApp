@@ -1,16 +1,16 @@
 import {Component, OnChanges, OnInit, SimpleChanges, ViewChild, AfterViewInit} from '@angular/core';
-import {ICompany} from '../shared/company-models/company';
-import {CompanyService} from '../shared/company-service/company.service';
-import {NotifierService} from '../shared/Notifications/notifier.service';
+import {ICompany} from '../../../../models/company';
+import {CompanyService} from '../../../../services/company.service';
+import {NotifierService} from '../../../../services/notifier.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {AddStockPriceComponent} from "./add-stock-price/add-stock-price.component";
-import {UpdateStockNameComponent} from './update-stock-name/update-stock-name.component';
-import {DeleteStockComponent} from './delete-stock/delete-stock.component';
-import {CreateNewStockComponent} from './create-new-stock/create-new-stock.component';
+import {AddStockPriceComponent} from "../dialog-boxes/add-stock-price/add-stock-price.component";
+import {UpdateStockNameComponent} from '../dialog-boxes/update-stock-name/update-stock-name.component';
+import {DeleteStockComponent} from '../dialog-boxes/delete-stock/delete-stock.component';
+import {CreateNewStockComponent} from '../dialog-boxes/create-new-stock/create-new-stock.component';
 import { max } from 'rxjs/operators';
 
 

@@ -1,8 +1,8 @@
 import { Component,  OnInit } from "@angular/core";
 import {AuthService} from '@auth0/auth0-angular';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {ChangePasswordComponent} from './change-password/change-password.component';
-import {DeleteAccountComponent} from './delete-account/delete-account.component';
+import {ChangePasswordComponent} from '../dialog-boxes/change-password/change-password.component';
+import {DeleteAccountComponent} from '../dialog-boxes/delete-account/delete-account.component';
 
 export interface AccountInformation{
     AccountParameter: string;

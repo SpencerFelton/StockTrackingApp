@@ -7,11 +7,11 @@ import {ChartDataSets, ChartOptions, Chart} from 'chart.js';
 import {BaseChartDirective,Color, Label} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
-import {ICompanyView} from '../company-models/companyView';
+import {ICompanyView} from '../../models/companyView';
 
 import { CompanyServiceClient } from '../../services/company-service-client';
 import { fromEvent } from 'rxjs';
-import { CompanyService } from '../company-service/company.service';
+import { CompanyService } from '../../services/company.service';
 //import './my-path/chartjs-chart-financial';
 
 

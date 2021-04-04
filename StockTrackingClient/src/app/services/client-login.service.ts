@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {ClientDetails} from './client-details';
+import {ClientDetails} from '../models/client-details';
 
 
 @Injectable({

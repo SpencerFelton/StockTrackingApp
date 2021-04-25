@@ -1,12 +1,15 @@
-<mat-toolbar  color="primary">
+
+<!--
+  <mat-toolbar  color="primary">
   <button mat-button ><img src="assets/Novus Stock Tracker Logos/novus N Blue.svg"></button>
   <span class="spacer"></span>
   <button mat-button  (click) = "sidenav.close()" [routerLink] = "['/welcome']" >Home</button>
   <button mat-button (click) = "sidenav.open()" [routerLink] = "['/viewstock']">Dashboard</button>
-  <!--<button mat-button (click) = "openLogin()">Login</button> -->
   <app-auth-button></app-auth-button>
 <router-outlet></router-outlet>
 </mat-toolbar>
+-->
+
 
 <mat-sidenav-container color="primary">
 <mat-sidenav #sidenav mode="side" class="mat-elevation-z4">

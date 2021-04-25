@@ -56,6 +56,10 @@ import {ChangePasswordComponent} from './pages/restricted/shared/account/dialog-
 
 //import {}
 
+import {NavBarComponent} from './components/nav-bar/nav-bar.component';
+import {HeroComponent} from './components/hero/hero.component';
+import {HomeContentComponent} from './components/home-content/home-content.component';
+import {FooterComponent} from './components/footer/footer.component';
 // Import the Auth0 module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
@@ -94,6 +98,10 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     //RulerGeneratorComponent,
     DeleteAccountComponent,
     ChangePasswordComponent,
+    NavBarComponent,
+    HeroComponent,
+    HomeContentComponent,
+    FooterComponent
     
   ],
   imports: [

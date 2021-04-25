@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.263" height="16.263" viewBox="0 0 16.263 16.263">
+  <g id="cross" transform="translate(-274.868 -47.368)">
+    <g id="Rectangle_64" data-name="Rectangle 64" transform="translate(274.868 61.51) rotate(-45)" stroke="#000" stroke-width="1">
+      <rect width="20" height="3" stroke="none"/>
+      <rect x="0.5" y="0.5" width="19" height="2" fill="none"/>
+    </g>
+    <g id="Rectangle_65" data-name="Rectangle 65" transform="translate(276.99 47.368) rotate(45)" stroke="#000" stroke-width="1">
+      <rect width="20" height="3" stroke="none"/>
+      <rect x="0.5" y="0.5" width="19" height="2" fill="none"/>
+    </g>
+  </g>
+</svg>

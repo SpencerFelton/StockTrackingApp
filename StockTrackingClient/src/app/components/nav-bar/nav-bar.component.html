@@ -1,0 +1,25 @@
+
+<div class="navbar">
+    <div class="container">
+        <a class= "logo" href="#"><img src="assets/svgs/novus N Blue.svg"></a>
+        <a class="logo-letters" href="#">OVUS</a>
+        <img [hidden]="!isCurrentlyOpen" id="mobile-cta" class = "mobile-menu" (click) = "OnMenuClicked()" src="assets\svgs\hamburger menu.svg">
+        <img [hidden]="isCurrentlyOpen" id="mobile-exit" class="mobile-menu" (click) = "OnMenuClicked()" src="assets/svgs/cross.svg">
+        <nav [hidden]="isCurrentlyOpen">
+            <ul class = "primary-nav">
+                <li><a href="#" class="primary-link">Home</a></li>
+                <li><a href="#" class="primary-link">Changelog</a></li>
+                <li><a href="#" class="primary-link">About Us</a></li>
+            </ul>
+
+            <ul class = "secondary-nav">
+                <li><a href="#" class="secondary-link">Dashboard</a></li>
+                <li ><a class = "sign-up-cta" href="#">Sign up</a></li>
+
+            </ul>
+        </nav>
+        
+        
+        
+    </div>
+</div>

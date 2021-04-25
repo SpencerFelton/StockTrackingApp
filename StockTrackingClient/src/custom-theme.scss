@@ -1,26 +1,15 @@
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
-// Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
+/*
+@import '~@angular/material/theming';
+
 @include mat-core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
 $APM-primary: mat-palette($mat-amber);
-//$APM-primary:mat
 $APM-accent: mat-palette($mat-pink, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
 $APM-warn: mat-palette($mat-red);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
 $APM-theme: mat-light-theme((
   color: (
     primary: $APM-primary,
@@ -29,46 +18,231 @@ $APM-theme: mat-light-theme((
   )
 ));
 
-.error.mat-snack-bar-container{
-  background: #f74e46e2;
-  color: white;
+.default-theme{
+  @include angular-material-theme($APM-theme);
 }
-.success.mat-snack-bar-container{
-  background: #48bf48c6;
-  color:white;
+*/
+
+@import 'assets/scss/modules/_fonts.scss';
+
+//FONT INFORMATION
+
+
+
+
+//root represents the element that is at the root of the document
+//this is equivalent to html tag
+:root{
+
+  //colours
+  --primary-colour: #FFC107;
+  --secondary-colour: #1066B4;
+  --secondary-colour2:#004686;
+  --background-colour1: white;
+  //primary font
+  --primary_font:'Roboto Condensed';
+  //logo font
+  --logo_font: 'Cloud';
+  // font-weight
+  --light:300;
+  --regular:400;
+  --bold:700;
+  // Font size
+  --font-xs:12px;
+  --font-sm: 14px;
+  --primary-fs: 16px;
+  --font-md: 18px;
+  --font-lg: 20px;  
+  
+  font-family: var(--primary_font);
+  margin: 0;
 }
 
-.link{
-  cursor: pointer;
+body{
+  margin: 0px;
 }
 
-.error{
-  color:red !important;
+.navbar{
+  background: var(--primary-colour);
+  padding: 0.5em 1em 0.5em 1em;
+  
+  .logo-letters{
+    text-decoration:none;
+    //height:fit-content;
+    display:inline-block;
+    padding-top:1em;
+    margin-right:1em;
+  }
+
+  nav{
+    //display: none;
+    position:fixed;
+    z-index: 999;
+    background:var(--primary-colour);
+    //width: 100%;
+    height: 18rem;
+    left:0;
+    top:3.5em;
+    right:0;
+    padding:1em;
+    text-align: center;
+
+    li{
+      //margin:1.2em;
+      a{
+        text-decoration: none;
+        //width:fit-content;        
+        display:inline-block;
+        padding: .5em;
+        margin: .5em;
+        
+      }
+
+      .primary-link{
+        color:black;
+        border-radius: .5em;
+        &:hover{
+          background:rgba(50, 50, 50, 0.1);
+        }
+      }
+      .secondary-link{
+        color:black;
+        border-radius: .5em;
+        &:hover{
+          background:rgba(50, 50, 50, 0.1);
+        }
+      }
+      .sign-up-cta{
+        background:white;
+        color:var(--secondary-colour2);
+        border-style:solid;
+        border-width: 2px;
+        border-color:var(--secondary-colour2);
+        border-radius: 5em;
+        padding-left: 3em;
+        padding-right: 3em;
+        &:hover{
+          background:grey;
+        }
+
+      }
+
+
+    }
+    
+  }
+
+  .container{
+    display:flex;
+    place-content:space-between;
+    width:100%
+  }
+  
+  .mobile-menu{
+    cursor:pointer;
+  }
+
+  .logo img{
+    width: 1.8rem;
+  }
+
+  .mobile-cta img{
+    height: 1.5rem;
+  }
+
 }
 
-mat-form-field {
-  width: 100%;
+h3{
+  color: var(--secondary-colour);
 }
 
-mat-toolbar {
-  z-index: 2;
-  position: relative;
-}
-
-mat-sidenav{
-  z-index: 2;
-  position: relative;
-}
-
-mat-card{
-  margin: 10px;
+ul{
+  list-style-type: none;
+  margin:0;
+  padding:0;
 }
 
 
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($APM-theme);
+article{
+  padding: 2em 2em;
+}
 
 
+.hero{
+  padding: 5em 1em;
+  text-align: center;
+  h1{
+    font-size: 2.7em;
+    margin-top: .2em;
+  }
+  .hero-img{
+    width: 10rem;
+    
+  }
+
+  .primary-cta {
+    background: var(--secondary-colour2);
+    color: white;
+    text-decoration: none;
+    font-size: 1.4em;
+    padding: 0.4em 1.3em;
+    font-weight: var(--bold);
+    border-radius: 5em;
+    display:inline-block;
+    //shadow
+    box-shadow: 0px 3px 0.3em rgb(56, 56, 56);
+  }
+}
+
+.home-content-section{
+  text-align: center;
+  h3{
+    font-size: 1.4em;
+    margin-top: .5em;
+    margin-bottom: .5em;
+  }
+
+  p{
+    margin-top: .5em;
+    margin-bottom: .5em;
+  }
+
+  .home-container-img{
+    width:100%;
+  }
+}
+
+@media only screen and (min-width:650px){
+  .mobile-menu{
+    display:none;
+  }
+
+  .navbar nav{
+    display:flex;
+    justify-content:space-between;
+    background:none;
+    position: unset;
+    height: auto;
+    width:100%;
+    padding:0;
+  }
+
+  ul{
+    display:flex;
+  }
+
+  a{
+    text-align: block;
+  }
+
+}
+
+
+@media only screen and (min-width:800px){
+  .logo-letters{
+    font-family: var(--logo_font);
+    font-weight: var(--bold);
+    color: var(--secondary-colour2);
+    display:none;
+  }
+}

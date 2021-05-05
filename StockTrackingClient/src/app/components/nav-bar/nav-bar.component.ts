@@ -2,17 +2,19 @@ import { Component } from "@angular/core";
 
 @Component({
     selector: 'navbar',
-    templateUrl: './nav-bar.component.html'
+    templateUrl: './nav-bar.component.html',
+    styleUrls:['./nav-bar.component.scss']
 })
 
 export class NavBarComponent {
 
-    isCurrentlyOpen:boolean = false;
+    isCurrentlyNotOpen:boolean = true;
 
-    constructor(){}
+    constructor(){
+    }
 
     OnMenuClicked(){
-        this.isCurrentlyOpen = !this.isCurrentlyOpen;
+        this.isCurrentlyNotOpen = !this.isCurrentlyNotOpen;
     }
     
 }

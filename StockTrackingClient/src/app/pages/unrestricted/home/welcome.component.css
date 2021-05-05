@@ -1,15 +1,17 @@
+/*
 body{
     background-color: rgb(255, 255, 255);
 }
 
-/*
+///*
 h1{
     text-align: center;
     vertical-align: middle;
     font-size: 300%;
     height: 100%;
 }
-*/
+//*/
+/*
 #splash{
     height: 40%;
     text-align: center;
@@ -181,4 +183,4 @@ p {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
-
+*/

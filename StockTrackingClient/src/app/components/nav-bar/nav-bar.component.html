@@ -1,15 +1,15 @@
 
 <div class="navbar">
     <div class="container">
-        <a class= "logo" href="#"><img src="assets/svgs/novus N Blue.svg"></a>
-        <a class="logo-letters" href="#">OVUS</a>
+        <a class= "logo" href="/welcome"><img src="assets/svgs/novus N Blue.svg"></a>
+        <a class="logo-letters" href="/welcome">OVUS</a>
         <img [hidden]="!isCurrentlyNotOpen" id="mobile-cta" class = "mobile-menu" (click) = "OnMenuClicked()" src="assets\svgs\hamburger menu.svg">
         <img [hidden]="isCurrentlyNotOpen" id="mobile-exit" class="mobile-menu" (click) = "OnMenuClicked()" src="assets/svgs/cross.svg">
         <nav [hidden]="isCurrentlyNotOpen">
             <ul class = "primary-nav">
-                <li><a href="#" class="primary-link">Home</a></li>
-                <li><a href="#" class="primary-link">Changelog</a></li>
-                <li><a href="#" class="primary-link">About Us</a></li>
+                <li><a href="/welcome" class="primary-link">Home</a></li>
+                <li><a href="/changelog" class="primary-link">Changelog</a></li>
+                <li><a href="/aboutus" class="primary-link">About Us</a></li>
             </ul>
 
             <ul class = "secondary-nav">

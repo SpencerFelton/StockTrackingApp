@@ -41,6 +41,8 @@ $APM-theme: mat-light-theme((
   --primary-colour4:#d3a200;
   --secondary-colour: #1066B4;
   --secondary-colour2:#004686;
+  --tertiary-colour:#EEEEEE;
+  --tertiary-colour2:#D5D5D5;
   --background-colour1: white;
   //primary font
   --primary_font:'Roboto Condensed';
@@ -83,5 +85,21 @@ hr{
   width:80vw;
   margin-left: auto;
   margin-right: auto;
+}
+
+h2{
+  text-align: center;
+  font-family: var(--primary_font);
+  font-weight: var(--bold);
+  font-size: 3em;
+  color: var(--secondary-colour2);
+  margin: 95px auto; 
+}
+
+
+@media only screen and (min-width:650px){
+  h2{
+    margin-top:25px;
+  }
 }
 

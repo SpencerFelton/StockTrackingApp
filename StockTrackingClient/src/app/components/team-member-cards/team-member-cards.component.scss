@@ -1,0 +1,92 @@
+img{
+    border-radius: 50%;
+}
+
+.card{
+    display: block;
+    overflow:hidden;
+    margin: 10em;
+    border: 5em;
+    border-radius: 5%;
+    width: 15em;
+    height:fit-content;
+    background-color: var(--tertiary-colour);
+
+}
+
+.photo{
+    display:block;
+    margin: 1em auto;
+}
+
+.link1{
+    display: block;
+    width:auto;
+    height:30px;
+    margin: 4px 5px;
+    border-radius: 8em;
+    background-color: var(--tertiary-colour2);
+}
+
+.link2{
+    display: block;
+    width:auto;
+    height:30px;
+    margin: 4px 5px;
+    border-radius: 8em;
+    background-color: var(--tertiary-colour2);
+}
+
+.edge{
+    height:10px;
+}
+
+h4{
+    margin-left: 4px;
+    font-family: var(--primary_font);
+    font-size: var(--bold);
+    font-size:1.5em;
+    margin-top:0;
+    margin-bottom: 0;
+}
+
+p{
+    margin-left:4px;
+    //font-family: var(--primary_font);
+    //font-size: var(--light);
+    font-size:1.1em;
+    margin-top:0;
+    margin-bottom: 0;
+}
+
+.container{
+    padding:5%
+}
+
+a{
+    display: block;
+    width:auto;
+    height:30px;
+    margin: 4px 5px;
+    border-radius: 8em;
+    background-color: var(--tertiary-colour2);
+    text-align: center;
+    &:hover{
+        background-color: rgb(104, 104, 104);
+    }
+}
+
+.img{
+    display: block;
+    float: left;
+    z-index: 50;
+    right: 20px;
+}
+
+.text{
+    display:inline-block;
+    margin-top: 5px;
+    margin-right: 15px;
+    text-decoration: none;
+    color:black;
+}

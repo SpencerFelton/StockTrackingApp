@@ -34,7 +34,8 @@ import { NgxColorsModule } from 'ngx-colors';
 import { AppComponent } from './app.component';
 import {StockMaker} from 'src/app/pages/restricted/provider/stock-maker/stock-maker.component';
 import {PercentChangeComponent} from './components/percent-change/percent-change.component';
-import {WelcomeComponent} from './pages/unrestricted/home/welcome.component';
+import {TeamMemberCardsComponent} from './components/team-member-cards/team-member-cards.component';
+
 import {StockViewer} from './pages/restricted/client/stock-viewer/stock-viewer.component';
 import {SubscriptionViewer} from './pages/restricted/client/subscription-viewer/subscription-viewer.component';
 //import {LoginComponent} from './Login/Login.component';
@@ -74,12 +75,17 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 
 //Account Service (REMOVE FOR API)
 
+import {WelcomeComponent} from './pages/unrestricted/home/welcome.component';
+import {AboutUsComponent} from './pages/unrestricted/about-us/about-us.component';
+import {ChangelogComponent} from './pages/unrestricted/changelog/changelog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     StockMaker,
     PercentChangeComponent,
     WelcomeComponent,
+    AboutUsComponent,
     StockViewer,
     SubscriptionViewer,
     //TestCallsComponent,
@@ -101,7 +107,9 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     NavBarComponent,
     HeroComponent,
     HomeContentComponent,
-    FooterComponent
+    FooterComponent,
+    TeamMemberCardsComponent,
+    ChangelogComponent
     
   ],
   imports: [
@@ -116,7 +124,9 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
       { path: 'stockmaker', component: StockMaker},
       { path: 'stockviewer', component: StockViewer},
       //{ path: 'stockmaker/editstock/:id', component: StockModify},
-      { path: 'welcome', component:WelcomeComponent},
+      {path: 'welcome', component:WelcomeComponent},
+      {path: 'aboutus', component:AboutUsComponent},
+      {path: 'changelog', component:ChangelogComponent},
       { path: 'viewstock', component:StockViewer}, 
       //{ path: 'login', component:LoginComponent},
       //{ path: 'register', component:RegisterComponent},

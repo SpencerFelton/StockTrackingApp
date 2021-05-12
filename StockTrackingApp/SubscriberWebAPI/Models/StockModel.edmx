@@ -26,8 +26,8 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="user_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="stock_id" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK__PriceHist__value__1273C1CD">
@@ -42,6 +42,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Subscript__stock__15502E78">
+          <End Role="Stocks" Type="Self.Stocks" Multiplicity="1" />
+          <End Role="Subscriptions" Type="Self.Subscriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stocks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subscriptions">
+              <PropertyRef Name="stock_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ClientStockTrackerModelStoreContainer">
           <EntitySet Name="PriceHistory" EntityType="Self.PriceHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stocks" EntityType="Self.Stocks" Schema="dbo" store:Type="Tables" />
@@ -49,6 +61,10 @@
           <AssociationSet Name="FK__PriceHist__value__1273C1CD" Association="Self.FK__PriceHist__value__1273C1CD">
             <End Role="Stocks" EntitySet="Stocks" />
             <End Role="PriceHistory" EntitySet="PriceHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__stock__15502E78" Association="Self.FK__Subscript__stock__15502E78">
+            <End Role="Stocks" EntitySet="Stocks" />
+            <End Role="Subscriptions" EntitySet="Subscriptions" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -77,7 +93,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="user_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_id" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="stock_id" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK__PriceHist__value__2B3F6F97">

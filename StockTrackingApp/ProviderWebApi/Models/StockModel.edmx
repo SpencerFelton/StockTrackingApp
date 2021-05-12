@@ -22,7 +22,7 @@
           <Property Name="name" Type="nchar" MaxLength="30" Nullable="false" />
           <Property Name="abbr" Type="nchar" MaxLength="4" Nullable="false" />
         </EntityType>
-        <Association Name="FK__PriceHist__stock__1273C1CD">
+        <Association Name="FK__PriceHist__value__1273C1CD">
           <End Role="Stocks" Type="Self.Stocks" Multiplicity="1" />
           <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -37,7 +37,7 @@
         <EntityContainer Name="StockTrackerModelStoreContainer">
           <EntitySet Name="PriceHistory" EntityType="Self.PriceHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stocks" EntityType="Self.Stocks" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__PriceHist__stock__1273C1CD" Association="Self.FK__PriceHist__stock__1273C1CD">
+          <AssociationSet Name="FK__PriceHist__value__1273C1CD" Association="Self.FK__PriceHist__value__1273C1CD">
             <End Role="Stocks" EntitySet="Stocks" />
             <End Role="PriceHistory" EntitySet="PriceHistory" />
           </AssociationSet>

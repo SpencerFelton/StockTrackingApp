@@ -1,15 +1,15 @@
 <section class="team-cards">
     <div class="outrcontainer">
-        <div class = "card">
+        <div class = "card" [@fadefrominvis] = "(showingDetails)? 'active':'*'">
             <div class ="container">
-                <img class = "photo"src="assets/photos/BlankPerson_resized.png" height=150 width=150/>
+                <img class = "photo"src="assets/photos/BlankPerson_resized.png" height=150 width=150 (click)="onClicked()"/>
                 <h4>Name</h4>
                 <p>Position Here</p>
-                <a class="link1" href="#">
+                <a class="link1" href="#" *ngIf ="showingDetails" [@fade] >
                     <img class = "img" src="assets/photos/github_logo_resized.png" height=30 width =30 />
                     <div class="text">github.com</div>
                 </a>
-                <a class="link2" href="#">
+                <a class="link2" href="#"  *ngIf ="showingDetails" [@fade]>
                     <img class = "img" src="assets/photos/linkedin_logo.png" height=30 width =30 />
                     <div class="text">linkedin.com</div>
                 </a>
